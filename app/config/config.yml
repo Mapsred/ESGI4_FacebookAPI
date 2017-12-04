@@ -73,6 +73,12 @@ hwi_oauth:
             type:          facebook
             client_id:     "%facebook_client_id%"
             client_secret: "%facebook_client_secret%"
-            scope:         "email"
-            infos_url:     "https://graph.facebook.com/me?fields=id,name,email,picture.type(square)"
+            scope:         "user_photos, email, publish_actions, public_profile"
+            infos_url:     "https://graph.facebook.com/me/?fields=name,email,albums{name,photos{picture}}"
+            options:
+                display: popup #dialog is optimized for popup window
+                auth_type: rerequest # Re-asking for Declined Permissions
+            paths:
+              friends:  friends
+              profilepicture: picture.data.url
 
