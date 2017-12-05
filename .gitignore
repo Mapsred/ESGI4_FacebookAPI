@@ -16,7 +16,6 @@
 /vendor/
 /web/bundles/
 docker-compose.yml
-engine
 web/compiled
 
 #ADMIN LTE
@@ -27,5 +26,4 @@ web/compiled
 /node_modules/
 ad.js
 TODO
-test.html
 /web/assets/bower/
