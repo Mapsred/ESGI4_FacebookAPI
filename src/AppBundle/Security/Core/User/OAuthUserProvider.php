@@ -8,15 +8,28 @@
 
 namespace AppBundle\Security\Core\User;
 
+use AppBundle\Entity\Site;
 use AppBundle\Utils\Facebook\Album;
 use AppBundle\Utils\Facebook\Picture;
+use Doctrine\Common\Persistence\ObjectManager;
 use HWI\Bundle\OAuthBundle\OAuth\Response\UserResponseInterface;
 use HWI\Bundle\OAuthBundle\Security\Core\User\OAuthUserProvider as BaseOAuthUserProvider;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Cocur\Slugify\Slugify;
 
 class OAuthUserProvider extends BaseOAuthUserProvider
 {
+    /**
+     * @var ObjectManager $manager
+     */
+    private $manager;
+
+    public function __construct(ObjectManager $manager)
+    {
+        $this->manager = $manager;
+    }
+
     /**
      * @param string $username
      * @return OAuthUser
@@ -48,6 +61,17 @@ class OAuthUserProvider extends BaseOAuthUserProvider
         }
 
         $user->setAlbums($albums);
+
+        if (null === $site = $this->manager->getRepository("AppBundle:Site")->findOneBy(['userId' => $user->getId()])) {
+            $site = new Site();
+            $site->setUserId($user->getId());
+        }
+
+        $slugify = new Slugify();
+        $site->setUserName($slugify->slugify($user->getUsername()));
+
+        $this->manager->persist($site);
+        $this->manager->flush();
 
         return $user;
     }

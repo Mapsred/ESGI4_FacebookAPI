@@ -2,7 +2,7 @@
 
 namespace AppBundle\Controller;
 
-use HWI\Bundle\OAuthBundle\Security\Core\User\OAuthUser;
+use AppBundle\Security\Core\User\OAuthUser;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,15 +18,17 @@ class DefaultController extends Controller
 {
     /**
      * @Route("/", name="homepage")
-     * @param Request $request
      * @return Response
      */
-    public function indexAction(Request $request)
+    public function indexAction()
     {
-        var_dump($this->getUser());
-        // replace this example code with whatever you need
+        if (null !== $this->getUser() &&
+            null !== $site = $this->getDoctrine()->getRepository('AppBundle:Site')->findOneBy(['userId' => $this->getUser()->getId()])) {
+            return $this->redirectToRoute("site_home", ['site' => $site->getUserName()]);
+        }
+
         return $this->render('default/index.html.twig', [
-            'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
+            'base_dir' => realpath($this->getParameter('kernel.project_dir')) . DIRECTORY_SEPARATOR,
         ]);
     }
 

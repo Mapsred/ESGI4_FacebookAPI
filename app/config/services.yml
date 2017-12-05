@@ -36,3 +36,4 @@ services:
 
     hwi_oauth.user.provider.entity:
         class: AppBundle\Security\Core\User\OAuthUserProvider
+        arguments: ["@doctrine.orm.entity_manager"]
