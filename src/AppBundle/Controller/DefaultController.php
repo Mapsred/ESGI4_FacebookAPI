@@ -29,4 +29,12 @@ class DefaultController extends Controller
             'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
         ]);
     }
+
+    /**
+     * @Route("/base", name="base")
+     */
+    public function baseAction()
+    {
+        return $this->render("AppBundle::base.html.twig");
+    }
 }

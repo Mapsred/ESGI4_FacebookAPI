@@ -1,0 +1,77 @@
+.table > thead > tr > td.orange,
+.table > tbody > tr > td.orange,
+.table > tfoot > tr > td.orange,
+.table > thead > tr > th.orange,
+.table > tbody > tr > th.orange,
+.table > tfoot > tr > th.orange,
+.table > thead > tr.orange > td,
+.table > tbody > tr.orange > td,
+.table > tfoot > tr.orange > td,
+.table > thead > tr.orange > th,
+.table > tbody > tr.orange > th,
+.table > tfoot > tr.orange > th {
+    background-color: rgba(238, 148, 65, 0.4);
+}
+
+
+.table > thead > tr > td.teal,
+.table > tbody > tr > td.teal,
+.table > tfoot > tr > td.teal,
+.table > thead > tr > th.teal,
+.table > tbody > tr > th.teal,
+.table > tfoot > tr > th.teal,
+.table > thead > tr.teal > td,
+.table > tbody > tr.teal > td,
+.table > tfoot > tr.teal > td,
+.table > thead > tr.teal > th,
+.table > tbody > tr.teal > th,
+.table > tfoot > tr.teal > th {
+    background-color: rgba(57, 204, 204, 0.4);
+}
+
+
+.table > thead > tr > td.green,
+.table > tbody > tr > td.green,
+.table > tfoot > tr > td.green,
+.table > thead > tr > th.green,
+.table > tbody > tr > th.green,
+.table > tfoot > tr > th.green,
+.table > thead > tr.green > td,
+.table > tbody > tr.green > td,
+.table > tfoot > tr.green > td,
+.table > thead > tr.green > th,
+.table > tbody > tr.green > th,
+.table > tfoot > tr.green > th {
+    background-color: rgba(125, 205, 91, 0.4);
+}
+
+
+.table > thead > tr > td.blue,
+.table > tbody > tr > td.blue,
+.table > tfoot > tr > td.blue,
+.table > thead > tr > th.blue,
+.table > tbody > tr > th.blue,
+.table > tfoot > tr > th.blue,
+.table > thead > tr.blue > td,
+.table > tbody > tr.blue > td,
+.table > tfoot > tr.blue > td,
+.table > thead > tr.blue > th,
+.table > tbody > tr.blue > th,
+.table > tfoot > tr.blue > th {
+    background-color: rgba(68, 88, 159, 0.4);
+}
+
+.table > thead > tr > td.red,
+.table > tbody > tr > td.red,
+.table > tfoot > tr > td.red,
+.table > thead > tr > th.red,
+.table > tbody > tr > th.red,
+.table > tfoot > tr > th.red,
+.table > thead > tr.red > td,
+.table > tbody > tr.red > td,
+.table > tfoot > tr.red > td,
+.table > thead > tr.red > th,
+.table > tbody > tr.red > th,
+.table > tfoot > tr.red > th {
+    background-color: rgba(227, 82, 82, 0.4);
+}

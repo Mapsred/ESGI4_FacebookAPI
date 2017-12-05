@@ -30,6 +30,8 @@ framework:
     assets: ~
     php_errors:
         log: true
+    templating:
+        engines: ['twig']
 
 # Twig Configuration
 twig:
@@ -82,3 +84,10 @@ hwi_oauth:
               friends:  friends
               profilepicture: picture.data.url
 
+assetic:
+    debug:          '%kernel.debug%'
+    use_controller: false
+    filters:
+        cssrewrite: ~
+    bundles:
+        - AppBundle

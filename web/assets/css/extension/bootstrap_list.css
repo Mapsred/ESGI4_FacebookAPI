@@ -1,0 +1,126 @@
+/* list-group-item blue */
+.list-group-item.blue,
+.list-group-item.blue:hover,
+.list-group-item.blue:focus {
+    z-index: 2;
+    color: #fff;
+    background-color: #44589F;
+    border-color: #44589F;
+    font-weight: bold;
+}
+
+.list-group-item.blue,
+.list-group-item.blue:hover,
+.list-group-item.blue:focus {
+    z-index: 2;
+    color: #fff;
+    background-color: #44589F;
+    border-color: #44589F;
+    font-weight: bold;
+}
+
+/* list-group-item-blue */
+
+.list-group-item-blue {
+    color: #333;
+    background-color: rgba(68, 88, 159, 0.4);
+}
+
+a.list-group-item-blue,
+button.list-group-item-blue {
+    color: #333;
+}
+
+a.list-group-item-blue .list-group-item-heading,
+button.list-group-item-blue .list-group-item-heading {
+    color: inherit;
+}
+
+a.list-group-item-blue:hover,
+button.list-group-item-blue:hover,
+a.list-group-item-blue:focus,
+button.list-group-item-blue:focus {
+    color: #333;
+    background-color: rgba(68, 88, 159, 0.4);
+}
+
+a.list-group-item-blue.active,
+button.list-group-item-blue.active,
+a.list-group-item-blue.active:hover,
+button.list-group-item-blue.active:hover,
+a.list-group-item-blue.active:focus,
+button.list-group-item-blue.active:focus {
+    color: #333;
+    background-color: rgba(68, 88, 159, 0.4);
+    border-color: #44589F;
+}
+
+/* list-group-item-teal */
+.list-group-item-teal {
+    color: #333;
+    background-color: rgba(57, 204, 204, 0.4);
+}
+
+a.list-group-item-teal,
+button.list-group-item-teal {
+    color: #F7F7F7;
+}
+
+a.list-group-item-teal .list-group-item-heading,
+button.list-group-item-teal .list-group-item-heading {
+    color: inherit;
+}
+
+a.list-group-item-teal:hover,
+button.list-group-item-teal:hover,
+a.list-group-item-teal:focus,
+button.list-group-item-teal:focus {
+    color: #333;
+    background-color: rgba(57, 204, 204, 0.4);
+}
+
+a.list-group-item-teal.active,
+button.list-group-item-teal.active,
+a.list-group-item-teal.active:hover,
+button.list-group-item-teal.active:hover,
+a.list-group-item-teal.active:focus,
+button.list-group-item-teal.active:focus {
+    color: #333;
+    background-color: rgba(57, 204, 204, 0.4);
+    border-color: #39cccc;
+}
+
+/* list-group-item-green */
+.list-group-item-green {
+    color: #333;
+    background-color: rgba(125, 205, 91, 0.4);
+}
+
+a.list-group-item-green,
+button.list-group-item-green {
+    color: #F7F7F7;
+}
+
+a.list-group-item-green .list-group-item-heading,
+button.list-group-item-green .list-group-item-heading {
+    color: inherit;
+}
+
+a.list-group-item-green:hover,
+button.list-group-item-green:hover,
+a.list-group-item-green:focus,
+button.list-group-item-green:focus {
+    color: #333;
+    background-color: rgba(125, 205, 91, 0.4);
+}
+
+a.list-group-item-green.active,
+button.list-group-item-green.active,
+a.list-group-item-green.active:hover,
+button.list-group-item-green.active:hover,
+a.list-group-item-green.active:focus,
+button.list-group-item-green.active:focus {
+    color: #333;
+    background-color: rgba(125, 205, 91, 0.4);
+    border-color: #7dcd5b;
+}

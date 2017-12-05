@@ -17,3 +17,15 @@
 /web/bundles/
 docker-compose.yml
 engine
+web/compiled
+
+#ADMIN LTE
+.idea
+.sass-cache/
+/nbproject/
+/nbproject/private/
+/node_modules/
+ad.js
+TODO
+test.html
+/web/assets/bower/

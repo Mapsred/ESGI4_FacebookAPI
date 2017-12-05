@@ -1,0 +1,25 @@
+.callout.callout-green, .alert-green, .label-green, .modal-green .modal-body {
+    background-color: #7dcd5b !important;
+    color: #F7F7F7;
+}
+
+.callout.callout-orange, .alert-orange, .label-orange, .modal-orange .modal-body {
+    background-color: #ee9441 !important;
+    color: #F7F7F7;
+}
+
+.callout.callout-teal, .alert-teal, .label-teal, .modal-teal .modal-body {
+    background-color: #0e9aa7 !important;
+    color: #F7F7F7;
+}
+
+.callout.callout-blue, .alert-blue, .label-blue, .modal-blue .modal-body {
+    background-color: #44589F !important;
+    color: #F7F7F7;
+}
+
+.callout.callout-red, .alert-red, .label-red, .modal-red .modal-body {
+    background-color: #e35252 !important;
+    color: #F7F7F7;
+}
+
