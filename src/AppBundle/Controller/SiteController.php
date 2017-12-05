@@ -11,17 +11,21 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Site;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 
 class SiteController extends Controller
 {
     /**
      * @Route("/{site}/home", name="site_home")
      * @param string $site
+     * @return Response
      */
     public function siteAction($site)
     {
         $site = $this->findSiteOrThrowException($site);
+        $oauthUser = $site->getOAuthUser();
 
+        return new Response();
     }
 
     /**
@@ -34,7 +38,7 @@ class SiteController extends Controller
             throw $this->createNotFoundException("Site $site not found");
         }
 
-        return $site;
+        return $this->get('AppBundle\Manager\SiteManager')->generateOAuthUser($site);
     }
 
 }

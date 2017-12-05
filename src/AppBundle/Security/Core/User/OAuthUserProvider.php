@@ -9,14 +9,12 @@
 namespace AppBundle\Security\Core\User;
 
 use AppBundle\Entity\Site;
-use AppBundle\Utils\Facebook\Album;
-use AppBundle\Utils\Facebook\Picture;
+use AppBundle\Manager\SiteManager;
 use Doctrine\Common\Persistence\ObjectManager;
 use HWI\Bundle\OAuthBundle\OAuth\Response\UserResponseInterface;
 use HWI\Bundle\OAuthBundle\Security\Core\User\OAuthUserProvider as BaseOAuthUserProvider;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Cocur\Slugify\Slugify;
 
 class OAuthUserProvider extends BaseOAuthUserProvider
 {
@@ -25,9 +23,15 @@ class OAuthUserProvider extends BaseOAuthUserProvider
      */
     private $manager;
 
-    public function __construct(ObjectManager $manager)
+    /**
+     * @var SiteManager $siteManager
+     */
+    private $siteManager;
+
+    public function __construct(ObjectManager $manager, SiteManager $siteManager)
     {
         $this->manager = $manager;
+        $this->siteManager = $siteManager;
     }
 
     /**
@@ -45,35 +49,14 @@ class OAuthUserProvider extends BaseOAuthUserProvider
      */
     public function loadUserByOAuthUserResponse(UserResponseInterface $response)
     {
-        $user = new OAuthUser($response->getRealName());
-        $user->setId($response->getUsername());
-        $user->setEmail($response->getEmail());
-
-        $albums = [];
-        foreach ($response->getData()['albums']['data'] as $data) {
-            $photos = [];
-            foreach ($data['photos']['data'] as $photoData) {
-                $photo = new Picture($photoData['id'], $photoData['picture']);
-                $photos[] = $photo;
-            }
-            $album = new Album($data['id'], $data['name'], $photos);
-            $albums[] = $album;
-        }
-
-        $user->setAlbums($albums);
-
-        if (null === $site = $this->manager->getRepository("AppBundle:Site")->findOneBy(['userId' => $user->getId()])) {
+        if (null === $site = $this->manager->getRepository("AppBundle:Site")->findOneBy(['userId' => $response->getUsername()])) {
             $site = new Site();
-            $site->setUserId($user->getId());
+            $site->setUserId($response->getUsername());
         }
 
-        $slugify = new Slugify();
-        $site->setUserName($slugify->slugify($user->getUsername()));
+        $site = $this->siteManager->generateOAuthUser($site, $response);
 
-        $this->manager->persist($site);
-        $this->manager->flush();
-
-        return $user;
+        return $site->getOAuthUser();
     }
 
     /**

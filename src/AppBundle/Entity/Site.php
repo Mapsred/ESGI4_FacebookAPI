@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Security\Core\User\OAuthUser;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -29,6 +30,13 @@ class Site
     private $userId;
 
     /**
+     * @var string $accessToken
+     *
+     * @ORM\Column(name="access_token", type="string", length=255)
+     */
+    private $accessToken;
+
+    /**
      * @var string $userName
      *
      * @ORM\Column(name="user_name", type="string", length=255)
@@ -48,6 +56,11 @@ class Site
      * @ORM\Column(name="photo_options", type="json_array", nullable=true)
      */
     private $photoOptions;
+
+    /**
+     * @var OAuthUser $OAuthUser
+     */
+    private $OAuthUser;
 
 
     /**
@@ -155,5 +168,44 @@ class Site
     {
         return $this->photoOptions;
     }
+
+    /**
+     * @return string
+     */
+    public function getAccessToken()
+    {
+        return $this->accessToken;
+    }
+
+    /**
+     * @param string $accessToken
+     * @return Site
+     */
+    public function setAccessToken($accessToken)
+    {
+        $this->accessToken = $accessToken;
+
+        return $this;
+    }
+
+    /**
+     * @return OAuthUser
+     */
+    public function getOAuthUser()
+    {
+        return $this->OAuthUser;
+    }
+
+    /**
+     * @param OAuthUser $OAuthUser
+     * @return Site
+     */
+    public function setOAuthUser($OAuthUser)
+    {
+        $this->OAuthUser = $OAuthUser;
+
+        return $this;
+    }
+
 }
 

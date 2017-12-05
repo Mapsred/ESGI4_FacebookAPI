@@ -34,6 +34,12 @@ services:
     #     arguments:
     #         $someArgument: 'some_value'
 
+    # alias created to autowire AppBundle\Manager\SiteManager class
+    HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\FacebookResourceOwner: '@hwi_oauth.resource_owner.facebook'
+
     hwi_oauth.user.provider.entity:
         class: AppBundle\Security\Core\User\OAuthUserProvider
-        arguments: ["@doctrine.orm.entity_manager"]
+        arguments: ["@doctrine.orm.entity_manager", '@AppBundle\Manager\SiteManager']
+
+    AppBundle\Manager\SiteManager:
+        public: true
