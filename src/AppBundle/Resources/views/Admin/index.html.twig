@@ -1,2 +1,30 @@
 {% extends 'AppBundle:Admin:base.html.twig' %}
 
+{% block title %}Accueil Admin{% endblock %}
+
+{% block header %}Accueil{% endblock %}
+
+{% block body %}
+    <div class="box box-default">
+        <div class="box-header with-border">
+            <h3 class="box-title">Configuration</h3>
+        </div>
+        <div class="box-body">
+            Bienvenue sur votre page d'administration de MyPhotoBook ! <br>
+            Vous pouvez ici configurer les différentes options de votre site afin de le rendre le plug agréable possible.
+            <br>
+            Vous pouvez :
+            <ul>
+                <li>Choisir la couleur principale</li>
+                <li>Choisir la disposition</li>
+                <li>Choisir les albums à cacher</li>
+                <li>Choisir les photos à cacher</li>
+                <li>Uploader des photos sur un album existant</li>
+            </ul>
+        </div>
+        <!-- /.box-body -->
+    </div>
+    <!-- /.box -->
+{% endblock %}
+
+

@@ -7,7 +7,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>{% block title %}{% endblock %}</title>
+    <title>{% block title %}{% endblock %} | MyPhotoBook</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
@@ -66,7 +66,7 @@ desired effect
     <header class="main-header">
 
         <!-- Logo -->
-        <a href="index2.html" class="logo">
+        <a href="{{ path('admin_index') }}" class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->
             <span class="logo-mini"><b>M</b>PB</span>
             <!-- logo for regular state and mobile devices -->
@@ -109,7 +109,7 @@ desired effect
         <section class="content-header">
             <h1>
                 {% block header %}Page Header{% endblock %}
-                <small>{% block subheader %}Optional description{% endblock %}</small>
+                <small>{% block subheader %}{% endblock %}</small>
             </h1>
 
             {% block breadcumb %}
@@ -122,11 +122,9 @@ desired effect
 
         <!-- Main content -->
         <section class="content container-fluid">
+            {% block body %}
 
-            <!--------------------------
-              | Your Page Content Here |
-              -------------------------->
-
+            {% endblock %}
         </section>
         <!-- /.content -->
     </div>
