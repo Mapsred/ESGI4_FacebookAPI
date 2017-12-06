@@ -117,14 +117,16 @@ desired effect
             <!-- Content Header (Page header) -->
             <section class="content-header">
                 <h1>
-                    Top Navigation
-                    <small>Example 2.0</small>
+                    {% block header %}Page Header{% endblock %}
+                    <small>{% block subheader %}Optional description{% endblock %}</small>
                 </h1>
-                <ol class="breadcrumb">
-                    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                    <li><a href="#">Layout</a></li>
-                    <li class="active">Top Navigation</li>
-                </ol>
+
+                {% block breadcumb %}
+                    <ol class="breadcrumb">
+                        <li><a href="{{ path('homepage') }}"><i class="fa fa-dashboard"></i> Level</a></li>
+                        <li class="active">Homepage</li>
+                    </ol>
+                {% endblock %}
             </section>
 
             <!-- Main content -->

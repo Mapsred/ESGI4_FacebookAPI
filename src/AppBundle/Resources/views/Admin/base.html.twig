@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{% block title %}{% endblock %}</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+    {% block stylesheet %}{% endblock %}
+
+    {% stylesheets 'assets/bower/bootstrap/dist/css/bootstrap.css' 'assets/bower/font-awesome/css/font-awesome.css'
+        'assets/bower/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css' 'assets/bower/select2/dist/css/select2.css'
+        'assets/bower/Ionicons/css/ionicons.css' 'assets/css/AdminLTE.css' 'assets/css/_all-skins.css'
+        'assets/css/helper.css'
+        output='compiled/css/main.css' filter='cssrewrite' %}
+        <link href="{{ asset_url }}" rel="stylesheet">
+    {% endstylesheets %}
+
+    {% stylesheets 'assets/css/extension/*' output='compiled/css/extension.css' filter='cssrewrite' %}
+        <link href="{{ asset_url }}" rel="stylesheet">
+    {% endstylesheets %}
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Google Font -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+    {% block head %}{% endblock %}
+</head>
+<!--
+BODY TAG OPTIONS:
+=================
+Apply one or more of the following classes to get the
+desired effect
+|---------------------------------------------------------|
+| SKINS         | skin-blue                               |
+|               | skin-black                              |
+|               | skin-purple                             |
+|               | skin-yellow                             |
+|               | skin-red                                |
+|               | skin-green                              |
+|---------------------------------------------------------|
+|LAYOUT OPTIONS | fixed                                   |
+|               | layout-boxed                            |
+|               | layout-top-nav                          |
+|               | sidebar-collapse                        |
+|               | sidebar-mini                            |
+|---------------------------------------------------------|
+-->
+<body class="hold-transition {% block skin %}skin-blue{% endblock %} sidebar-mini">
+<div class="wrapper">
+
+    <!-- Main Header -->
+    <header class="main-header">
+
+        <!-- Logo -->
+        <a href="index2.html" class="logo">
+            <!-- mini logo for sidebar mini 50x50 pixels -->
+            <span class="logo-mini"><b>M</b>PB</span>
+            <!-- logo for regular state and mobile devices -->
+            <span class="logo-lg"><b>My</b>PhotoBook</span>
+        </a>
+
+        <!-- Header Navbar -->
+        <nav class="navbar navbar-static-top" role="navigation">
+            <!-- Sidebar toggle button-->
+            <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+                <span class="sr-only">Toggle navigation</span>
+            </a>
+        </nav>
+    </header>
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar">
+
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+            <!-- Sidebar Menu -->
+            <ul class="sidebar-menu" data-widget="tree">
+                <li class="header">Options</li>
+                <!-- Optionally, you can add icons to the links -->
+                <li><a href="#"><i class="fa fa-file-text-o"></i> <span>Choisir ma disposition</span></a></li>
+                <li><a href="#"><i class="fa fa-adjust"></i> <span>Choisir ma couleur</span></a></li>
+                <li><a href="#"><i class="fa fa-folder-open"></i> <span>Choisir mes albums</span></a></li>
+                <li><a href="#"><i class="fa fa-file-image-o"></i> <span>Choisir mes photos</span></a></li>
+            </ul>
+            <p class="text-center small" style="border-top: 1px solid #444444; padding-top: 10px">
+                <a href="/">Retourner sur le site</a>
+            </p>
+            <!-- /.sidebar-menu -->
+        </section>
+        <!-- /.sidebar -->
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                {% block header %}Page Header{% endblock %}
+                <small>{% block subheader %}Optional description{% endblock %}</small>
+            </h1>
+
+            {% block breadcumb %}
+                <ol class="breadcrumb">
+                    <li><a href="{{ path('homepage') }}"><i class="fa fa-dashboard"></i> Level</a></li>
+                    <li class="active">Admin</li>
+                </ol>
+            {% endblock %}
+        </section>
+
+        <!-- Main content -->
+        <section class="content container-fluid">
+
+            <!--------------------------
+              | Your Page Content Here |
+              -------------------------->
+
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- Main Footer -->
+    <footer class="main-footer">
+        <!-- To the right -->
+        <div class="pull-right hidden-xs">
+            Anything you want
+        </div>
+        <!-- Default to the left -->
+        <strong>Copyright &copy; 2017 <a href="#">MyPhotoBook</a>.</strong> All rights reserved.
+    </footer>
+</div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED JS SCRIPTS -->
+
+{% javascripts 'assets/bower/jquery/dist/jquery.js' 'assets/bower/bootstrap/dist/js/bootstrap.js'
+    'assets/js/adminlte.js' 'assets/bower/jquery-ui/jquery-ui.js' 'assets/bower/moment/moment.js'
+    'assets/bower/moment/locale/fr.js' 'assets/bower/bootstrap-datepicker/dist/js/bootstrap-datepicker.js'
+    'assets/bower/bootstrap-datepicker/dist/locales/bootstrap-datepicker.fr.min.js'
+    'assets/bower/select2/dist/js/select2.js' 'assets/bower/select2/dist/js/i18n/fr.js'
+    output='compiled/js/main.js' %}
+    <script src="{{ asset_url }}"></script>
+{% endjavascripts %}
+
+{% block javascript %}{% endblock %}
+
+<!-- Optionally, you can add Slimscroll and FastClick plugins.
+     Both of these plugins are recommended to enhance the
+     user experience. -->
+</body>
+</html>
