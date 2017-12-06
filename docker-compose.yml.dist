@@ -44,3 +44,12 @@ services:
         MYSQL_USERNAME: root
         MYSQL_ROOT_PASSWORD: root
 
+    nodejs:
+      build: engine/nodejs
+      container_name: esgi-facebook-final-docker-nodejs
+      working_dir: /application
+      volumes:
+        - .:/application
+      ports:
+        - "3030:3000"
+      tty: true
