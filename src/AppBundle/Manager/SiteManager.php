@@ -31,6 +31,8 @@ class SiteManager
      */
     private $resourceOwner;
 
+    private $site;
+
     /**
      * SiteManager constructor.
      * @param ObjectManager $manager
@@ -97,6 +99,30 @@ class SiteManager
         $token->setRefreshToken($expiredToken->getRefreshToken());
 
         return $token;
+    }
+
+    /**
+     * @return ObjectManager
+     */
+    public function getManager()
+    {
+        return $this->manager;
+    }
+
+    /**
+     * @return Site
+     */
+    public function getSite()
+    {
+        return $this->site;
+    }
+
+    /**
+     * @param Site $site
+     */
+    public function setSite($site)
+    {
+        $this->site = $site;
     }
 
 }

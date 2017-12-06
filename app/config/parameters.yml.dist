@@ -19,3 +19,4 @@ parameters:
     secret: ThisTokenIsNotSoSecretChangeIt
     facebook_client_id: 1234
     facebook_client_secret: 1234
+    domain: facebook-final.dev

@@ -24,7 +24,7 @@ class DefaultController extends Controller
     {
         if (null !== $this->getUser() &&
             null !== $site = $this->getDoctrine()->getRepository('AppBundle:Site')->findOneBy(['userId' => $this->getUser()->getId()])) {
-            return $this->redirectToRoute("site_home", ['site' => $site->getUserName()]);
+            return $this->redirectToRoute("site_home", ['project_name' => $site->getUserName()]);
         }
 
         return $this->render('default/index.html.twig', [

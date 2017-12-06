@@ -26,31 +26,17 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class AdminController extends Controller
 {
     /**
-     * @Route("/admin", name="admin_index")
+     * @Route("/", name="admin_index")
      * @return Response
      */
     public function indexAction()
     {
-        $site = $this->findSiteOrThrowException();
+        $site = $this->get('AppBundle\Manager\SiteManager')->getSite();
 
         return $this->render('AppBundle:Admin:index.html.twig', [
             'site' => $site
         ]);
     }
 
-    /**
-     * @return Site|null|object
-     * @throws NotFoundHttpException
-     */
-    private function findSiteOrThrowException()
-    {
-        if (null !== $site = $this->getDoctrine()->getRepository("AppBundle:Site")->findOneBy(['userId' => $this->getUser()->getId()])) {
-            $site->setOAuthUser($this->getUser());
-
-            return $site;
-        }
-
-        throw $this->createNotFoundException("Site $site not found");
-    }
 
 }

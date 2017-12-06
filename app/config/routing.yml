@@ -1,6 +1,22 @@
+sub_app:
+    resource: "@AppBundle/Controller/SiteController.php"
+    type:     annotation
+    prefix:   /
+    host:     '{project_name}.%domain%'
+    defaults:
+        domain: '%domain%'
+    requirements:
+        domain: '%domain%'
+
+admin:
+    resource: "@AppBundle/Controller/AdminController.php"
+    type:     annotation
+    prefix:   /admin
+
 app:
-    resource: '@AppBundle/Controller/'
-    type: annotation
+    resource: "@AppBundle/Controller/DefaultController.php"
+    type:     annotation
+    prefix:   /
 
 hwi_oauth_redirect:
     resource: "@HWIOAuthBundle/Resources/config/routing/redirect.xml"
