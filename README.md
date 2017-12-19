@@ -3,9 +3,9 @@ MyPhotoBook
 
 MyPhotoBook is a project using Symfony 3.4 (LTS).
 
-##How to install
+## How to install
 
-###Docker-Compose way
+### With Docker-Compose
 
 copy ``docker-compose.yml.dist`` to ``docker-compose.yml``
 
@@ -21,11 +21,11 @@ If you did not modify the ``docker-compose.yml`` then you are ready to go
 Then run 
 
 * ``docker-compose exec php-fpm composer install`` To install composer dependencies
-* ``bower install``
+* ``docker-compose exec nodejs bower install`` To install bower dependencies
 * ``docker-compose exec php-fpm php bin/console assetic:dump`` To dump all css/js libraries
 
 
-###Normal way
+### Without Docker-Compose
 
 copy ``app/config/parameters.yml.dist`` to ``app/config/parameters.yml``
 
@@ -34,5 +34,24 @@ Replace the ``facebook_client_id`` and ``facebook_client_secret`` parameters and
 Then run 
 
 * ``composer install`` To install composer dependencies
-* ``bower install``
+* ``bower install`` To install bower dependencies
 * ``php bin/console assetic:dump`` To dump all css/js libraries
+
+
+### Finally
+
+Open your host file (`C:\Windows\System32\driver\etc\hosts`) on Windows
+
+Copy the following 2 lines and replace firstname-lastname with your facebook firstname and lastname:
+```
+	127.0.0.1		facebook-final.develop
+	127.0.0.1		firstname-lastname.facebook-final.develop
+```
+
+Connect to ``http://facebook-final.develop/app_dev.php/login``
+
+if you have the following error ``You are not allowed to access this file. Your ip is x.x.x.x``
+
+Then add your ip (x.x.x.x here) to the app_dev file ip array (do not remove any existing)
+
+Run ``docker-compose exec php-fpm php bin/console doctrine:schema:update --force`` to build the database schema
