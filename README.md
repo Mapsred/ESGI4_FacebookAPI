@@ -3,9 +3,9 @@ MyPhotoBook
 
 MyPhotoBook is a project using Symfony 3.4 (LTS).
 
-##How to install
+## How to install
 
-###Docker-Compose way
+### With Docker-Compose
 
 copy ``docker-compose.yml.dist`` to ``docker-compose.yml``
 
@@ -25,7 +25,7 @@ Then run
 * ``docker-compose exec php-fpm bin/console assetic:dump`` To dump all css/js libraries
 
 
-###Normal way
+### Without Docker-Compose
 
 copy ``app/config/parameters.yml.dist`` to ``app/config/parameters.yml``
 
