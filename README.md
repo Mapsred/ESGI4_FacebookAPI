@@ -22,7 +22,7 @@ Then run
 
 * ``docker-compose exec php-fpm composer install`` To install composer dependencies
 * ``bower install``
-* ``docker-compose exec php-fpm bin/console assetic:dump`` To dump all css/js libraries
+* ``docker-compose exec php-fpm php bin/console assetic:dump`` To dump all css/js libraries
 
 
 ###Normal way
