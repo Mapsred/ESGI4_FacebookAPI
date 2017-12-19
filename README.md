@@ -53,3 +53,5 @@ Connect to ``http://facebook-final.develop/app_dev.php/login``
 if you have the following error ``You are not allowed to access this file. Your ip is x.x.x.x``
 
 Then add your ip (x.x.x.x here) to the app_dev file ip array (do not remove any existing)
+
+Run ``docker-compose exec php-fpm php bin/console doctrine:schema:update --force`` to build the database schema
