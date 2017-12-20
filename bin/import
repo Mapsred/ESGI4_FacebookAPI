@@ -16,7 +16,6 @@ $commands = [
     "--assetic-prod" => "php bin/console assetic:dump --env=prod",
     "--clear-cache-prod" => "php bin/console cache:clear --no-warmup --env=prod",
     "--composer" => "composer install",
-    "--cache-warm" => "php bin/console cache:warm --env=prod",
     "--copy-bootstrap-source" => "cp web/assets/bower/bootstrap/dist/css/bootstrap.css.map web/compiled/css/bootstrap.css.map"
 ];
 
@@ -27,7 +26,6 @@ $commands["--prod"] = [
     "--assetic-prod" => "php bin/console assetic:dump --env=prod",
     '--assetic-version' => "php bin/console assets-version:increment --env=prod",
     "--clear-cache-prod" => "php bin/console cache:clear --no-warmup --env=prod",
-    "--cache-warm" => "php bin/console cache:warm --env=prod",
     "--copy-bootstrap-source" => "cp web/assets/bower/bootstrap/dist/css/bootstrap.css.map web/compiled/css/bootstrap.css.map"
 ];
 
