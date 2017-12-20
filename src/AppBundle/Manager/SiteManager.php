@@ -64,12 +64,19 @@ class SiteManager
         $user->setEmail($response->getEmail());
 
         $albums = [];
+
         foreach ($response->getData()['albums']['data'] as $data) {
+
             $photos = [];
-            foreach ($data['photos']['data'] as $photoData) {
-                $photo = new Picture($photoData['id'], $photoData['picture']);
-                $photos[] = $photo;
+
+            if (isset($data['photos'])) {
+
+                foreach ($data['photos']['data'] as $photoData) {
+                    $photo = new Picture($photoData['id'], $photoData['picture']);
+                    $photos[] = $photo;
+                }
             }
+
             $album = new Album($data['id'], $data['name'], $photos);
             $albums[] = $album;
         }

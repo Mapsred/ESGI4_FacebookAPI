@@ -1,0 +1,42 @@
+{% extends 'AppBundle:Admin:base.html.twig' %}
+
+{% block title %}Accueil Admin{% endblock %}
+
+{% block header %}Album {{ album_name }}{% endblock %}
+
+{% block breadcumb %}
+<ol class="breadcrumb">
+    <li>
+        <a href="{{ path('site_home', {'project_name': site.username}) }}">
+            <i class="fa fa-dashboard"></i> Mon site
+        </a>
+    </li>
+    <li class="active">Admin</li>
+</ol>
+{% endblock %}
+
+{% block body %}
+
+{% dump site.oAuthUser.albums %}
+
+{% for picture in site.oAuthUser.albums.first.pictures %}
+<div class="post">
+
+    <!-- /.user-block -->
+    <div class="row margin-bottom">
+        <div class="col-sm-6">
+            <img class="img-responsive" src="{{ picture.pictureLink }}" alt="Photo">
+        </div>
+        <!-- /.col -->
+
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</div>
+{% else %}
+<p> Aucune photo </p>
+{% endfor %}
+
+{% endblock %}
+
+

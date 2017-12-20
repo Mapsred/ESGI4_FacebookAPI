@@ -38,5 +38,34 @@ class AdminController extends Controller
         ]);
     }
 
+    /**
+     * @Route("/albums", name="admin_albums")
+     * @return Response
+     */
+    public function albumsAction()
+    {
+        $site = $this->get('AppBundle\Manager\SiteManager')->getSite();
+
+        return $this->render('AppBundle:Admin:albums.html.twig', [
+            'site' => $site
+        ]);
+    }
+
+    /**
+     * @Route("/album{}", name="admin_album")
+     * @return Response
+     */
+    public function albumAction($album = null)
+    {
+
+        $album_name = ucwords(str_replace("-", " ", $album));
+
+        $site = $this->get('AppBundle\Manager\SiteManager')->getSite();
+
+        return $this->render('AppBundle:Admin:album.html.twig', [
+            'site' => $site,
+            'album' => $album_name
+        ]);
+    }
 
 }
