@@ -23,6 +23,15 @@ security:
                 failure_path: /login
                 oauth_user_provider:
                     service: hwi_oauth.user.provider.entity
+            remember_me:
+                secret:   '%secret%'
+                lifetime: 604800
+                path:     /
+                domain:   ".%domain%"
+            logout:
+                path:   /logout
+                target: /
+                invalidate_session: true
 
     access_control:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }

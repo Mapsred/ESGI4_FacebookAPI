@@ -4,6 +4,17 @@
 
 {% block header %}Accueil{% endblock %}
 
+{% block breadcumb %}
+    <ol class="breadcrumb">
+        <li>
+            <a href="{{ path('site_home', {'project_name': site.username}) }}">
+                <i class="fa fa-dashboard"></i> Mon site
+            </a>
+        </li>
+        <li class="active">Admin</li>
+    </ol>
+{% endblock %}
+
 {% block body %}
     <div class="box box-default">
         <div class="box-header with-border">
@@ -11,7 +22,8 @@
         </div>
         <div class="box-body">
             Bienvenue sur votre page d'administration de MyPhotoBook ! <br>
-            Vous pouvez ici configurer les différentes options de votre site afin de le rendre le plug agréable possible.
+            Vous pouvez ici configurer les différentes options de votre site afin de le rendre le plug agréable
+            possible.
             <br>
             Vous pouvez :
             <ul>

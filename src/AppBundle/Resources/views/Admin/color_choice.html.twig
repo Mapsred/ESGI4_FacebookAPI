@@ -4,6 +4,22 @@
 
 {% block header %}Choix des couleurs{% endblock %}
 
+{% block breadcumb %}
+    <ol class="breadcrumb">
+        <li>
+            <a href="{{ path('site_home', {'project_name': site.username}) }}">
+                <i class="fa fa-dashboard"></i> Mon site
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('admin_index', {'project_name': site.username}) }}">
+                <i class="fa fa-dashboard"></i> Admin
+            </a>
+        </li>
+        <li class="active">Choisir ma couleur</li>
+    </ol>
+{% endblock %}
+
 {% block body %}
     <div class="box box-default">
         <div class="box-header with-border">
