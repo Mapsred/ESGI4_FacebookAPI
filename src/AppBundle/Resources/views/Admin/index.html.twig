@@ -31,7 +31,11 @@
                 <li>Choisir la disposition</li>
                 <li>Choisir les albums à cacher</li>
                 <li>Choisir les photos à cacher</li>
-                <li>Uploader des photos sur un album existant</li>
+                <li>
+                    <a href="{{ path('photo_upload', {'project_name': site.userName}) }}">
+                        Ajout d'une photo
+                    </a>
+                </li>
             </ul>
         </div>
         <!-- /.box-body -->

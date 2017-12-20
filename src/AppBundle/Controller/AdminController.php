@@ -8,14 +8,15 @@
 
 namespace AppBundle\Controller;
 
-
-use AppBundle\Entity\Site;
+use AppBundle\Manager\SiteManager;
 use AppBundle\Security\Core\User\OAuthUser;
+use AppBundle\Utils\Facebook\Facebook;
+use Facebook\GraphNodes\GraphNode;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Class AdminController
@@ -38,6 +39,52 @@ class AdminController extends Controller
         ]);
     }
 
+    /**
+     * @Route("/upload", name="photo_upload")
+     * @param Request $request
+     * @return Response
+     */
+    public function photoUploadAction(Request $request)
+    {
+        $albums = $this->get(Facebook::class)->getAlbums();
+        $site = $this->get(SiteManager::class)->getSite();
+
+        $albumIds = array_map(function (GraphNode $album) {
+            return $album->getField('id');
+        }, $albums->all());
+
+        if ($request->isMethod('POST')) {
+            /** @var UploadedFile $photo */
+            $photo = $request->files->get('photo');
+            $message = $request->request->get('message');
+            $album = $request->request->get('album');
+
+            if (!in_array($album, $albumIds)) {
+                $this->addFlash('danger', 'L\'album sélectionné n\'existe pas.');
+
+                return $this->redirectToRoute('photo_upload', ['project_name' => $site->getUserName()]);
+            }
+
+            if (!$this->get(Facebook::class)->uploadPhoto($album, $message, $photo->getPathname())) {
+                $this->addFlash('danger', 'Une erreur s\'est produite, merci de rééssayer plus tard');
+
+                return $this->redirectToRoute('photo_upload', ['project_name' => $site->getUserName()]);
+            }
+
+            $this->addFlash('success', 'La photo sélectionnée a bien été ajoutée.');
+            //In case of success, we need to refresh the site to add the new photo
+            $site = $this->get(SiteManager::class)->generateOAuthUser($site);
+            $this->get(SiteManager::class)->setSite($site);
+
+
+            return $this->redirectToRoute('admin_index', ['project_name' => $site->getUserName()]);
+        }
+
+        return $this->render('AppBundle:Admin:photo_upload.html.twig', [
+            'site' => $site,
+            'albums' => $albums->all()
+        ]);
+    }
     /**
      * @Route("/albums", name="admin_albums")
      * @return Response
