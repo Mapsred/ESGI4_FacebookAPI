@@ -39,4 +39,12 @@ class DefaultController extends Controller
     {
         return $this->render("AppBundle::base.html.twig");
     }
+
+    /**
+     * @Route("/policy", name="policy")
+     */
+    public function policyAction()
+    {
+        return $this->render('AppBundle:Default:policy.html.twig');
+    }
 }
