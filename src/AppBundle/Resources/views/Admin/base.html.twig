@@ -101,7 +101,11 @@ desired effect
                     </a>
                 </li>
                 <li><a href="#"><i class="fa fa-cloud-upload"></i> <span>Uploader une photo</span></a></li>
-                <li><a href="{{ path('admin_albums', {'project_name': site.username}) }}"><i class="fa fa-cloud-upload"></i> <span>Mes albums</span></a></li>
+                <li class="{{ currentPath == 'admin_albums' ? 'active': '' }}">
+                    <a href="{{ path('admin_albums', {'project_name': site.username}) }}">
+                        <i class="fa fa-cloud-upload"></i> <span>Mes albums</span>
+                    </a>
+                </li>
             </ul>
             <p class="text-center small" style="border-top: 1px solid #444444; padding-top: 10px">
                 <a href="{{ path('site_home', {'project_name': site.username}) }}">Retourner sur le site</a>
