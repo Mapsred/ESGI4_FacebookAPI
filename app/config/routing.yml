@@ -3,6 +3,7 @@ sub_app:
     type:     annotation
     prefix:   /
     host:     '{project_name}.%domain%'
+    schemes:    [http]
     defaults:
         domain: '%domain%'
     requirements:
@@ -13,6 +14,7 @@ admin:
     type:     annotation
     prefix:   /admin
     host:     '{project_name}.%domain%'
+    schemes:    [http]
     defaults:
         domain: '%domain%'
     requirements:
