@@ -24,7 +24,6 @@ $commands["--full"] = $commands;
 $commands["--prod"] = [
     "--pull" => "git pull",
     "--assetic-prod" => "php bin/console assetic:dump --env=prod",
-    '--assetic-version' => "php bin/console assets-version:increment --env=prod",
     "--clear-cache-prod" => "php bin/console cache:clear --no-warmup --env=prod",
     "--copy-bootstrap-source" => "cp web/assets/bower/bootstrap/dist/css/bootstrap.css.map web/compiled/css/bootstrap.css.map"
 ];
