@@ -38,5 +38,18 @@ class AdminController extends Controller
         ]);
     }
 
+    /**
+     * @Route("/color", name="admin_colorChoice")
+     * @return Response
+     */
+    public function colorAction()
+    {
+        $site = $this->get('AppBundle\Manager\SiteManager')->getSite();
+
+        return $this->render('AppBundle:Admin:color_choice.html.twig', [
+            'site' => $site
+        ]);
+    }
+
 
 }
