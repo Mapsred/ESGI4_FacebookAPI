@@ -70,36 +70,32 @@ class SiteManager
         $user->setId($response->getUsername());
         $user->setEmail($response->getEmail());
 
-        $albums = [];
-
-        foreach ($response->getData()['albums']['data'] as $data) {
-
-            $photos = [];
-            if (isset($data['photos'])) {
-                foreach ($data['photos']['data'] as $photoData) {
-                    $photo = new Picture($photoData['id'], $photoData['picture']);
-                    $photos[] = $photo;
-                }
-            }
-
-            $album = new Album($data['id'], $data['name'], $photos);
-            $albums[] = $album;
-        }
-
-        $user->setAlbums($albums);
-
-        $scopes = array_map("trim", explode(" ", $response->getResourceOwner()->getOption('scope')));
-        $scopes = array_filter($scopes);
-
         $slugify = new Slugify();
         $site
             ->setOAuthUser($user)
             ->setUserName($slugify->slugify($response->getRealName()))
-            ->setAccessToken($response->getAccessToken())
-            ->setWantedScopes($scopes);
+            ->setAccessToken($response->getAccessToken());
 
         $permissions = $this->facebook->getPermissions($site);
         $site->setGivenScopes($permissions);
+
+        if ($site->hasScope("user_photos")) {
+            $albums = [];
+            foreach ($response->getData()['albums']['data'] as $data) {
+                $photos = [];
+                if (isset($data['photos'])) {
+                    foreach ($data['photos']['data'] as $photoData) {
+                        $photo = new Picture($photoData['id'], $photoData['picture']);
+                        $photos[] = $photo;
+                    }
+                }
+
+                $album = new Album($data['id'], $data['name'], $photos);
+                $albums[] = $album;
+            }
+
+            $user->setAlbums($albums);
+        }
 
         $this->manager->persist($site);
         $this->manager->flush();

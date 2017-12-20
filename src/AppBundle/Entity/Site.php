@@ -63,13 +63,6 @@ class Site
     private $OAuthUser;
 
     /**
-     * @var array $wantedScopes
-     *
-     * @ORM\Column(name="wanted_scopes", type="json_array", nullable=true)
-     */
-    private $wantedScopes;
-
-    /**
      * @var array $givenScopes
      *
      * @ORM\Column(name="given_scopes", type="json_array", nullable=true)
@@ -223,25 +216,6 @@ class Site
     /**
      * @return array
      */
-    public function getWantedScopes()
-    {
-        return $this->wantedScopes;
-    }
-
-    /**
-     * @param array $wantedScopes
-     * @return Site
-     */
-    public function setWantedScopes($wantedScopes): Site
-    {
-        $this->wantedScopes = $wantedScopes;
-
-        return $this;
-    }
-
-    /**
-     * @return array
-     */
     public function getGivenScopes()
     {
         return $this->givenScopes;
@@ -256,6 +230,15 @@ class Site
         $this->givenScopes = $givenScopes;
 
         return $this;
+    }
+
+    /**
+     * @param $scope
+     * @return bool
+     */
+    public function hasScope($scope)
+    {
+        return isset($this->givenScopes[$scope]);
     }
 }
 

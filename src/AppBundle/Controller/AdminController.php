@@ -8,6 +8,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Site;
 use AppBundle\Manager\SiteManager;
 use AppBundle\Security\Core\User\OAuthUser;
 use AppBundle\Utils\Facebook\Facebook;
@@ -15,6 +16,7 @@ use Facebook\GraphNodes\GraphNode;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -47,6 +49,14 @@ class AdminController extends Controller
     public function photoUploadAction(Request $request)
     {
         $site = $this->get(SiteManager::class)->getSite();
+        if (null !== $redirectResponse = $this->verifyAndRedirect($site, 'user_photos', "Pour pouvoir ajouter des photos")) {
+            return $redirectResponse;
+        }
+
+        if (null !== $redirectResponse = $this->verifyAndRedirect($site, 'publish_action', "Pour pouvoir ajouter des photos")) {
+            return $redirectResponse;
+        }
+
         $albums = $this->get(Facebook::class)->getAlbums($site);
 
         $albumIds = array_map(function (GraphNode $album) {
@@ -115,4 +125,20 @@ class AdminController extends Controller
         ]);
     }
 
+    /**
+     * @param Site $site
+     * @param string $scope
+     * @param string $msg
+     * @return null|RedirectResponse
+     */
+    private function verifyAndRedirect(Site $site, string $scope, string $msg)
+    {
+        if (!$site->hasScope($scope)) {
+            $this->addFlash('danger', sprintf('%s, vous devez accepter la permission \'%s\' de facebook', $msg, $scope));
+
+            return $this->redirectToRoute('admin_index', ['project_name' => $site->getUserName()]);
+        }
+
+        return null;
+    }
 }
