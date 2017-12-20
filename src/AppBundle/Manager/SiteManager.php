@@ -8,7 +8,6 @@
 
 namespace AppBundle\Manager;
 
-
 use AppBundle\Entity\Site;
 use AppBundle\Security\Core\User\OAuthUser;
 use AppBundle\Utils\Facebook\Album;
@@ -32,9 +31,13 @@ class SiteManager
      */
     private $resourceOwner;
 
-    private $site;
     /**
-     * @var Facebook
+     * @var Site $site
+     */
+    private $site;
+
+    /**
+     * @var Facebook $facebook
      */
     private $facebook;
 
@@ -147,5 +150,4 @@ class SiteManager
     {
         return $this->facebook;
     }
-
 }
