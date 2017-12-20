@@ -46,8 +46,8 @@ class AdminController extends Controller
      */
     public function photoUploadAction(Request $request)
     {
-        $albums = $this->get(Facebook::class)->getAlbums();
         $site = $this->get(SiteManager::class)->getSite();
+        $albums = $this->get(Facebook::class)->getAlbums($site);
 
         $albumIds = array_map(function (GraphNode $album) {
             return $album->getField('id');
@@ -65,7 +65,7 @@ class AdminController extends Controller
                 return $this->redirectToRoute('photo_upload', ['project_name' => $site->getUserName()]);
             }
 
-            if (!$this->get(Facebook::class)->uploadPhoto($album, $message, $photo->getPathname())) {
+            if (!$this->get(Facebook::class)->uploadPhoto($site, $album, $message, $photo->getPathname())) {
                 $this->addFlash('danger', 'Une erreur s\'est produite, merci de rééssayer plus tard');
 
                 return $this->redirectToRoute('photo_upload', ['project_name' => $site->getUserName()]);

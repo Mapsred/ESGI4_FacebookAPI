@@ -12,6 +12,7 @@ namespace AppBundle\Manager;
 use AppBundle\Entity\Site;
 use AppBundle\Security\Core\User\OAuthUser;
 use AppBundle\Utils\Facebook\Album;
+use AppBundle\Utils\Facebook\Facebook;
 use AppBundle\Utils\Facebook\Picture;
 use Cocur\Slugify\Slugify;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -32,16 +33,22 @@ class SiteManager
     private $resourceOwner;
 
     private $site;
+    /**
+     * @var Facebook
+     */
+    private $facebook;
 
     /**
      * SiteManager constructor.
      * @param ObjectManager $manager
      * @param FacebookResourceOwner $resourceOwner
+     * @param Facebook $facebook
      */
-    public function __construct(ObjectManager $manager, FacebookResourceOwner $resourceOwner)
+    public function __construct(ObjectManager $manager, FacebookResourceOwner $resourceOwner, Facebook $facebook)
     {
         $this->manager = $manager;
         $this->resourceOwner = $resourceOwner;
+        $this->facebook = $facebook;
     }
 
     /**
@@ -68,9 +75,7 @@ class SiteManager
         foreach ($response->getData()['albums']['data'] as $data) {
 
             $photos = [];
-
             if (isset($data['photos'])) {
-
                 foreach ($data['photos']['data'] as $photoData) {
                     $photo = new Picture($photoData['id'], $photoData['picture']);
                     $photos[] = $photo;
@@ -83,11 +88,18 @@ class SiteManager
 
         $user->setAlbums($albums);
 
+        $scopes = array_map("trim", explode(" ", $response->getResourceOwner()->getOption('scope')));
+        $scopes = array_filter($scopes);
+
         $slugify = new Slugify();
         $site
             ->setOAuthUser($user)
             ->setUserName($slugify->slugify($response->getRealName()))
-            ->setAccessToken($response->getAccessToken());
+            ->setAccessToken($response->getAccessToken())
+            ->setWantedScopes($scopes);
+
+        $permissions = $this->facebook->getPermissions($site);
+        $site->setGivenScopes($permissions);
 
         $this->manager->persist($site);
         $this->manager->flush();
@@ -130,6 +142,14 @@ class SiteManager
     public function setSite($site)
     {
         $this->site = $site;
+    }
+
+    /**
+     * @return Facebook
+     */
+    public function getFacebook(): Facebook
+    {
+        return $this->facebook;
     }
 
 }

@@ -62,6 +62,19 @@ class Site
      */
     private $OAuthUser;
 
+    /**
+     * @var array $wantedScopes
+     *
+     * @ORM\Column(name="wanted_scopes", type="json_array", nullable=true)
+     */
+    private $wantedScopes;
+
+    /**
+     * @var array $givenScopes
+     *
+     * @ORM\Column(name="given_scopes", type="json_array", nullable=true)
+     */
+    private $givenScopes;
 
     /**
      * Get id
@@ -207,5 +220,42 @@ class Site
         return $this;
     }
 
+    /**
+     * @return array
+     */
+    public function getWantedScopes()
+    {
+        return $this->wantedScopes;
+    }
+
+    /**
+     * @param array $wantedScopes
+     * @return Site
+     */
+    public function setWantedScopes($wantedScopes): Site
+    {
+        $this->wantedScopes = $wantedScopes;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getGivenScopes()
+    {
+        return $this->givenScopes;
+    }
+
+    /**
+     * @param array $givenScopes
+     * @return Site
+     */
+    public function setGivenScopes($givenScopes): Site
+    {
+        $this->givenScopes = $givenScopes;
+
+        return $this;
+    }
 }
 

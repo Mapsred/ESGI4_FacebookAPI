@@ -8,23 +8,23 @@
 
 namespace AppBundle\Utils\Facebook;
 
+use AppBundle\Entity\Site;
 use AppBundle\Manager\SiteManager;
 use Facebook\Exceptions\FacebookResponseException;
 use Facebook\Exceptions\FacebookSDKException;
 use Facebook\Facebook as BaseFacebook;
 use Facebook\FacebookResponse;
 use Facebook\GraphNodes\GraphEdge;
+use Facebook\GraphNodes\GraphNode;
 
 class Facebook extends BaseFacebook
 {
-    /** @var array $parameters */
+    /**
+     * @var array $parameters
+     */
     private $parameters = [
         'default_graph_version' => 'v2.10',
     ];
-    /**
-     * @var SiteManager
-     */
-    private $siteManager;
 
     /**
      * Facebook constructor.
@@ -33,7 +33,7 @@ class Facebook extends BaseFacebook
      * @param string $facebookClientSecret
      * @throws FacebookSDKException
      */
-    public function __construct(SiteManager $siteManager, string $facebookClientId, string $facebookClientSecret)
+    public function __construct(string $facebookClientId, string $facebookClientSecret)
     {
         $this->parameters = [
             'app_id' => $facebookClientId,
@@ -41,17 +41,15 @@ class Facebook extends BaseFacebook
         ];
 
         parent::__construct($this->parameters);
-
-        $this->siteManager = $siteManager;
-    }
+        }
 
     /**
+     * @param Site $site
      * @return GraphEdge|bool
      * @throws FacebookSDKException
      */
-    public function getAlbums()
+    public function getAlbums(Site $site)
     {
-        $site = $this->siteManager->getSite();
         try {
             /** @var FacebookResponse $response */
             $response = $this->get(sprintf('/%s/albums', $site->getUserId()), $site->getAccessToken());
@@ -63,15 +61,14 @@ class Facebook extends BaseFacebook
     }
 
     /**
+     * @param Site $site
      * @param string $album
      * @param string $message
      * @param string $photoPath
      * @return bool
      */
-    public function uploadPhoto(string $album, string $message, string $photoPath)
+    public function uploadPhoto(Site $site, string $album, string $message, string $photoPath)
     {
-        $site = $this->siteManager->getSite();
-
         try {
             $this->post(sprintf('/%s/photos', $album), [
                 'source' => $this->fileToUpload($photoPath),
@@ -82,5 +79,26 @@ class Facebook extends BaseFacebook
         }
 
         return true;
+    }
+
+    /**
+     * @param Site $site
+     * @return bool|array
+     * @throws FacebookSDKException
+     */
+    public function getPermissions(Site $site)
+    {
+        $url = sprintf('/%s/permissions', $site->getUserId());
+        try {
+            $response = $this->get($url, $site->getAccessToken());
+        } catch (FacebookSDKException $e) {
+            return false;
+        }
+
+        $permissions = array_map(function (GraphNode $permission) {
+            return $permission->getField('status') == "granted" ? $permission->getField('permission') : "";
+        }, $response->getGraphEdge()->all());
+
+        return array_filter($permissions);
     }
 }
