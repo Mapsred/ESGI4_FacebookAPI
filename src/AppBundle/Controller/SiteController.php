@@ -26,6 +26,6 @@ class SiteController extends Controller
         $site = $this->get('AppBundle\Manager\SiteManager')->getSite();
         $oauthUser = $site->getOAuthUser();
 
-        return new Response();
+        return $this->render('AppBundle:Site:home.html.twig');
     }
 }

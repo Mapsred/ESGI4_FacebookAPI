@@ -66,7 +66,7 @@ desired effect
     <header class="main-header">
 
         <!-- Logo -->
-        <a href="{{ path('admin_index') }}" class="logo">
+        <a href="{{ path('admin_index', {'project_name': site.username}) }}" class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->
             <span class="logo-mini"><b>M</b>PB</span>
             <!-- logo for regular state and mobile devices -->
@@ -97,7 +97,7 @@ desired effect
                 <li><a href="#"><i class="fa fa-cloud-upload"></i> <span>Uploader une photo</span></a></li>
             </ul>
             <p class="text-center small" style="border-top: 1px solid #444444; padding-top: 10px">
-                <a href="/">Retourner sur le site</a>
+                <a href="{{ path('site_home', {'project_name': site.username}) }}">Retourner sur le site</a>
             </p>
             <!-- /.sidebar-menu -->
         </section>
@@ -113,12 +113,7 @@ desired effect
                 <small>{% block subheader %}{% endblock %}</small>
             </h1>
 
-            {% block breadcumb %}
-                <ol class="breadcrumb">
-                    <li><a href="{{ path('homepage') }}"><i class="fa fa-dashboard"></i> Level</a></li>
-                    <li class="active">Admin</li>
-                </ol>
-            {% endblock %}
+            {% block breadcumb %}{% endblock %}
         </section>
 
         <!-- Main content -->
@@ -138,7 +133,7 @@ desired effect
             Anything you want
         </div>
         <!-- Default to the left -->
-        <strong>Copyright &copy; 2017 <a href="#">MyPhotoBook</a>.</strong> All rights reserved.
+        <strong>Copyright &copy; 2017 <a href="{{ path('homepage') }}">MyPhotoBook</a>.</strong> All rights reserved.
     </footer>
 </div>
 <!-- ./wrapper -->

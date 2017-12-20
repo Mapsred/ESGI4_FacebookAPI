@@ -37,10 +37,12 @@ class CurrentSiteListener
      */
     public function onKernelRequest(GetResponseEvent $event)
     {
-        $currentHost = $event->getRequest()->getHttpHost();
+        $request = $event->getRequest();
+        $currentHost = $request->getHttpHost();
         $subdomain = str_replace('.' . $this->baseHost, '', $currentHost);
+        $request->attributes->set('_subdomain', $subdomain);
 
-        $controller = explode("::", $event->getRequest()->attributes->get('_controller'))[0];
+        $controller = explode("::", $request->attributes->get('_controller'))[0];
         //If the controller is not in the array, it is not a site route
         if (!in_array($controller, ["AppBundle\Controller\SiteController", "AppBundle\Controller\AdminController"])) {
             return;
@@ -52,16 +54,6 @@ class CurrentSiteListener
             $this->siteManager->setSite($site);
 
             return;
-        }
-
-        //Handle admin page
-        if (null !== $user = $this->getUser()) {
-            if (null !== $site = $this->isAdmin()) {
-                $site->setOAuthUser($user);
-                $this->siteManager->setSite($site);
-
-                return;
-            }
         }
 
         throw new NotFoundHttpException(sprintf('No site for host "%s", subdomain "%s"', $this->baseHost, $subdomain));
