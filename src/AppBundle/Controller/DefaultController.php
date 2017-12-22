@@ -47,4 +47,13 @@ class DefaultController extends Controller
     {
         return $this->render('AppBundle:Default:policy.html.twig');
     }
+
+    /**
+     * @Route("/serviceCondition", name="serviceCondition")
+     */
+    public function serviceConditionAction()
+    {
+        return $this->render('AppBundle:Default:serviceCondition.html.twig');
+    }
+
 }
