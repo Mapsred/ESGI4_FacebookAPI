@@ -8,7 +8,6 @@
 
 namespace AppBundle\EventListener;
 
-
 use AppBundle\Entity\Site;
 use AppBundle\Manager\SiteManager;
 use AppBundle\Security\Core\User\OAuthUser;

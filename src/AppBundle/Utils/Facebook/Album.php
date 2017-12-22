@@ -8,7 +8,6 @@
 
 namespace AppBundle\Utils\Facebook;
 
-
 use Doctrine\Common\Collections\ArrayCollection;
 
 class Album
@@ -97,6 +96,4 @@ class Album
 
         return $this;
     }
-
-
 }

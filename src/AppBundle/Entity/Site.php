@@ -270,6 +270,4 @@ class Site
     {
         return $this->skinColor;
     }
-
 }
-

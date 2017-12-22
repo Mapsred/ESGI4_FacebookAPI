@@ -139,5 +139,4 @@ class OAuthUser extends BaseOAuthUser
     {
         return in_array($role, $this->getRoles());
     }
-
 }

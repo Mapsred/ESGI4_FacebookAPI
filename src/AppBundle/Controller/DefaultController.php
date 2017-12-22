@@ -5,7 +5,6 @@ namespace AppBundle\Controller;
 use AppBundle\Security\Core\User\OAuthUser;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -55,5 +54,4 @@ class DefaultController extends Controller
     {
         return $this->render('AppBundle:Default:serviceCondition.html.twig');
     }
-
 }
