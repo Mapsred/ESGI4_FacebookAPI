@@ -59,7 +59,15 @@ desired effect
 |               | sidebar-mini                            |
 |---------------------------------------------------------|
 -->
-<body class="hold-transition {% block skin %}skin-blue{% endblock %} sidebar-mini">
+<body class="hold-transition
+    {% set skinColor = 'skin-blue' %}
+    {% block skin %}
+    {% if site.skinColor is defined %}
+        {{ site.skinColor }}
+    {% else %}
+        {{ skinColor }}
+    {% endif %}
+    {% endblock %} sidebar-mini">
 <div class="wrapper">
 
     <!-- Main Header -->
@@ -157,6 +165,7 @@ desired effect
     'assets/bower/moment/locale/fr.js' 'assets/bower/bootstrap-datepicker/dist/js/bootstrap-datepicker.js'
     'assets/bower/bootstrap-datepicker/dist/locales/bootstrap-datepicker.fr.min.js'
     'assets/bower/select2/dist/js/select2.js' 'assets/bower/select2/dist/js/i18n/fr.js'
+    'assets/js/colorScript.js'
     output='compiled/js/main.js' %}
     <script src="{{ asset_url }}"></script>
 {% endjavascripts %}
