@@ -238,7 +238,7 @@ class Site
      */
     public function hasScope($scope)
     {
-        return isset($this->givenScopes[$scope]);
+        return in_array($scope, $this->givenScopes);
     }
 }
 
