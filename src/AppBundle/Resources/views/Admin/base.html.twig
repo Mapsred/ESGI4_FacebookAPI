@@ -93,17 +93,15 @@ desired effect
                 <!-- Optionally, you can add icons to the links -->
                 <li><a href="#"><i class="fa fa-file-text-o"></i> <span>Choisir ma disposition</span></a></li>
                 <li><a href="#"><i class="fa fa-adjust"></i> <span>Choisir ma couleur</span></a></li>
-                <li><a href="#"><i class="fa fa-folder-open"></i> <span>Choisir mes albums</span></a></li>
+                <li class="{{ currentPath == 'admin_albums' ? 'active': '' }}">
+                    <a href="{{ path('admin_albums', {'project_name': site.username}) }}">
+                        <i class="fa fa-cloud-upload"></i> <span>Choisir mes albums</span>
+                    </a>
+                </li>
                 <li><a href="#"><i class="fa fa-file-image-o"></i> <span>Choisir mes photos</span></a></li>
                 <li class="{{ currentPath == 'photo_upload' ? 'active': '' }}">
                     <a href="{{ path('photo_upload', {'project_name': site.username}) }}">
                         <i class="fa fa-cloud-upload"></i> <span>Uploader une photo</span>
-                    </a>
-                </li>
-                <li><a href="#"><i class="fa fa-cloud-upload"></i> <span>Uploader une photo</span></a></li>
-                <li class="{{ currentPath == 'admin_albums' ? 'active': '' }}">
-                    <a href="{{ path('admin_albums', {'project_name': site.username}) }}">
-                        <i class="fa fa-cloud-upload"></i> <span>Mes albums</span>
                     </a>
                 </li>
             </ul>

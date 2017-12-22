@@ -29,7 +29,11 @@
             <ul>
                 <li>Choisir la couleur principale</li>
                 <li>Choisir la disposition</li>
-                <li>Choisir les albums à cacher</li>
+                <li>
+                    <a href="{{ path('admin_albums', {'project_name': site.username}) }}">
+                        Choisir les albums à cacher
+                    </a>
+                </li>
                 <li>Choisir les photos à cacher</li>
                 <li>
                     <a href="{{ path('photo_upload', {'project_name': site.userName}) }}">
