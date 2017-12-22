@@ -27,7 +27,11 @@
             <br>
             Vous pouvez :
             <ul>
-                <li>Choisir la couleur principale</li>
+                <li>
+                    <a href="{{ path('admin_colorChoice', {'project_name': site.username}) }}">
+                        Choisir la couleur principale
+                    </a>
+                </li>
                 <li>Choisir la disposition</li>
                 <li>
                     <a href="{{ path('admin_albums', {'project_name': site.username}) }}">
