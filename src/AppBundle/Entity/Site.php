@@ -44,6 +44,13 @@ class Site
     private $userName;
 
     /**
+     * @var string $skinColor
+     *
+     * @ORM\Column(name="skin_color", type="string", length=255)
+     */
+    private $skinColor = 'skin-blue';
+
+    /**
      * @var array $albumOptions
      *
      * @ORM\Column(name="album_options", type="json_array", nullable=true)
@@ -205,6 +212,30 @@ class Site
         $this->OAuthUser = $OAuthUser;
 
         return $this;
+    }
+
+    /**
+     * Set skinColor
+     *
+     * @param string $skinColor
+     *
+     * @return Site
+     */
+    public function setSkinColor($skinColor)
+    {
+        $this->skinColor = $skinColor;
+
+        return $this;
+    }
+
+    /**
+     * Get skinColor
+     *
+     * @return string
+     */
+    public function getSkinColor()
+    {
+        return $this->skinColor;
     }
 
 }

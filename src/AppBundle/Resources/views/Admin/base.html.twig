@@ -59,7 +59,15 @@ desired effect
 |               | sidebar-mini                            |
 |---------------------------------------------------------|
 -->
-<body class="hold-transition {% block skin %}skin-blue{% endblock %} sidebar-mini">
+<body class="hold-transition
+    {% set skinColor = 'skin-blue' %}
+    {% block skin %}
+    {% if site.skinColor is defined %}
+        {{ site.skinColor }}
+    {% else %}
+        {{ skinColor }}
+    {% endif %}
+    {% endblock %} sidebar-mini">
 <div class="wrapper">
 
     <!-- Main Header -->
@@ -95,6 +103,7 @@ desired effect
                 <li><a href="#"><i class="fa fa-folder-open"></i> <span>Choisir mes albums</span></a></li>
                 <li><a href="#"><i class="fa fa-file-image-o"></i> <span>Choisir mes photos</span></a></li>
                 <li><a href="#"><i class="fa fa-cloud-upload"></i> <span>Uploader une photo</span></a></li>
+                {{ dump(site) }}
             </ul>
             <p class="text-center small" style="border-top: 1px solid #444444; padding-top: 10px">
                 <a href="{{ path('site_home', {'project_name': site.username}) }}">Retourner sur le site</a>
@@ -145,6 +154,7 @@ desired effect
     'assets/bower/moment/locale/fr.js' 'assets/bower/bootstrap-datepicker/dist/js/bootstrap-datepicker.js'
     'assets/bower/bootstrap-datepicker/dist/locales/bootstrap-datepicker.fr.min.js'
     'assets/bower/select2/dist/js/select2.js' 'assets/bower/select2/dist/js/i18n/fr.js'
+    'assets/js/colorScript.js'
     output='compiled/js/main.js' %}
     <script src="{{ asset_url }}"></script>
 {% endjavascripts %}
