@@ -265,5 +265,29 @@ class Site
     {
         return in_array($scope, $this->givenScopes);
     }
+    /**
+     * Set skinColor
+     *
+     * @param string $skinColor
+     *
+     * @return Site
+     */
+    public function setSkinColor($skinColor)
+    {
+        $this->skinColor = $skinColor;
+
+        return $this;
+    }
+
+    /**
+     * Get skinColor
+     *
+     * @return string
+     */
+    public function getSkinColor()
+    {
+        return $this->skinColor;
+    }
+
 }
 
