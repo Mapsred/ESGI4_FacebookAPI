@@ -131,4 +131,13 @@ class OAuthUser extends BaseOAuthUser
         return $this;
     }
 
+    /**
+     * @param $role
+     * @return bool
+     */
+    public function hasRole($role)
+    {
+        return in_array($role, $this->getRoles());
+    }
+
 }

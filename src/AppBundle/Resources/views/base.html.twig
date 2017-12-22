@@ -34,7 +34,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <![endif]-->
 
     <!-- Google Font -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 
     {% block head %}{% endblock %}
 </head>
@@ -82,9 +83,13 @@ desired effect
                 <!-- Navbar Right Menu -->
                 <div class="navbar-custom-menu">
                     <ul class="nav navbar-nav">
-                        <li>
-                            <a href="#"><i class="fa fa-gears"></i></a>
-                        </li>
+                        {% if site is defined and app.user.hasRole('ROLE_USER') and app.user == site.oauthUser %}
+                            <li>
+                                <a href="{{ path('admin_index', {'project_name': site.username}) }}">
+                                    <i class="fa fa-gears"></i>
+                                </a>
+                            </li>
+                        {% endif %}
                     </ul>
                 </div>
                 <!-- /.navbar-custom-menu -->
