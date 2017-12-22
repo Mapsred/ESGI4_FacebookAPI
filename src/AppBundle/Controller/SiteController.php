@@ -9,11 +9,18 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Site;
+use AppBundle\Security\Core\User\OAuthUser;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Class SiteController
+ *
+ * @author François MATHIEU <francois.mathieu@livexp.fr>
+ * @method OAuthUser getUser()
+ */
 class SiteController extends Controller
 {
     /**
@@ -26,6 +33,8 @@ class SiteController extends Controller
         $site = $this->get('AppBundle\Manager\SiteManager')->getSite();
         $oauthUser = $site->getOAuthUser();
 
-        return $this->render('AppBundle:Site:home.html.twig');
+        return $this->render('AppBundle:Site:home.html.twig', [
+            'site' => $site
+        ]);
     }
 }

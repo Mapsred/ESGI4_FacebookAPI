@@ -16,16 +16,35 @@ use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
+/**
+ * Class CurrentSiteListener
+ *
+ * @author François MATHIEU <francois.mathieu@livexp.fr>
+ */
 class CurrentSiteListener
 {
-    private $siteManager;
-    private $baseHost;
     /**
-     * @var TokenStorage
+     * @var SiteManager $siteManager
+     */
+    private $siteManager;
+
+    /**
+     * @var string $baseHost
+     */
+    private $baseHost;
+
+    /**
+     * @var TokenStorage $tokenStorage
      */
     private $tokenStorage;
 
-    public function __construct(SiteManager $siteManager, TokenStorage $tokenStorage, $baseHost)
+    /**
+     * CurrentSiteListener constructor.
+     * @param SiteManager $siteManager
+     * @param TokenStorage $tokenStorage
+     * @param string $baseHost
+     */
+    public function __construct(SiteManager $siteManager, TokenStorage $tokenStorage, string $baseHost)
     {
         $this->siteManager = $siteManager;
         $this->baseHost = $baseHost;
@@ -60,10 +79,10 @@ class CurrentSiteListener
     }
 
     /**
-     * @param $subdomain
+     * @param string $subdomain
      * @return Site|null|object
      */
-    public function isSubDomain($subdomain)
+    public function isSubDomain(string $subdomain)
     {
         if ($subdomain != $this->baseHost) {
             return $this->siteManager->getManager()->getRepository("AppBundle:Site")->findOneBy(['userName' => $subdomain]);
@@ -95,6 +114,4 @@ class CurrentSiteListener
 
         return $user;
     }
-
-
 }

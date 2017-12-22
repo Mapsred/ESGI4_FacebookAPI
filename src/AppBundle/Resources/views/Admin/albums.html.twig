@@ -1,0 +1,78 @@
+{% extends 'AppBundle:Admin:base.html.twig' %}
+
+{% block title %}Accueil Admin{% endblock %}
+
+{% block header %}Mes albums{% endblock %}
+
+{% block breadcumb %}
+    <ol class="breadcrumb">
+        <li>
+            <a href="{{ path('site_home', {'project_name': site.username}) }}">
+                <i class="fa fa-dashboard"></i> Mon site
+            </a>
+        </li>
+        <li class="active">Admin</li>
+    </ol>
+{% endblock %}
+
+{% block body %}
+
+    {% dump site.oAuthUser.albums %}
+
+    {% for album in site.oAuthUser.albums %}
+        <div class="post">
+            <div class="user-block">
+                <span class="username">
+                          <a href="#">{{ album.name }}</a>
+                          <a href="#" class="pull-right btn-box-tool"><i class="fa fa-times"></i></a>
+                        </span>
+                <span class="description">Posted {{ album.pictures|length }} photos - 5 days ago</span>
+            </div>
+
+            {% if album.pictures|length > 0 %}
+
+            <!-- /.user-block -->
+            <div class="row margin-bottom">
+                <div class="col-sm-6">
+                    <img class="img-responsive" src="{{ album.pictures.first.pictureLink }}" alt="Photo">
+                </div>
+                <!-- /.col -->
+                <div class="col-sm-6">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            {% if album.pictures.get(1) %}
+                            <img class="img-responsive" src="{{ album.pictures.get(1).pictureLink }}" alt="Photo">
+                            {% endif %}
+                            <br>
+                            {% if album.pictures.get(2) %}
+                            <img class="img-responsive" src="{{ album.pictures.get(2).pictureLink }}" alt="Photo">
+                            {% endif %}
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-sm-6">
+                            {% if album.pictures.get(3) %}
+                            <img class="img-responsive" src="{{ album.pictures.get(3).pictureLink }}" alt="Photo">
+                            {% endif %}
+                            <br>
+                            {% if album.pictures.get(4) %}
+                            <img class="img-responsive" src="{{ album.pictures.get(4).pictureLink }}" alt="Photo">
+                            {% endif %}
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+                </div>
+                <!-- /.col -->
+            </div>
+
+            {% endif %}
+
+            <!-- /.row -->
+        </div>
+    {% else %}
+        <p> Aucun album </p>
+    {% endfor %}
+
+{% endblock %}
+
+

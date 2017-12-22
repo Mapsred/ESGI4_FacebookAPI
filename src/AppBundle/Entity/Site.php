@@ -69,6 +69,12 @@ class Site
      */
     private $OAuthUser;
 
+    /**
+     * @var array $givenScopes
+     *
+     * @ORM\Column(name="given_scopes", type="json_array", nullable=true)
+     */
+    private $givenScopes;
 
     /**
      * Get id
@@ -216,15 +222,28 @@ class Site
 
     /**
      * Set skinColor
-     *
      * @param string $skinColor
-     *
-     * @return Site
      */
     public function setSkinColor($skinColor)
     {
         $this->skinColor = $skinColor;
+    }
 
+    /**
+     * @return array
+     */
+    public function getGivenScopes()
+    {
+        return $this->givenScopes;
+    }
+
+    /**
+     * @param array $givenScopes
+     * @return Site
+     */
+    public function setGivenScopes($givenScopes): Site
+    {
+        $this->givenScopes = $givenScopes;
         return $this;
     }
 
@@ -238,5 +257,13 @@ class Site
         return $this->skinColor;
     }
 
+    /**
+     * @param $scope
+     * @return bool
+     */
+    public function hasScope($scope)
+    {
+        return in_array($scope, $this->givenScopes);
+    }
 }
 

@@ -8,10 +8,10 @@
 
 namespace AppBundle\Manager;
 
-
 use AppBundle\Entity\Site;
 use AppBundle\Security\Core\User\OAuthUser;
 use AppBundle\Utils\Facebook\Album;
+use AppBundle\Utils\Facebook\Facebook;
 use AppBundle\Utils\Facebook\Picture;
 use Cocur\Slugify\Slugify;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -31,17 +31,27 @@ class SiteManager
      */
     private $resourceOwner;
 
+    /**
+     * @var Site $site
+     */
     private $site;
+
+    /**
+     * @var Facebook $facebook
+     */
+    private $facebook;
 
     /**
      * SiteManager constructor.
      * @param ObjectManager $manager
      * @param FacebookResourceOwner $resourceOwner
+     * @param Facebook $facebook
      */
-    public function __construct(ObjectManager $manager, FacebookResourceOwner $resourceOwner)
+    public function __construct(ObjectManager $manager, FacebookResourceOwner $resourceOwner, Facebook $facebook)
     {
         $this->manager = $manager;
         $this->resourceOwner = $resourceOwner;
+        $this->facebook = $facebook;
     }
 
     /**
@@ -63,24 +73,32 @@ class SiteManager
         $user->setId($response->getUsername());
         $user->setEmail($response->getEmail());
 
-        $albums = [];
-        foreach ($response->getData()['albums']['data'] as $data) {
-            $photos = [];
-            foreach ($data['photos']['data'] as $photoData) {
-                $photo = new Picture($photoData['id'], $photoData['picture']);
-                $photos[] = $photo;
-            }
-            $album = new Album($data['id'], $data['name'], $photos);
-            $albums[] = $album;
-        }
-
-        $user->setAlbums($albums);
-
         $slugify = new Slugify();
         $site
             ->setOAuthUser($user)
             ->setUserName($slugify->slugify($response->getRealName()))
             ->setAccessToken($response->getAccessToken());
+
+        $permissions = $this->facebook->getPermissions($site);
+        $site->setGivenScopes($permissions);
+
+        if ($site->hasScope("user_photos")) {
+            $albums = [];
+            foreach ($response->getData()['albums']['data'] as $data) {
+                $photos = [];
+                if (isset($data['photos'])) {
+                    foreach ($data['photos']['data'] as $photoData) {
+                        $photo = new Picture($photoData['id'], $photoData['picture']);
+                        $photos[] = $photo;
+                    }
+                }
+
+                $album = new Album($data['id'], $data['name'], $photos);
+                $albums[] = $album;
+            }
+
+            $user->setAlbums($albums);
+        }
 
         $this->manager->persist($site);
         $this->manager->flush();
@@ -125,4 +143,11 @@ class SiteManager
         $this->site = $site;
     }
 
+    /**
+     * @return Facebook
+     */
+    public function getFacebook(): Facebook
+    {
+        return $this->facebook;
+    }
 }
