@@ -40,7 +40,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/mentions-legales", name="service_condition")
+     * @Route("/conditions-de-service", name="service_condition")
      */
     public function serviceConditionAction()
     {
