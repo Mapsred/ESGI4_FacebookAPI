@@ -12,6 +12,7 @@ $empty = true;
 $commands = [
     "--pull" => "git pull",
     "--dump-sql" => "php bin/console doctrine:schema:update --dump-sql",
+    "--force-sql" => "php bin/console doctrine:schema:update --force",
     "--assetic-dev" => "php bin/console assetic:dump --env=dev",
     "--assetic-prod" => "php bin/console assetic:dump --env=prod",
     "--clear-cache-prod" => "php bin/console cache:clear --no-warmup --env=prod",

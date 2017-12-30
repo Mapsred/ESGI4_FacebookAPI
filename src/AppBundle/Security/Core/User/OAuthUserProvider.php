@@ -81,5 +81,4 @@ class OAuthUserProvider extends BaseOAuthUserProvider
     {
         return 'AppBundle\\Security\\Core\\User\\OAuthUser' === $class;
     }
-
 }

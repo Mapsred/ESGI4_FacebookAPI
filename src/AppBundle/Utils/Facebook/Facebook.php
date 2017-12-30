@@ -9,8 +9,6 @@
 namespace AppBundle\Utils\Facebook;
 
 use AppBundle\Entity\Site;
-use AppBundle\Manager\SiteManager;
-use Facebook\Exceptions\FacebookResponseException;
 use Facebook\Exceptions\FacebookSDKException;
 use Facebook\Facebook as BaseFacebook;
 use Facebook\FacebookResponse;
@@ -28,7 +26,6 @@ class Facebook extends BaseFacebook
 
     /**
      * Facebook constructor.
-     * @param SiteManager $siteManager
      * @param string $facebookClientId
      * @param string $facebookClientSecret
      * @throws FacebookSDKException
@@ -41,7 +38,7 @@ class Facebook extends BaseFacebook
         ];
 
         parent::__construct($this->parameters);
-        }
+    }
 
     /**
      * @param Site $site

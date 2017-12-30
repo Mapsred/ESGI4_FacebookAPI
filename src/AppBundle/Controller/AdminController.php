@@ -126,7 +126,6 @@ class AdminController extends Controller
      */
     public function albumAction($album = null)
     {
-
         $album_name = ucwords(str_replace("-", " ", $album));
 
         $site = $this->get('AppBundle\Manager\SiteManager')->getSite();

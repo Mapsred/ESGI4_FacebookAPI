@@ -8,7 +8,6 @@
 
 namespace AppBundle\Utils\Facebook;
 
-
 class Picture
 {
     /** @var int $id */
