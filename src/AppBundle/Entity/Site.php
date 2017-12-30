@@ -221,15 +221,6 @@ class Site
     }
 
     /**
-     * Set skinColor
-     * @param string $skinColor
-     */
-    public function setSkinColor($skinColor)
-    {
-        $this->skinColor = $skinColor;
-    }
-
-    /**
      * @return array
      */
     public function getGivenScopes()
@@ -245,16 +236,6 @@ class Site
     {
         $this->givenScopes = $givenScopes;
         return $this;
-    }
-
-    /**
-     * Get skinColor
-     *
-     * @return string
-     */
-    public function getSkinColor()
-    {
-        return $this->skinColor;
     }
 
     /**
