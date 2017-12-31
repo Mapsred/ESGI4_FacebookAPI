@@ -2,7 +2,7 @@
 
 {% block title %}Accueil Admin{% endblock %}
 
-{% block header %}Album {{ album_name }}{% endblock %}
+{% block header %}Album {{ album.name }}{% endblock %}
 
 {% block breadcumb %}
 <ol class="breadcrumb">
@@ -17,26 +17,19 @@
 
 {% block body %}
 
-{% dump site.oAuthUser.albums %}
+<div class="row">
 
-{% for picture in site.oAuthUser.albums.first.pictures %}
-<div class="post">
+    {% for picture in album.pictures %}
 
-    <!-- /.user-block -->
-    <div class="row margin-bottom">
-        <div class="col-sm-6">
-            <img class="img-responsive" src="{{ picture.pictureLink }}" alt="Photo">
+        <div class="col-sm-3">
+            <img width="100%" class="img-responsive" src="{{ picture.pictureLink }}" alt="Photo">
+            <br>
         </div>
-        <!-- /.col -->
 
-        <!-- /.col -->
-    </div>
-    <!-- /.row -->
-</div>
-{% else %}
-<p> Aucune photo </p>
-{% endfor %}
+    {% else %}
+        <p> Aucune photos </p>
+    {% endfor %}
+
+    <div class="row">
 
 {% endblock %}
-
-
