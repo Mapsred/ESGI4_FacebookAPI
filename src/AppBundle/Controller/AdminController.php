@@ -34,7 +34,7 @@ class AdminController extends Controller
      */
     public function indexAction()
     {
-        $site = $this->get('AppBundle\Manager\SiteManager')->getSite();
+        $site = $this->get(SiteManager::class)->getSite();
 
         return $this->render('AppBundle:Admin:index.html.twig', [
             'site' => $site
@@ -47,7 +47,7 @@ class AdminController extends Controller
      */
     public function colorAction()
     {
-        $site = $this->get('AppBundle\Manager\SiteManager')->getSite();
+        $site = $this->get(SiteManager::class)->getSite();
 
         return $this->render('AppBundle:Admin:color_choice.html.twig', [
             'site' => $site
@@ -114,7 +114,7 @@ class AdminController extends Controller
      */
     public function albumsAction()
     {
-        $site = $this->get('AppBundle\Manager\SiteManager')->getSite();
+        $site = $this->get(SiteManager::class)->getSite();
 
         return $this->render('AppBundle:Admin:albums.html.twig', [
             'site' => $site
@@ -122,14 +122,14 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("/album/{albumName}", name="admin_album")
+     * @Route("/album/{album_name}", name="admin_album")
+     * @param null $album_name
      * @return Response
      */
-    public function albumAction($albumName = null)
+    public function albumAction($album_name = null)
     {
-        $album_name = ucwords(str_replace("-", " ", $albumName));
-
-        $site = $this->get('AppBundle\Manager\SiteManager')->getSite();
+        $album_name = ucwords(str_replace("-", " ", $album_name));
+        $site = $this->get(SiteManager::class)->getSite();
 
         $album = $site->getOAuthUser()->getAlbums()->get(4);
 
