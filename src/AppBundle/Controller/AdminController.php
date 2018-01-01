@@ -66,7 +66,7 @@ class AdminController extends Controller
             return $redirectResponse;
         }
 
-        if (null !== $redirectResponse = $this->verifyAndRedirect($site, 'publish_action', "Pour pouvoir ajouter des photos")) {
+        if (null !== $redirectResponse = $this->verifyAndRedirect($site, 'publish_actions', "Pour pouvoir ajouter des photos")) {
             return $redirectResponse;
         }
 
