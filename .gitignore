@@ -28,8 +28,8 @@ ad.js
 TODO
 /web/assets/bower/
 
-/web/app_dev.php
 
 
-
-
+/bin/symfony_requirements
+/web/config.php
+/var/SymfonyRequirements.php
