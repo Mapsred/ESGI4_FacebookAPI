@@ -57,29 +57,24 @@ class AdminController extends Controller
 
 
     /**
-     * @Route("/editColor/{idColor}", name="admin_colorEdit")
-     * @param string $Color
-     * @return Response
+     * @Route("/editColor/{idColor}",
+     *     defaults = { "color" = "skin-blue"},
+     *     options={ "expose" = true },
+     *     name="admin_colorEdit")
+     * @param string $color
+     * @return void
      */
-    public function editColorAction(string $Color){
-
-        echo($Color);
-        die();
+    public function editColorAction(string $color){
 
         $em = $this->getDoctrine(AppBundle::Site)->getManager();
         $myColour = $em->getRepository('');
 
         if(isset($myColour)){
-            $myColour->setSkinColor($Color);
+            $myColour->setSkinColor($color);
             $em->persist($myColour);
             $em->flush();
         }
 
-        $site = $this->get('AppBundle\Manager\SiteManager')->getSite();
-
-        return $this->render('AppBundle:Admin:color_choice.html.twig', [
-            'site' => $site
-        ]);
     }
 
     /**

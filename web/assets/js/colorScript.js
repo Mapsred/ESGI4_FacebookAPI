@@ -64,92 +64,80 @@ $(document).ready(function(){
     });
 
     $(".btn-blue-choice").click(function(){
+        var edit = Routing.generate('admin_colorEdit', { color: "skin-blue" });
         $.ajax({
-            url: 'admin_colorEdit',
+            url: edit,
             type: "POST",
-            data: {
-                Color: String("skin-blue")
-            },
             error: function () {
                 alert('Problème dans la fonction de choix de couleur');
             },
         }).done(function (){
-            window.location.href = 'admin_colorChoice';
+            window.location.href = 'admin_index';
         });
     });
 
     $(".btn-yellow-choice").click(function(){
+        var edit = Routing.generate('admin_colorEdit', { color: "skin-yellow" });
         $.ajax({
-            url: 'admin_colorEdit',
+            url: edit,
             type: "POST",
-            data: {
-                Color: String("skin-yellow")
-            },
             error: function () {
                 alert('Problème dans la fonction de choix de couleur');
             },
         }).done(function (){
-            window.location.href = 'admin_colorChoice';
+            window.location.href = 'admin_index';
         });
     });
 
     $(".btn-green-choice").click(function(){
+        var edit = Routing.generate('admin_colorEdit', { color: "skin-green" });
         $.ajax({
-            url: 'admin_colorEdit',
+            url: edit,
             type: "POST",
-            data: {
-                Color: String("skin-green")
-            },
             error: function () {
                 alert('Problème dans la fonction de choix de couleur');
             },
         }).done(function (){
-            window.location.href = 'admin_colorChoice';
+            window.location.href = 'admin_index';
         });
     });
 
     $(".btn-purple-choice").click(function(){
+        var edit = Routing.generate('admin_colorEdit', { color: "skin-purple" });
         $.ajax({
-            url: 'admin_colorEdit',
+            url: edit,
             type: "POST",
-            data: {
-                Color: String("skin-purple")
-            },
             error: function () {
                 alert('Problème dans la fonction de choix de couleur');
             },
         }).done(function (){
-            window.location.href = 'admin_colorChoice';
+            window.location.href = 'admin_index';
         });
     });
 
     $(".btn-red-choice").click(function(){
+        var edit = Routing.generate('admin_colorEdit', { color: "skin-red" });
         $.ajax({
-            url: 'admin_colorEdit',
+            url: edit,
             type: "POST",
-            data: {
-                Color: String("skin-red")
-            },
             error: function () {
                 alert('Problème dans la fonction de choix de couleur');
             },
         }).done(function (){
-            window.location.href = 'admin_colorChoice';
+            window.location.href = 'admin_index';
         });
     });
 
     $(".btn-black-choice").click(function(){
+        var edit = Routing.generate('admin_colorEdit', { color: "skin-black" });
         $.ajax({
-            url: 'admin_colorEdit',
+            url: edit,
             type: "POST",
-            data: {
-                Color: String("skin-black")
-            },
             error: function () {
                 alert('Problème dans la fonction de choix de couleur');
             },
         }).done(function (){
-            window.location.href = 'admin_colorChoice';
+            window.location.href = 'admin_index';
         });
     });
 
