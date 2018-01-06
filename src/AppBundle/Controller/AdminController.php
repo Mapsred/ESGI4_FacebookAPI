@@ -8,6 +8,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\AppBundle;
 use AppBundle\Entity\Site;
 use AppBundle\Manager\SiteManager;
 use AppBundle\Security\Core\User\OAuthUser;
@@ -47,6 +48,33 @@ class AdminController extends Controller
      */
     public function colorAction()
     {
+        $site = $this->get('AppBundle\Manager\SiteManager')->getSite();
+
+        return $this->render('AppBundle:Admin:color_choice.html.twig', [
+            'site' => $site
+        ]);
+    }
+
+
+    /**
+     * @Route("/editColor/{idColor}", name="admin_colorEdit")
+     * @param string $Color
+     * @return Response
+     */
+    public function editColorAction(string $Color){
+
+        echo($Color);
+        die();
+
+        $em = $this->getDoctrine(AppBundle::Site)->getManager();
+        $myColour = $em->getRepository('');
+
+        if(isset($myColour)){
+            $myColour->setSkinColor($Color);
+            $em->persist($myColour);
+            $em->flush();
+        }
+
         $site = $this->get('AppBundle\Manager\SiteManager')->getSite();
 
         return $this->render('AppBundle:Admin:color_choice.html.twig', [

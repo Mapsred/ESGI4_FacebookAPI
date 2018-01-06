@@ -63,6 +63,96 @@ $(document).ready(function(){
         addClassBlack();
     });
 
+    $(".btn-blue-choice").click(function(){
+        $.ajax({
+            url: 'admin_colorEdit',
+            type: "POST",
+            data: {
+                Color: String("skin-blue")
+            },
+            error: function () {
+                alert('Problème dans la fonction de choix de couleur');
+            },
+        }).done(function (){
+            window.location.href = 'admin_colorChoice';
+        });
+    });
+
+    $(".btn-yellow-choice").click(function(){
+        $.ajax({
+            url: 'admin_colorEdit',
+            type: "POST",
+            data: {
+                Color: String("skin-yellow")
+            },
+            error: function () {
+                alert('Problème dans la fonction de choix de couleur');
+            },
+        }).done(function (){
+            window.location.href = 'admin_colorChoice';
+        });
+    });
+
+    $(".btn-green-choice").click(function(){
+        $.ajax({
+            url: 'admin_colorEdit',
+            type: "POST",
+            data: {
+                Color: String("skin-green")
+            },
+            error: function () {
+                alert('Problème dans la fonction de choix de couleur');
+            },
+        }).done(function (){
+            window.location.href = 'admin_colorChoice';
+        });
+    });
+
+    $(".btn-purple-choice").click(function(){
+        $.ajax({
+            url: 'admin_colorEdit',
+            type: "POST",
+            data: {
+                Color: String("skin-purple")
+            },
+            error: function () {
+                alert('Problème dans la fonction de choix de couleur');
+            },
+        }).done(function (){
+            window.location.href = 'admin_colorChoice';
+        });
+    });
+
+    $(".btn-red-choice").click(function(){
+        $.ajax({
+            url: 'admin_colorEdit',
+            type: "POST",
+            data: {
+                Color: String("skin-red")
+            },
+            error: function () {
+                alert('Problème dans la fonction de choix de couleur');
+            },
+        }).done(function (){
+            window.location.href = 'admin_colorChoice';
+        });
+    });
+
+    $(".btn-black-choice").click(function(){
+        $.ajax({
+            url: 'admin_colorEdit',
+            type: "POST",
+            data: {
+                Color: String("skin-black")
+            },
+            error: function () {
+                alert('Problème dans la fonction de choix de couleur');
+            },
+        }).done(function (){
+            window.location.href = 'admin_colorChoice';
+        });
+    });
+
 });
 
 
