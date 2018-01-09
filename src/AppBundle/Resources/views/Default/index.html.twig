@@ -1,0 +1,88 @@
+{% extends 'AppBundle::base.html.twig' %}
+
+{% block title %}Page d'accueil{% endblock %}
+
+{% block header %}{% endblock %}
+{% block subheader %}{% endblock %}
+
+{% block breadcumb %}
+    <ol class="breadcrumb">
+        <li class="active">Page d'accueil</li>
+    </ol>
+{% endblock %}
+
+{% block body %}
+    <div class="box box-default">
+        <div class="box-header with-border">
+            <h3 class="box-title">Qui sommes-nous ?</h3>
+        </div>
+        <div class="box-body">
+            <p>
+                <b>MyPhotoBook</b> est un projet créé par un groupe d'élèves de l'école
+                <a target="_blank" href="http://www.esgi.fr/ecole-informatique.html">ESGI</a>.
+            </p>
+            <p>
+                Ce site vous permet de vous connecter via votre compte <a href="https://facebook.com">facebook</a> afin
+                de partager vos albums et photos à un plus grand nombre de personnes n'étant pas forcément inscrites sur
+                le site.
+            </p>
+        </div>
+        <!-- /.box-body -->
+    </div>
+    <!-- /.box -->
+
+    <div class="box box-default">
+        <div class="box-header with-border">
+            <h3 class="box-title">Comment ça fonctionne ?</h3>
+        </div>
+        <div class="box-body">
+            <p>
+                C'est très simple, il vous suffit juste de vous connecter avec votre compte Facebook, vous aurez ensuite
+                accès à une interface ou vous pourrez ajouter des photos mais aussi trier les photos et albums à
+                afficher
+                (ou non)
+            </p>
+        </div>
+        <!-- /.box-body -->
+    </div>
+    <!-- /.box -->
+
+    <div class="box box-default">
+        <div class="box-header with-border">
+            <h3 class="box-title">Inscription/Connexion</h3>
+        </div>
+        <div class="box-body">
+            <div class="col-md-4">
+                <a href="{{ path('hwi_oauth_service_redirect', {'service': 'facebook'}) }}"
+                   class="btn btn-block btn-social btn-facebook">
+                    <i class="fa fa-facebook"></i> S'inscrire avec Facebook
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="{{ path('hwi_oauth_service_redirect', {'service': 'facebook'}) }}"
+                   class="btn btn-block btn-social btn-facebook">
+                    <i class="fa fa-facebook"></i> Se connecter avec Facebook
+                </a>
+            </div>
+        </div>
+        <!-- /.box-body -->
+    </div>
+    <!-- /.box -->
+
+    <div class="box box-default">
+        <div class="box-header with-border">
+            <h3 class="box-title">Nos utilisateurs</h3>
+        </div>
+        <div class="box-body">
+            {% for site in sites %}
+                {% set site_link = path('site_home', {'project_name': site.userName}) %}
+                <a href="{{ site_link }}">{{ site_link }}</a>
+            {% endfor %}
+        </div>
+        <!-- /.box-body -->
+    </div>
+    <!-- /.box -->
+
+{% endblock %}
+
+
