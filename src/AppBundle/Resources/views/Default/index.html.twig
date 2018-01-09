@@ -74,10 +74,12 @@
             <h3 class="box-title">Nos utilisateurs</h3>
         </div>
         <div class="box-body">
-            {% for site in sites %}
-                {% set site_link = path('site_home', {'project_name': site.userName}) %}
-                <a href="{{ site_link }}">{{ site_link }}</a>
-            {% endfor %}
+            <ul>
+                {% for site in sites %}
+                    {% set site_link = path('site_home', {'project_name': site.userName}) %}
+                    <li><a href="{{ site_link }}">{{ site_link }}</a></li>
+                {% endfor %}
+            </ul>
         </div>
         <!-- /.box-body -->
     </div>
