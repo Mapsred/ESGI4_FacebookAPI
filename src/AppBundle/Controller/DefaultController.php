@@ -21,13 +21,10 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        if (null !== $this->getUser() &&
-            null !== $site = $this->getDoctrine()->getRepository('AppBundle:Site')->findOneBy(['userId' => $this->getUser()->getId()])) {
-            return $this->redirectToRoute("site_home", ['project_name' => $site->getUserName()]);
-        }
+        $sites = $this->getDoctrine()->getRepository('AppBundle:Site')->findAll();
 
-        return $this->render('AppBundle::base.html.twig', [
-            'base_dir' => realpath($this->getParameter('kernel.project_dir')) . DIRECTORY_SEPARATOR,
+        return $this->render('AppBundle:Default:index.html.twig', [
+            'sites' => $sites
         ]);
     }
 
