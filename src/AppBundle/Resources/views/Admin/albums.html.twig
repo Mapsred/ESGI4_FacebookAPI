@@ -18,10 +18,11 @@
 {% block body %}
 
     {% for album in site.oAuthUser.albums if site.oAuthUser.albums.count > 0 %}
+
         <div class="post">
             <div class="user-block">
                 <span class="username">
-                    <a href={{ path('admin_album', {'project_name': site.username, 'album_name': album.name}) }}>{{ album.name }}</a>
+                    <a href={{ path('admin_album', {'project_name': site.username, 'album_id': album.id}) }}>{{ album.name }}</a>
                 </span>
                 <span class="description">{{ album.pictures|length }} photos posteés </span>
             </div>
@@ -29,28 +30,38 @@
                 <!-- /.user-block -->
                 <div class="row margin-bottom">
                     <div class="col-sm-6">
-                        <img class="img-responsive" src="{{ album.pictures.first.pictureLink }}" alt="Photo">
+                        <a href="{{ album.pictures.first.pictureLink }}" data-lightbox="{{ album.name }}">
+                            <img width="100%" class="img-responsive" src="{{ album.pictures.first.pictureLink }}" alt="Photo">
+                        </a>
                     </div>
                     <!-- /.col -->
                     <div class="col-sm-6">
                         <div class="row">
                             <div class="col-sm-6">
                                 {% if album.pictures.get(1) %}
-                                    <img class="img-responsive" src="{{ album.pictures.get(1).pictureLink }}" alt="Photo">
+                                <a href="{{ album.pictures.get(1).pictureLink }}" data-lightbox="{{ album.name }}">
+                                    <img width="100%" class="img-responsive" src="{{ album.pictures.get(1).pictureLink }}" alt="Photo">
+                                </a>
                                 {% endif %}
                                 <br>
                                 {% if album.pictures.get(2) %}
-                                    <img class="img-responsive" src="{{ album.pictures.get(2).pictureLink }}" alt="Photo">
+                                <a href="{{ album.pictures.get(2).pictureLink }}" data-lightbox="{{ album.name }}">
+                                    <img width="100%" class="img-responsive" src="{{ album.pictures.get(2).pictureLink }}" alt="Photo">
+                                </a>
                                 {% endif %}
                             </div>
                             <!-- /.col -->
                             <div class="col-sm-6">
                                 {% if album.pictures.get(3) %}
-                                    <img class="img-responsive" src="{{ album.pictures.get(3).pictureLink }}" alt="Photo">
+                                <a href="{{ album.pictures.get(3).pictureLink }}" data-lightbox="{{ album.name }}">
+                                    <img width="100%" class="img-responsive" src="{{ album.pictures.get(3).pictureLink }}" alt="Photo">
+                                </a>
                                 {% endif %}
                                 <br>
                                 {% if album.pictures.get(4) %}
-                                    <img class="img-responsive" src="{{ album.pictures.get(4).pictureLink }}" alt="Photo">
+                                <a href="{{ album.pictures.get(4).pictureLink }}" data-lightbox="{{ album.name }}">
+                                    <img width="100%" class="img-responsive" src="{{ album.pictures.get(4).pictureLink }}" alt="Photo">
+                                 </a>
                                 {% endif %}
                             </div>
                             <!-- /.col -->

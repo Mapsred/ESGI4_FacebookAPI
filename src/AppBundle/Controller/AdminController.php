@@ -154,21 +154,21 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("/album/{album_name}", name="admin_album")
-     * @param null $album_name
+     * @Route("/album/{album_id}", name="admin_album")
+     * @param null $album_id
      * @return Response
      */
-    public function albumAction($album_name = null)
+    public function albumAction($album_id = null)
     {
-        $album_name = ucwords(str_replace("-", " ", $album_name));
         $site = $this->get(SiteManager::class)->getSite();
 
-        $album = $site->getOAuthUser()->getAlbums()->get(4);
+        $album = $site->getOAuthUser()->getAlbums()->filter(function ($album) use($album_id) {
+            return $album->getId() == $album_id;
+        });
 
         return $this->render('AppBundle:Admin:album.html.twig', [
             'site' => $site,
-            'album' => $album
-
+            'album' => $album->first()
         ]);
     }
 
