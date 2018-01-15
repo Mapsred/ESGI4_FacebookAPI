@@ -59,7 +59,8 @@ desired effect
 |               | sidebar-mini                            |
 |---------------------------------------------------------|
 -->
-<body class="hold-transition {% block skin %}skin-isolonice{% endblock %} layout-top-nav">
+<body class="hold-transition
+    {{ site is defined and site.skinColor is defined ? site.skinColor : skinColor }}  layout-top-nav">
 <div class="wrapper">
 
     <header class="main-header">
@@ -149,6 +150,9 @@ desired effect
 <!-- ./wrapper -->
 
 <!-- REQUIRED JS SCRIPTS -->
+
+<script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+<script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
 
 {% javascripts 'assets/bower/jquery/dist/jquery.js' 'assets/bower/bootstrap/dist/js/bootstrap.js'
     'assets/js/adminlte.js' 'assets/bower/jquery-ui/jquery-ui.js' 'assets/bower/moment/moment.js'
