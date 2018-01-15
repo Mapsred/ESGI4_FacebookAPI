@@ -14,12 +14,15 @@ use AppBundle\Manager\SiteManager;
 use AppBundle\Security\Core\User\OAuthUser;
 use AppBundle\Utils\Facebook\Facebook;
 use Facebook\GraphNodes\GraphNode;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Class AdminController
@@ -30,7 +33,7 @@ use Symfony\Component\HttpFoundation\Response;
 class AdminController extends Controller
 {
     /**
-     * @Route("/", name="admin_index")
+     * @Route("/", name="admin_index", options={"expose" = true})
      * @return Response
      */
     public function indexAction()
@@ -57,23 +60,29 @@ class AdminController extends Controller
 
 
     /**
-     * @Route("/editColor/{idColor}",
-     *     defaults = { "color" = "skin-blue"},
-     *     options={ "expose" = true },
-     *     name="admin_colorEdit")
-     * @param string $color
-     * @return void
+     * @Route("/editColor", options={ "expose" = true }, name="admin_colorEdit")
+     * @param Request $request
+     * @Method({"POST"})
+     * @return JsonResponse
      */
-    public function editColorAction(string $color){
+    public function editColorAction(Request $request)
+    {
 
-        $em = $this->getDoctrine(AppBundle::Site)->getManager();
-        $myColour = $em->getRepository('');
-
-        if(isset($myColour)){
-            $myColour->setSkinColor($color);
-            $em->persist($myColour);
-            $em->flush();
+        if (!$request->request->has('color')) {
+            return new JsonResponse('Color Manquant', Response::HTTP_UNPROCESSABLE_ENTITY);
         }
+
+        $site = $this->get(SiteManager::class)->getSite();
+        $color = $request->request->get('color');
+
+        $em = $this->getDoctrine()->getManager();
+
+        $site->setSkinColor($color);
+        $em->persist($site);
+        $em->flush();
+
+        $this->addFlash('success', 'La couleur est changée');
+        return new JsonResponse('La couleur est changée');
 
     }
 
@@ -130,6 +139,7 @@ class AdminController extends Controller
             'albums' => $albums->all()
         ]);
     }
+
     /**
      * @Route("/albums", name="admin_albums")
      * @return Response
