@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Security\Core\User\OAuthUser;
+use Cocur\Slugify\Slugify;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
@@ -42,5 +43,17 @@ class DefaultController extends Controller
     public function serviceConditionAction()
     {
         return $this->render('AppBundle:Default:service_condition.html.twig');
+    }
+
+    /**
+     * @Route("/redirect_to_page", name="redirect_to_page")
+     */
+    public function redirectToPageAction()
+    {
+        $slugify = new Slugify();
+
+        return $this->getUser() instanceof OAuthUser ? $this->redirectToRoute('site_home', [
+            'project_name' => $slugify->slugify($this->getUser()->getName())
+        ]) : $this->redirectToRoute('homepage');
     }
 }

@@ -2,9 +2,6 @@
 
 {% block title %}Page d'accueil{% endblock %}
 
-{% block header %}{% endblock %}
-{% block subheader %}{% endblock %}
-
 {% block breadcumb %}
     <ol class="breadcrumb">
         <li class="active">Page d'accueil</li>
@@ -12,7 +9,7 @@
 {% endblock %}
 
 {% block body %}
-    <div class="box box-default">
+    <div class="box box-primary">
         <div class="box-header with-border">
             <h3 class="box-title">Qui sommes-nous ?</h3>
         </div>
@@ -46,27 +43,22 @@
         <!-- /.box-body -->
     </div>
     <!-- /.box -->
-
-    <div class="box box-default">
-        <div class="box-header with-border">
-            <h3 class="box-title">Inscription/Connexion</h3>
-        </div>
-        <div class="box-body">
-            <div class="col-md-4">
-                <a href="{{ path('hwi_oauth_service_redirect', {'service': 'facebook'}) }}"
-                   class="btn btn-block btn-social btn-facebook">
-                    <i class="fa fa-facebook"></i> S'inscrire avec Facebook
-                </a>
+    {% if not app.user %}
+        <div class="box box-default">
+            <div class="box-header with-border">
+                <h3 class="box-title">Inscription/Connexion</h3>
             </div>
-            <div class="col-md-4">
-                <a href="{{ path('hwi_oauth_service_redirect', {'service': 'facebook'}) }}"
-                   class="btn btn-block btn-social btn-facebook">
-                    <i class="fa fa-facebook"></i> Se connecter avec Facebook
-                </a>
+            <div class="box-body">
+                <div class="col-md-4">
+                    <a href="{{ path('hwi_oauth_service_redirect', {'service': 'facebook'}) }}"
+                       class="btn btn-block btn-social btn-facebook">
+                        <i class="fa fa-facebook"></i> Se connecter avec Facebook
+                    </a>
+                </div>
             </div>
+            <!-- /.box-body -->
         </div>
-        <!-- /.box-body -->
-    </div>
+    {% endif %}
     <!-- /.box -->
 
     <div class="box box-default">
