@@ -29,84 +29,42 @@
                     <table id="layout-skins-list" class="table table-striped bring-up nth-2-center">
                         <thead>
                         <tr>
-                            <th style="width: 210px;">Skin Class</th>
-                            <th>Preview</th>
-                            <th>Choice</th>
+                            {#<th style="width: 210px;">Skin Class</th>#}
+                            <th>Previsualisation</th>
+                            <th>Choisir</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr>
-                            <td><code>skin-blue</code></td>
-                            <td><a href="#" data-skin="skin-blue" class="btn btn-primary btn-xs btn-blue"><i class="fa fa-eye"></i></a></td>
-                            <td><a href="#" data-skin="skin-blue" class="btn btn-primary btn-xs btn-blue"> Choix du bleu </td>
+                            {#<td><code>skin-blue</code></td>#}
+                            <td><a data-skin="skin-blue" style="width: 100px;" class="btn btn-primary btn-xs btn-blue"><i class="fa fa-eye"></i></a></td>
+                            <td><a data-skin="skin-blue" style="width: 100px;" class="btn btn-primary btn-xs btn-blue btn-choice"> Choix du bleu </td>
                         </tr>
-                        {#
                         <tr>
-                            <td><code>skin-blue-light</code></td>
-                            <td><a href="#" data-skin="skin-blue-light" class="btn btn-primary btn-xs"><i class="fa fa-eye"></i></a></td>
-                            <td><a href="#" data-skin="skin-blue-light" class="btn btn-primary btn-xs"> Choix du bleu clair </a></td>
+                            {#<td><code>skin-yellow</code></td>#}
+                            <td><a data-skin="skin-yellow" style="width: 100px;" class="btn btn-warning btn-xs btn-yellow"><i class="fa fa-eye"></i></a></td>
+                            <td><a data-skin="skin-yellow" style="width: 100px;" class="btn btn-warning btn-xs btn-yellow btn-choice"> Choix du jaune </a></td>
                         </tr>
-                        #}
                         <tr>
-                            <td><code>skin-yellow</code></td>
-                            <td><a href="#" data-skin="skin-yellow" class="btn btn-warning btn-xs btn-yellow"><i class="fa fa-eye"></i></a></td>
-                            <td><a href="#" data-skin="skin-yellow" class="btn btn-warning btn-xs btn-yellow"> Choix du jaune </a></td>
+                            {#<td><code>skin-green</code></td>#}
+                            <td><a data-skin="skin-green" style="width: 100px;" class="btn btn-success btn-xs btn-green"><i class="fa fa-eye"></i></a></td>
+                            <td><a data-skin="skin-green" style="width: 100px;" class="btn btn-success btn-xs btn-green btn-choice"> Choix du vert </a></td>
                         </tr>
-                        {#
                         <tr>
-                            <td><code>skin-yellow-light</code></td>
-                            <td><a href="#" data-skin="skin-yellow-light" class="btn btn-warning btn-xs"><i class="fa fa-eye"></i></a></td>
-                            <td><a href="#" data-skin="skin-yellow-light" class="btn btn-warning btn-xs"> Choix du jaune clair </a></td>
+                            {#<td><code>skin-purple</code></td>#}
+                            <td><a data-skin="skin-purple" style="width: 100px;" class="btn bg-purple btn-xs btn-purple"><i class="fa fa-eye"></i></a></td>
+                            <td><a data-skin="skin-purple" style="width: 100px;" class="btn bg-purple btn-xs btn-purple btn-choice"> Choix du violet </a></td>
                         </tr>
-                        #}
                         <tr>
-                            <td><code>skin-green</code></td>
-                            <td><a href="#" data-skin="skin-green" class="btn btn-success btn-xs btn-green"><i class="fa fa-eye"></i></a></td>
-                            <td><a href="#" data-skin="skin-green" class="btn btn-success btn-xs btn-green"> Choix du vert </a></td>
+                            {#<td><code>skin-red</code></td>#}
+                            <td><a data-skin="skin-red" style="width: 100px;" class="btn btn-danger btn-xs btn-red"><i class="fa fa-eye"></i></a></td>
+                            <td><a data-skin="skin-red" style="width: 100px;" class="btn btn-danger btn-xs btn-red btn-choice"> Choix du rouge </a></td>
                         </tr>
-                        {#
                         <tr>
-                            <td><code>skin-green-light</code></td>
-                            <td><a href="#" data-skin="skin-green-light" class="btn btn-success btn-xs"><i class="fa fa-eye"></i></a></td>
-                            <td><a href="#" data-skin="skin-green-light" class="btn btn-success btn-xs"> Choix du vert clair </a></td>
+                            {#<td><code>skin-black</code></td>#}
+                            <td><a data-skin="skin-black" style="width: 100px;" class="btn bg-black btn-xs btn-black"><i class="fa fa-eye"></i></a></td>
+                            <td><a data-skin="skin-black" style="width: 100px;" class="btn bg-black btn-xs btn-black btn-choice"> Choix du noir </a></td>
                         </tr>
-                        #}
-                        <tr>
-                            <td><code>skin-purple</code></td>
-                            <td><a href="#" data-skin="skin-purple" class="btn bg-purple btn-xs btn-purple"><i class="fa fa-eye"></i></a></td>
-                            <td><a href="#" data-skin="skin-purple" class="btn bg-purple btn-xs btn-purple"> Choix du violet </a></td>
-                        </tr>
-                        {#
-                        <tr>
-                            <td><code>skin-purple-light</code></td>
-                            <td><a href="#" data-skin="skin-purple-light" class="btn bg-purple btn-xs"><i class="fa fa-eye"></i></a></td>
-                            <td><a href="#" data-skin="skin-purple-light" class="btn bg-purple btn-xs"> Choix du violet clair </a></td>
-                        </tr>
-                        #}
-                        <tr>
-                            <td><code>skin-red</code></td>
-                            <td><a href="#" data-skin="skin-red" class="btn btn-danger btn-xs btn-red"><i class="fa fa-eye"></i></a></td>
-                            <td><a href="#" data-skin="skin-red" class="btn btn-danger btn-xs btn-red"> Choix du rouge </a></td>
-                        </tr>
-                        {#
-                        <tr>
-                            <td><code>skin-red-light</code></td>
-                            <td><a href="#" data-skin="skin-red-light" class="btn btn-danger btn-xs"><i class="fa fa-eye"></i></a></td>
-                            <td><a href="#" data-skin="skin-red-light" class="btn btn-danger btn-xs"> Choix du rouge clair </a></td>
-                        </tr>
-                        #}
-                        <tr>
-                            <td><code>skin-black</code></td>
-                            <td><a href="#" data-skin="skin-black" class="btn bg-black btn-xs btn-black"><i class="fa fa-eye"></i></a></td>
-                            <td><a href="#" data-skin="skin-black" class="btn bg-black btn-xs btn-black"> Choix du noir </a></td>
-                        </tr>
-                        {#
-                        <tr>
-                            <td><code>skin-black-light</code></td>
-                            <td><a href="#" data-skin="skin-black-light" class="btn bg-black btn-xs"><i class="fa fa-eye"></i></a></td>
-                            <td><a href="#" data-skin="skin-black-light" class="btn bg-black btn-xs"> Choix du noir clair </a></td>
-                        </tr>
-                        #}
                         </tbody>
                     </table>
                 </div><!-- /.box-body -->
@@ -118,5 +76,10 @@
         <!-- /.box-body -->
     </div>
     <!-- /.box -->
+{% endblock %}
+
+{% block javascript %}
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
 {% endblock %}
 
