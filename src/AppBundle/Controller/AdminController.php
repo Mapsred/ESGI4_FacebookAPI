@@ -108,6 +108,7 @@ class AdminController extends Controller
             'albums' => $albums->all()
         ]);
     }
+
     /**
      * @Route("/albums", name="admin_albums")
      * @return Response
