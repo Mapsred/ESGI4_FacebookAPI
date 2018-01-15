@@ -59,7 +59,8 @@ desired effect
 |               | sidebar-mini                            |
 |---------------------------------------------------------|
 -->
-<body class="hold-transition {% block skin %}skin-isolonice{% endblock %} layout-top-nav">
+<body class="hold-transition
+    {{ site is defined and site.skinColor is defined ? site.skinColor : skinColor}}  layout-top-nav">
 <div class="wrapper">
 
     <header class="main-header">

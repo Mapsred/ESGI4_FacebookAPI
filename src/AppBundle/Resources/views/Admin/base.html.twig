@@ -60,10 +60,8 @@ desired effect
 |---------------------------------------------------------|
 -->
 <body class="hold-transition
-    {% set skinColor = 'skin-blue' %}
-    {% block skin %}
-    {{ site.skinColor is defined ? site.skinColor : skinColor}}
-    {% endblock %} sidebar-mini" data-sub_domain="{{ site.username }}">
+    {{ site is defined and site.skinColor is defined ? site.skinColor : skinColor}}
+    sidebar-mini" data-sub_domain="{{ site.username }}">
 <div class="wrapper">
 
     <!-- Main Header -->
