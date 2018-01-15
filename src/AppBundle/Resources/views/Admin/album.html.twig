@@ -22,7 +22,9 @@
     {% for picture in album.pictures %}
 
         <div class="col-sm-3">
-            <img width="100%" class="img-responsive" src="{{ picture.pictureLink }}" alt="Photo">
+            <a href="{{ picture.pictureLink }}" data-lightbox="album">
+                <img width="100%" class="img-responsive" src="{{ picture.pictureLink }}" alt="Photo">
+            </a>
             <br>
         </div>
 

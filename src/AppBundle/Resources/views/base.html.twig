@@ -59,7 +59,8 @@ desired effect
 |               | sidebar-mini                            |
 |---------------------------------------------------------|
 -->
-<body class="hold-transition {% block skin %}skin-isolonice{% endblock %} layout-top-nav">
+<body class="hold-transition
+    {{ site is defined and site.skinColor is defined ? site.skinColor : skinColor }}  layout-top-nav">
 <div class="wrapper">
 
     <header class="main-header">
@@ -89,12 +90,15 @@ desired effect
                 <!-- Navbar Right Menu -->
                 <div class="navbar-custom-menu">
                     <ul class="nav navbar-nav">
-                        {% if site is defined and app.user.hasRole('ROLE_USER') and app.user == site.oauthUser %}
+                        {% if site is defined and app.user is not null and app.user.hasRole('ROLE_USER') and app.user == site.oauthUser %}
                             <li>
                                 <a href="{{ path('admin_index', {'project_name': site.username}) }}">
                                     <i class="fa fa-gears"></i>
                                 </a>
                             </li>
+                        {% endif %}
+                        {% if app.user %}
+                            <li><a href="{{ path('logout') }}">Se déconnecter</a></li>
                         {% endif %}
                     </ul>
                 </div>
@@ -109,8 +113,8 @@ desired effect
             <!-- Content Header (Page header) -->
             <section class="content-header">
                 <h1>
-                    {% block header %}Page Header{% endblock %}
-                    <small>{% block subheader %}Optional description{% endblock %}</small>
+                    {% block header %}{% endblock %}
+                    <small>{% block subheader %}{% endblock %}</small>
                 </h1>
 
                 {% block breadcumb %}
@@ -146,6 +150,9 @@ desired effect
 <!-- ./wrapper -->
 
 <!-- REQUIRED JS SCRIPTS -->
+
+<script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+<script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
 
 {% javascripts 'assets/bower/jquery/dist/jquery.js' 'assets/bower/bootstrap/dist/js/bootstrap.js'
     'assets/js/adminlte.js' 'assets/bower/jquery-ui/jquery-ui.js' 'assets/bower/moment/moment.js'

@@ -9,58 +9,58 @@ $(document).ready(function(){
         $("body").removeClass("skin-black");
     }
 
-    function addClassBlue(){
-        $("body").addClass("skin-blue");
-    }
-
-    function addClassYellow(){
-        $("body").addClass("skin-yellow");
-    }
-
-    function addClassGreen(){
-        $("body").addClass("skin-green");
-    }
-
-    function addClassPurple(){
-        $("body").addClass("skin-purple");
-    }
-
-    function addClassRed(){
-        $("body").addClass("skin-red");
-    }
-
-    function addClassBlack(){
-        $("body").addClass("skin-black");
+    function addClassColor(color){
+        color = $(color).data("skin");
+        $("body").addClass(color);
     }
 
     $(".btn-blue").click(function(){
         removeClass();
-        addClassBlue();
+        addClassColor(this);
     });
 
     $(".btn-yellow").click(function(){
         removeClass();
-        addClassYellow();
+        addClassColor(this);
     });
 
     $(".btn-green").click(function(){
         removeClass();
-        addClassGreen();
+        addClassColor(this);
     });
 
     $(".btn-purple").click(function(){
         removeClass();
-        addClassPurple();
+        addClassColor(this);
     });
 
     $(".btn-red").click(function(){
         removeClass();
-        addClassRed();
+        addClassColor(this);
     });
 
     $(".btn-black").click(function(){
         removeClass();
-        addClassBlack();
+        addClassColor(this);
+    });
+
+    $(".btn-choice").click(function(){
+        var color = $(this).data("skin");
+        var sub_domain = $("body").data("sub_domain");
+        var edit = Routing.generate('admin_colorEdit', { project_name: sub_domain});
+        $.ajax({
+            url: edit,
+            type: "POST",
+            data: {color: color},
+            error: function () {
+                alert('Problème dans la fonction de choix de couleur');
+                console.log(color);
+                console.log(sub_domain);
+            },
+            success: function (){
+                window.location.href = Routing.generate('admin_index', { project_name: sub_domain});
+            }
+        });
     });
 
 });

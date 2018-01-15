@@ -21,6 +21,8 @@ class AppKernel extends Kernel
             new Http\HttplugBundle\HttplugBundle(), // If you require the php-http/httplug-bundle package.
             new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
 
+            new FOS\JsRoutingBundle\FOSJsRoutingBundle(), //Pour les routes JS
+
             new AppBundle\AppBundle(),
         ];
 

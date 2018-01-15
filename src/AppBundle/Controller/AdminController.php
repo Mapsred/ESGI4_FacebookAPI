@@ -8,17 +8,21 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\AppBundle;
 use AppBundle\Entity\Site;
 use AppBundle\Manager\SiteManager;
 use AppBundle\Security\Core\User\OAuthUser;
 use AppBundle\Utils\Facebook\Facebook;
 use Facebook\GraphNodes\GraphNode;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Class AdminController
@@ -29,7 +33,7 @@ use Symfony\Component\HttpFoundation\Response;
 class AdminController extends Controller
 {
     /**
-     * @Route("/", name="admin_index")
+     * @Route("/", name="admin_index", options={"expose" = true})
      * @return Response
      */
     public function indexAction()
@@ -52,6 +56,34 @@ class AdminController extends Controller
         return $this->render('AppBundle:Admin:color_choice.html.twig', [
             'site' => $site
         ]);
+    }
+
+
+    /**
+     * @Route("/editColor", options={ "expose" = true }, name="admin_colorEdit")
+     * @param Request $request
+     * @Method({"POST"})
+     * @return JsonResponse
+     */
+    public function editColorAction(Request $request)
+    {
+
+        if (!$request->request->has('color')) {
+            return new JsonResponse('Color Manquant', Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        $site = $this->get(SiteManager::class)->getSite();
+        $color = $request->request->get('color');
+
+        $em = $this->getDoctrine()->getManager();
+
+        $site->setSkinColor($color);
+        $em->persist($site);
+        $em->flush();
+
+        $this->addFlash('success', 'La couleur est changée');
+        return new JsonResponse('La couleur est changée');
+
     }
 
     /**
@@ -90,7 +122,6 @@ class AdminController extends Controller
 
             if (!$this->get(Facebook::class)->uploadPhoto($site, $album, $message, $photo->getPathname())) {
                 $this->addFlash('danger', 'Une erreur s\'est produite, merci de rééssayer plus tard');
-
                 return $this->redirectToRoute('photo_upload', ['project_name' => $site->getUserName()]);
             }
 
@@ -108,6 +139,7 @@ class AdminController extends Controller
             'albums' => $albums->all()
         ]);
     }
+
     /**
      * @Route("/albums", name="admin_albums")
      * @return Response
@@ -122,21 +154,21 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("/album/{album_name}", name="admin_album")
-     * @param null $album_name
+     * @Route("/album/{album_id}", name="admin_album")
+     * @param null $album_id
      * @return Response
      */
-    public function albumAction($album_name = null)
+    public function albumAction($album_id = null)
     {
-        $album_name = ucwords(str_replace("-", " ", $album_name));
         $site = $this->get(SiteManager::class)->getSite();
 
-        $album = $site->getOAuthUser()->getAlbums()->get(4);
+        $album = $site->getOAuthUser()->getAlbums()->filter(function ($album) use($album_id) {
+            return $album->getId() == $album_id;
+        });
 
         return $this->render('AppBundle:Admin:album.html.twig', [
             'site' => $site,
-            'album' => $album
-
+            'album' => $album->first()
         ]);
     }
 

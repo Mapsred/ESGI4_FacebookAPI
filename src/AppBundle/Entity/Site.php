@@ -235,7 +235,6 @@ class Site
     public function setGivenScopes($givenScopes): Site
     {
         $this->givenScopes = $givenScopes;
-
         return $this;
     }
 
