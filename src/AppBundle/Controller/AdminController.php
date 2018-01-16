@@ -54,7 +54,15 @@ class AdminController extends Controller
         $site = $this->get(SiteManager::class)->getSite();
 
         return $this->render('AppBundle:Admin:color_choice.html.twig', [
-            'site' => $site
+            'site' => $site,
+            'colors' => [
+                ['blue', 'bleu', 'btn-primary'],
+                ['yellow', 'jaune', 'btn-warning'],
+                ['green', 'vert', 'btn-success'],
+                ['purple', 'violet', 'bg-purple'],
+                ['red', 'rouge', 'btn-danger'],
+                ['black', 'noir', 'bg-black']
+            ]
         ]);
     }
 
@@ -82,6 +90,7 @@ class AdminController extends Controller
         $em->flush();
 
         $this->addFlash('success', 'La couleur est changée');
+
         return new JsonResponse('La couleur est changée');
 
     }
@@ -122,6 +131,7 @@ class AdminController extends Controller
 
             if (!$this->get(Facebook::class)->uploadPhoto($site, $album, $message, $photo->getPathname())) {
                 $this->addFlash('danger', 'Une erreur s\'est produite, merci de rééssayer plus tard');
+
                 return $this->redirectToRoute('photo_upload', ['project_name' => $site->getUserName()]);
             }
 
@@ -162,7 +172,7 @@ class AdminController extends Controller
     {
         $site = $this->get(SiteManager::class)->getSite();
 
-        $album = $site->getOAuthUser()->getAlbums()->filter(function ($album) use($album_id) {
+        $album = $site->getOAuthUser()->getAlbums()->filter(function ($album) use ($album_id) {
             return $album->getId() == $album_id;
         });
 

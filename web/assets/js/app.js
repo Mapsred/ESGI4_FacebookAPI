@@ -1,10 +1,7 @@
-(function ($) {
-
-    // Light box option
+$(document).ready(function(){
 
     lightbox.option({
         'resizeDuration': 200,
         'wrapAround': true
     })
-
-})(jQuery);
+});
