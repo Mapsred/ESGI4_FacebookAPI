@@ -159,7 +159,8 @@ class AdminController extends Controller
         $site = $this->get(SiteManager::class)->getSite();
 
         return $this->render('AppBundle:Admin:albums.html.twig', [
-            'site' => $site
+            'site' => $site,
+            'disabledAlbums' => $disabledAlbums = $site->getAlbumOptions()
         ]);
     }
 
@@ -181,6 +182,91 @@ class AdminController extends Controller
             'album' => $album->first()
         ]);
     }
+
+    /**
+     * @Route("/disable-album/{album_id}", name="admin_disable_album")
+     * @param null $album_id
+     * @return Response
+     */
+    public function disableAlbumAction($album_id = null)
+    {
+        $site = $this->get(SiteManager::class)->getSite();
+
+        $album = $site->getOAuthUser()->getAlbums()->filter(function ($album) use ($album_id) {
+            return $album->getId() == $album_id;
+        });
+
+        if ($album->count() > 0) {
+
+            $disabledAlbums = $site->getAlbumOptions(); // Array
+
+            if (in_array($album_id , $disabledAlbums))  {
+
+                $this->addFlash('danger', 'Cet album est déja désactivé .');
+            }
+
+            else {
+
+                $disabledAlbums [] = $album_id;
+
+                $site->setAlbumOptions($disabledAlbums);
+                $this->getDoctrine()->getManager()->persist($site);
+                $this->getDoctrine()->getManager()->flush();
+
+                $this->addFlash('success', 'L\'album a bien été désactivé.');
+            }
+        }
+
+        else {
+
+            $this->addFlash('danger', "Cet album n'existe pas");
+        }
+
+        return $this->redirectToRoute('admin_albums', ['project_name' => $site->getUserName()]);
+    }
+
+    /**
+     * @Route("/enable-album/{album_id}", name="admin_enable_album")
+     * @param null $album_id
+     * @return Response
+     */
+    public function enableAlbumAction($album_id = null)
+    {
+        $site = $this->get(SiteManager::class)->getSite();
+
+        $album = $site->getOAuthUser()->getAlbums()->filter(function ($album) use ($album_id) {
+            return $album->getId() == $album_id;
+        });
+
+        if ($album->count() > 0) {
+
+            $enabledAlbums = $site->getAlbumOptions(); // Array
+
+            if (!in_array($album_id , $enabledAlbums))  {
+
+                $this->addFlash('danger', 'Cet album est déja activé .');
+            }
+
+            else {
+
+                unset($enabledAlbums[array_search($album_id , $enabledAlbums)]);
+
+                $site->setAlbumOptions($enabledAlbums);
+                $this->getDoctrine()->getManager()->persist($site);
+                $this->getDoctrine()->getManager()->flush();
+
+                $this->addFlash('success', 'L\'album a bien été activé .');
+            }
+        }
+
+        else {
+
+            $this->addFlash('danger', "Cet album n'existe pas");
+        }
+
+        return $this->redirectToRoute('admin_albums', ['project_name' => $site->getUserName()]);
+    }
+
 
     /**
      * @param Site $site

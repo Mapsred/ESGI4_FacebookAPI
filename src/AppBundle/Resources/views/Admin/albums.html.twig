@@ -24,6 +24,17 @@
                 <span class="username">
                     <a href={{ path('admin_album', {'project_name': site.username, 'album_id': album.id}) }}>{{ album.name }}</a>
                 </span>
+                {% if album.pictures|length > 0 %}
+                    {% if album.id not in disabledAlbums %}
+                        <span class="pull-right">
+                          <a href="{{ path('admin_disable_album', {'project_name': site.username, 'album_id': album.id}) }}" type="button" class="btn btn-block btn-warning btn-xs">Désactiver l'album</a>
+                        </span>
+                    {% else %}
+                        <span class="pull-right">
+                          <a href="{{ path('admin_enable_album', {'project_name': site.username, 'album_id': album.id}) }}" type="button" class="btn btn-block btn-success btn-xs">Activer l'album</a>
+                        </span>
+                    {% endif %}
+                {% endif %}
                 <span class="description">{{ album.pictures|length }} photos posteés </span>
             </div>
             {% if album.pictures|length > 0 %}
