@@ -27,11 +27,11 @@
                 {% if album.pictures|length > 0 %}
                     {% if album.id not in disabledAlbums %}
                         <span class="pull-right">
-                          <a href="{{ path('admin_disable_album', {'project_name': site.username, 'album_id': album.id}) }}" type="button" class="btn btn-block btn-warning btn-xs">Désactiver l'album</a>
+                          <a href="{{ path('admin_disable_album', {'project_name': site.username, 'album_id': album.id}) }}" type="button" class="btn btn-block btn-warning btn-sm">Désactiver l'album</a>
                         </span>
                     {% else %}
                         <span class="pull-right">
-                          <a href="{{ path('admin_enable_album', {'project_name': site.username, 'album_id': album.id}) }}" type="button" class="btn btn-block btn-success btn-xs">Activer l'album</a>
+                          <a href="{{ path('admin_enable_album', {'project_name': site.username, 'album_id': album.id}) }}" type="button" class="btn btn-block btn-success btn-sm">Activer l'album</a>
                         </span>
                     {% endif %}
                 {% endif %}

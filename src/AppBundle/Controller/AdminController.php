@@ -179,7 +179,8 @@ class AdminController extends Controller
 
         return $this->render('AppBundle:Admin:album.html.twig', [
             'site' => $site,
-            'album' => $album->first()
+            'album' => $album->first(),
+            'disabledAlbums' => $disabledAlbums = $site->getAlbumOptions()
         ]);
     }
 

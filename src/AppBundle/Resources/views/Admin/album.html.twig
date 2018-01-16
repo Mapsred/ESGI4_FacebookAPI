@@ -2,7 +2,15 @@
 
 {% block title %}Accueil Admin{% endblock %}
 
-{% block header %}Album {{ album.name }}{% endblock %}
+{% block header %}
+    Album {{ album.name }}
+    {% if album.id not in disabledAlbums %}
+        <span style="font-size: 0.5em" class="label label-success">Album activé</span>
+    {% else %}
+        <span style="font-size: 0.5em" class="label label-danger">Album désactivé</span>
+    {% endif %}
+
+{% endblock %}
 
 {% block breadcumb %}
 <ol class="breadcrumb">
