@@ -12,6 +12,7 @@ use AppBundle\AppBundle;
 use AppBundle\Entity\Site;
 use AppBundle\Manager\SiteManager;
 use AppBundle\Security\Core\User\OAuthUser;
+use AppBundle\Utils\Facebook\Album;
 use AppBundle\Utils\Facebook\Facebook;
 use Facebook\GraphNodes\GraphNode;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -197,74 +198,47 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("/disable-album/{album_id}", name="admin_disable_album")
-     * @param null $album_id
-     * @return Response
+     * @Route("/album_update/{type}/{album_id}", name="admin_album_update")
+     * @param $type
+     * @param $album_id
+     * @return RedirectResponse
      */
-    public function disableAlbumAction($album_id = null)
+    public function albumUpdateAction($type, $album_id)
     {
+        if (!in_array($type, ['enable', 'disable'])) {
+            throw new NotFoundHttpException(sprintf('Page not found for $type = %s', $type));
+        }
+
         $site = $this->get(SiteManager::class)->getSite();
+        $redirectResponse = $this->redirectToRoute('admin_albums', ['project_name' => $site->getUserName()]);
 
         $album = $site->getOAuthUser()->getAlbums()->filter(function ($album) use ($album_id) {
             return $album->getId() == $album_id;
         });
 
-        if ($album->count() > 0) {
+        if ($album->count() == 0) {
+            $this->addFlash('danger', "Cet album n'existe pas");
 
+            return $redirectResponse;
+        }
+
+        if ($type == "disable") {
             $disabledAlbums = $site->getAlbumOptions(); // Array
-
-            if (in_array($album_id , $disabledAlbums))  {
-
+            if (in_array($album_id, $disabledAlbums)) {
                 $this->addFlash('danger', 'Cet album est déja désactivé .');
-            }
-
-            else {
-
-                $disabledAlbums [] = $album_id;
-
-                $site->setAlbumOptions($disabledAlbums);
+            } else {
+                $site->addAlbumOption($album_id);
                 $this->getDoctrine()->getManager()->persist($site);
                 $this->getDoctrine()->getManager()->flush();
 
                 $this->addFlash('success', 'L\'album a bien été désactivé.');
             }
-        }
-
-        else {
-
-            $this->addFlash('danger', "Cet album n'existe pas");
-        }
-
-        return $this->redirectToRoute('admin_albums', ['project_name' => $site->getUserName()]);
-    }
-
-    /**
-     * @Route("/enable-album/{album_id}", name="admin_enable_album")
-     * @param null $album_id
-     * @return Response
-     */
-    public function enableAlbumAction($album_id = null)
-    {
-        $site = $this->get(SiteManager::class)->getSite();
-
-        $album = $site->getOAuthUser()->getAlbums()->filter(function ($album) use ($album_id) {
-            return $album->getId() == $album_id;
-        });
-
-        if ($album->count() > 0) {
-
+        }else {
             $enabledAlbums = $site->getAlbumOptions(); // Array
-
-            if (!in_array($album_id , $enabledAlbums))  {
-
+            if (!in_array($album_id, $enabledAlbums)) {
                 $this->addFlash('danger', 'Cet album est déja activé .');
-            }
-
-            else {
-
-                unset($enabledAlbums[array_search($album_id , $enabledAlbums)]);
-
-                $site->setAlbumOptions($enabledAlbums);
+            } else {
+                $site->removeAlbumOption($album_id);
                 $this->getDoctrine()->getManager()->persist($site);
                 $this->getDoctrine()->getManager()->flush();
 
@@ -272,12 +246,7 @@ class AdminController extends Controller
             }
         }
 
-        else {
-
-            $this->addFlash('danger', "Cet album n'existe pas");
-        }
-
-        return $this->redirectToRoute('admin_albums', ['project_name' => $site->getUserName()]);
+        return $redirectResponse;
     }
 
     /**
