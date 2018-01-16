@@ -8,33 +8,33 @@
 
 namespace AppBundle\Utils\Facebook;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 class Picture
 {
     /** @var int $id */
     private $id;
     /** @var string $picture */
     private $picture;
-    /** @var WebpImages[]|ArrayCollection $webpimages */
-    private $webpimages;
-
+    /** @var WebpImage[]|ArrayCollection $webpImages */
+    private $webpImages;
 
     /**
      * Picture constructor.
      * @param $id
      * @param $picture
-     * @param $webpimages
+     * @param $webpImages
      */
-
-    public function __construct($id, $picture, $webpimages)
+    public function __construct($id, $picture, $webpImages)
     {
         $this->id = $id;
         $this->picture = $picture;
-        $this->webpimages = $webpimages;
+        $this->setWebpImages($webpImages);
     }
 
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getId()
     {
@@ -52,10 +52,25 @@ class Picture
     }
 
     /**
-     * @return WebpImages[]|ArrayCollection
+     * @param WebpImage[]|ArrayCollection $webpImages
+     * @return Picture
      */
-    public function getWebpimages()
+    public function setWebpImages($webpImages)
     {
-        return $this->webpimages;
+        if (is_array($webpImages)) {
+            $webpImages = new ArrayCollection($webpImages);
+        }
+
+        $this->webpImages = $webpImages;
+
+        return $this;
+    }
+
+    /**
+     * @return WebpImage[]|ArrayCollection
+     */
+    public function getWebpImages()
+    {
+        return $this->webpImages;
     }
 }

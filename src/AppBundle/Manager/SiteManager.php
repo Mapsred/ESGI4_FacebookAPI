@@ -13,7 +13,7 @@ use AppBundle\Security\Core\User\OAuthUser;
 use AppBundle\Utils\Facebook\Album;
 use AppBundle\Utils\Facebook\Facebook;
 use AppBundle\Utils\Facebook\Picture;
-use AppBundle\Utils\Facebook\WebpImages;
+use AppBundle\Utils\Facebook\WebpImage;
 use Cocur\Slugify\Slugify;
 use Doctrine\Common\Persistence\ObjectManager;
 use HWI\Bundle\OAuthBundle\OAuth\ResourceOwner\FacebookResourceOwner;
@@ -89,16 +89,13 @@ class SiteManager
                 $photos = [];
                 if (isset($data['photos'])) {
                     foreach ($data['photos']['data'] as $photoData) {
-
-                        $webp_images = [];
-
-                        foreach ($photoData['webp_images'] as $webpImageData ) {
-
-                            $webp_image = new WebpImages($webpImageData['source']);
-                            $webp_images[] = $webp_image;
+                        $webpImages = [];
+                        foreach ($photoData['webp_images'] as $webpImageData) {
+                            $webpImage = new WebpImage($webpImageData['source']);
+                            $webpImages[] = $webpImage;
                         }
 
-                        $photo = new Picture($photoData['id'], $photoData['picture'] , $webp_images);
+                        $photo = new Picture($photoData['id'], $photoData['picture'], $webpImages);
                         $photos[] = $photo;
                     }
                 }

@@ -246,6 +246,7 @@ class Site
     {
         return in_array($scope, $this->givenScopes);
     }
+
     /**
      * Set skinColor
      *

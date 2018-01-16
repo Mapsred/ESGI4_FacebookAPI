@@ -8,22 +8,23 @@
 
 namespace AppBundle\Utils\Facebook;
 
-class WebpImages
+class WebpImage
 {
-    /** @var int $id */
+    /** @var static $source */
     private $source;
 
     /**
      * Picture constructor.
-     * @param $id
-     * @param $picture
+     * @param string $source
      */
     public function __construct($source)
     {
         $this->source = $source;
     }
 
-
+    /**
+     * @return string
+     */
     public function getSource()
     {
         return $this->source;
