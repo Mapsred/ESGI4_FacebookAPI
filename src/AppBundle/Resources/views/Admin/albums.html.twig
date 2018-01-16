@@ -30,8 +30,9 @@
                 <!-- /.user-block -->
                 <div class="row margin-bottom">
                     <div class="col-sm-6">
-                        <a href="{{ album.pictures.first.pictureLink }}" data-lightbox="{{ album.name }}">
-                            <img width="100%" class="img-responsive" src="{{ album.pictures.first.pictureLink }}" alt="Photo">
+
+                        <a href="{{ album.pictures.first.webpimages[0].source }}" data-lightbox="{{ album.name }}">
+                            <img width="100%" class="img-responsive" src="{{ album.pictures.first.webpimages[0].source }}" alt="Photo">
                         </a>
                     </div>
                     <!-- /.col -->
@@ -39,28 +40,28 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 {% if album.pictures.get(1) %}
-                                <a href="{{ album.pictures.get(1).pictureLink }}" data-lightbox="{{ album.name }}">
-                                    <img width="100%" class="img-responsive" src="{{ album.pictures.get(1).pictureLink }}" alt="Photo">
+                                <a href="{{ album.pictures.get(1).webpimages[0].source }}" data-lightbox="{{ album.name }}">
+                                    <img width="100%" class="img-responsive" src="{{ album.pictures.get(1).webpimages[0].source }}" alt="Photo">
                                 </a>
                                 {% endif %}
                                 <br>
                                 {% if album.pictures.get(2) %}
-                                <a href="{{ album.pictures.get(2).pictureLink }}" data-lightbox="{{ album.name }}">
-                                    <img width="100%" class="img-responsive" src="{{ album.pictures.get(2).pictureLink }}" alt="Photo">
+                                <a href="{{ album.pictures.get(2).webpimages[0].source }}" data-lightbox="{{ album.name }}">
+                                    <img width="100%" class="img-responsive" src="{{ album.pictures.get(2).webpimages[0].source }}" alt="Photo">
                                 </a>
                                 {% endif %}
                             </div>
                             <!-- /.col -->
                             <div class="col-sm-6">
                                 {% if album.pictures.get(3) %}
-                                <a href="{{ album.pictures.get(3).pictureLink }}" data-lightbox="{{ album.name }}">
-                                    <img width="100%" class="img-responsive" src="{{ album.pictures.get(3).pictureLink }}" alt="Photo">
+                                <a href="{{ album.pictures.get(3).webpimages[0].source }}" data-lightbox="{{ album.name }}">
+                                    <img width="100%" class="img-responsive" src="{{ album.pictures.get(3).webpimages[0].source }}" alt="Photo">
                                 </a>
                                 {% endif %}
                                 <br>
                                 {% if album.pictures.get(4) %}
-                                <a href="{{ album.pictures.get(4).pictureLink }}" data-lightbox="{{ album.name }}">
-                                    <img width="100%" class="img-responsive" src="{{ album.pictures.get(4).pictureLink }}" alt="Photo">
+                                <a href="{{ album.pictures.get(4).webpimages[0].source }}" data-lightbox="{{ album.name }}">
+                                    <img width="100%" class="img-responsive" src="{{ album.pictures.get(4).webpimages[0].source }}" alt="Photo">
                                  </a>
                                 {% endif %}
                             </div>
