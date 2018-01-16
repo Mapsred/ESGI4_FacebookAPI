@@ -26,6 +26,7 @@
         "doctrine/orm": "^2.5",
         "facebook/graph-sdk": "^5.6",
         "friendsofsymfony/jsrouting-bundle": "^2.1",
+        "friendsofsymfony/user-bundle": "^2.0",
         "hwi/oauth-bundle": "^0.6.0",
         "incenteev/composer-parameter-handler": "^2.0",
         "php-http/guzzle6-adapter": "^1.1",
