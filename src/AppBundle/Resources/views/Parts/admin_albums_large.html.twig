@@ -1,0 +1,45 @@
+{% if site.oAuthUser.albums.count > 0 %}
+    <form action="{{ path('admin_albums', {'project_name': site.userName, 'type': type}) }}" method="post"
+          id="largeForm">
+        <span class="h3">
+        <input type="submit" value="Désactiver le contenu sélectionné"
+               class="btn btn-isolonice btn-flat margin-bottom15" id="btn" disabled>
+    </span>
+        <div class="box box-red">
+            <div class="box-header with-border">
+                <h3 class="box-title">Activer/Désactiver des albums</h3>
+            </div>
+            <!-- form start -->
+            <div class="box-body table-responsive no-padding">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>Albums</th>
+                        <th class="select_all text-center">
+                            <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for album in site.oAuthUser.albums %}
+                        <tr>
+                            <td>
+                                <a href={{ path('admin_album', {'project_name': site.username, 'album_id': album.id}) }}>{{ album.name }}</a>
+                            </td>
+                            <td class="input text-center">
+                                <input type="checkbox" name="albums[{{ album.id }}]" {{ album.id in disabledAlbums ? 'checked' : '' }}>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.box-body -->
+        </div>
+    </form>
+{% else %}
+    <p> Aucun album </p>
+{% endif %}
+
+
+

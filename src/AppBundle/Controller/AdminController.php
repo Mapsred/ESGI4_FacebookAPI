@@ -66,7 +66,6 @@ class AdminController extends Controller
         ]);
     }
 
-
     /**
      * @Route("/editColor", options={ "expose" = true }, name="admin_colorEdit")
      * @param Request $request
@@ -151,16 +150,29 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("/albums", name="admin_albums")
+     * @Route("/albums/{type}", name="admin_albums", defaults={"type": "list"})
+     * @param Request $request
+     * @param string $type
      * @return Response
      */
-    public function albumsAction()
+    public function albumsAction(Request $request, $type)
     {
         $site = $this->get(SiteManager::class)->getSite();
 
+        if ($request->isMethod('POST') && $request->request->has('albums')) {
+            $site->setAlbumOptions(array_keys($request->request->get('albums')));
+            $this->getDoctrine()->getManager()->persist($site);
+            $this->getDoctrine()->getManager()->flush();
+
+            $this->addFlash('success', 'Les albums sélectionnés ont bien été désactivés');
+
+            return $this->redirectToRoute('admin_albums', ['project_name' => $site->getUserName(), 'type' => $type]);
+        }
+
         return $this->render('AppBundle:Admin:albums.html.twig', [
             'site' => $site,
-            'disabledAlbums' => $disabledAlbums = $site->getAlbumOptions()
+            'disabledAlbums' => $site->getAlbumOptions(),
+            'type' => $type
         ]);
     }
 
@@ -267,7 +279,6 @@ class AdminController extends Controller
 
         return $this->redirectToRoute('admin_albums', ['project_name' => $site->getUserName()]);
     }
-
 
     /**
      * @param Site $site
