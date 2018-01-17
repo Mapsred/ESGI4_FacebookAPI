@@ -30,7 +30,7 @@ class OAuthUser extends BaseOAuthUser
     private $email;
 
     /**
-     * @var string $slugifiedNam
+     * @var string $slugifiedName
      */
     private $slugifiedName;
 
