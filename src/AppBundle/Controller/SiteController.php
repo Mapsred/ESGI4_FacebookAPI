@@ -22,7 +22,7 @@ use Symfony\Component\HttpFoundation\Response;
 class SiteController extends Controller
 {
     /**
-     * @Route("/home", name="site_home")
+     * @Route("/", name="site_home")
      * @return Response
      */
     public function siteAction()

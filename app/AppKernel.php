@@ -22,6 +22,7 @@ class AppKernel extends Kernel
             new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
 
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(), //Pour les routes JS
+            new FOS\UserBundle\FOSUserBundle(),
 
             new AppBundle\AppBundle(),
         ];

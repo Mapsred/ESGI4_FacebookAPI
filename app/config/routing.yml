@@ -1,3 +1,22 @@
+fos_user_security:
+    resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+    prefix: /manage
+    host:     '%domain%'
+    defaults:
+        domain: '%domain%'
+    requirements:
+        domain: '%domain%'
+
+new_admin:
+    resource: "@AppBundle/Controller/ManageController.php"
+    type:     annotation
+    prefix:   /manage
+    host:     '%domain%'
+    defaults:
+        domain: '%domain%'
+    requirements:
+        domain: '%domain%'
+
 sub_app:
     resource: "@AppBundle/Controller/SiteController.php"
     type:     annotation

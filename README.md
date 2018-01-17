@@ -21,7 +21,7 @@ If you did not modify the ``docker-compose.yml`` then you are ready to go
 Then run 
 
 * ``docker-compose exec php-fpm composer install`` To install composer dependencies
-* ``docker-compose exec nodejs bower install`` To install bower dependencies
+* ``docker-compose exec nodejs bower install --allow-root`` To install bower dependencies
 * ``docker-compose exec php-fpm php bin/console assetic:dump`` To dump all css/js libraries
 
 
@@ -55,3 +55,10 @@ if you have the following error ``You are not allowed to access this file. Your 
 Then add your ip (x.x.x.x here) to the app_dev file ip array (do not remove any existing)
 
 Run ``docker-compose exec php-fpm php bin/console doctrine:schema:update --force`` to build the database schema
+
+### FOSUser and Site Management 
+
+To access to the Admin page you need to create a database user with the following command :
+``php bin/console fos:user:create admin --super-admin`` (don't forget the `docker-compose exec php-fpm` if you use docker-compose)
+
+Next, the ``facebook-final.develop/manage/login`` and ``facebook-final.develop/manage/edit`` pages are available to you 

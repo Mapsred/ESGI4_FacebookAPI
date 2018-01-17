@@ -1,0 +1,31 @@
+{% extends 'AppBundle:Manage:base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <form action="{{ path('manage_edit') }}" method="post">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Site</th>
+                    <th>Supprimer</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for site in sites %}
+                    {% set site_link = path('site_home', {'project_name': site.userName}) %}
+                    <tr>
+                        <td><a href="{{ site_link }}">{{ site.userName }}</a></td>
+                        <td><label><input type="checkbox" name="site[]" value="{{ site.id }}"></label></td>
+                    </tr>
+                {% endfor %}
+                <tr>
+                    <td></td>
+                    <td>
+                        <button type="submit" class="btn btn-info">Valider</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+{% endblock %}
