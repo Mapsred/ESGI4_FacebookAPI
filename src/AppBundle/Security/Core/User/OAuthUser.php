@@ -9,7 +9,6 @@
 namespace AppBundle\Security\Core\User;
 
 use AppBundle\Utils\Facebook\Album;
-use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;
 use HWI\Bundle\OAuthBundle\Security\Core\User\OAuthUser as BaseOAuthUser;
 
@@ -30,8 +29,10 @@ class OAuthUser extends BaseOAuthUser
      */
     private $email;
 
-    /** @var Slugify $slugify */
-    private $slugify;
+    /**
+     * @var string $slugifiedName
+     */
+    private $slugifiedName;
 
     /**
      * OAuthUser constructor.
@@ -40,8 +41,6 @@ class OAuthUser extends BaseOAuthUser
     public function __construct($username)
     {
         parent::__construct($username);
-        $this->slugify = new Slugify();
-
         $this->albums = new ArrayCollection();
     }
 
@@ -74,7 +73,18 @@ class OAuthUser extends BaseOAuthUser
      */
     public function getSlugifiedName()
     {
-        return $this->slugify->slugify($this->getName());
+        return $this->slugifiedName;
+    }
+
+    /**
+     * @param string $slugifiedName
+     * @return OAuthUser
+     */
+    public function setSlugifiedName($slugifiedName)
+    {
+        $this->slugifiedName = $slugifiedName;
+
+        return $this;
     }
 
     /**

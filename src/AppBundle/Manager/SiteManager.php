@@ -70,14 +70,15 @@ class SiteManager
             $response = $this->resourceOwner->getUserInformation($oldToken->getRawToken());
         }
 
+        $slugify = new Slugify();
         $user = new OAuthUser($response->getRealName());
         $user->setId($response->getUsername());
         $user->setEmail($response->getEmail());
+        $user->setSlugifiedName($slugify->slugify($response->getRealName()));
 
-        $slugify = new Slugify();
         $site
             ->setOAuthUser($user)
-            ->setUserName($slugify->slugify($response->getRealName()))
+            ->setUserName($user->getSlugifiedName())
             ->setAccessToken($response->getAccessToken());
 
         $permissions = $this->facebook->getPermissions($site);

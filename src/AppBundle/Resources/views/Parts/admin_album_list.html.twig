@@ -3,7 +3,7 @@
           id="largeForm">
         <span class="h3">
         <input type="submit" value="Désactiver le contenu sélectionné"
-               class="btn btn-isolonice btn-flat margin-bottom15" id="btn" disabled>
+               class="btn btn-isolonice btn-flat margin-bottom15" id="btn">
     </span>
         <div class="box box-red">
             <div class="box-header with-border">
@@ -24,7 +24,9 @@
                     {% for picture in album.pictures %}
                         <tr>
                             <td>
-                                <img width="10%" src="{{ picture.webpimages[0].source }}" alt="Photo numero {{ picture.id }} ">
+                                <a href="{{ picture.webpimages[0].source }}" data-lightbox="album">
+                                    <img width="10%" src="{{ picture.webpimages[0].source }}" alt="Photo numero {{ picture.id }} ">
+                                </a>
                             </td>
                             <td class="input text-center">
                                 <input type="checkbox" name="photos[{{ picture.id }}]" {{ picture.id in disabledPhotos ? 'checked' : '' }}>
