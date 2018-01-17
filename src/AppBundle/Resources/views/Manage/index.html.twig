@@ -1,38 +1,11 @@
-<!doctype html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Modification des sites</title>
-    <link rel="stylesheet" href="{{ asset('assets/bower/bootstrap/dist/css/bootstrap.css') }}">
-</head>
-<body>
-<div class="container">
-    <form action="{{ path('manage_homepage') }}" method="post">
-        <table class="table">
-            <thead>
-            <tr>
-                <th>Site</th>
-                <th>Supprimer</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for site in sites %}
-                {% set site_link = path('site_home', {'project_name': site.userName}) %}
-                <tr>
-                    <td><a href="{{ site_link }}">{{ site.userName }}</a></td>
-                    <td><label><input type="checkbox" name="site[]" value="{{ site.id }}"></label></td>
-                </tr>
-            {% endfor %}
-            <tr>
-                <td></td>
-                <td><button type="submit" class="btn btn-info">Valider</button></td>
-            </tr>
-            </tbody>
-        </table>
-    </form>
-</div>
-</body>
-</html>
+{% extends 'AppBundle:Manage:base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <h1>Management de MyPhotoBook</h1>
+        <h2><a href="{{ path('fos_user_security_login') }}">Se connecter</a></h2>
+        {% if app.user is not null and is_granted('ROLE_ADMIN') %}
+            <h2><a href="{{ path('manage_edit') }}">Editer les sites</a></h2>
+        {% endif %}
+    </div>
+{% endblock %}

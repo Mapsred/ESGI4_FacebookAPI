@@ -8,7 +8,7 @@
     <ol class="breadcrumb">
         <li>
             <a href="{{ path('site_home', {'project_name': site.username}) }}">
-                <i class="fa fa-dashboard"></i> Mon site
+                <i class="fa fa-dashboard"></i> Page d'accueil
             </a>
         </li>
         <li class="active">Admin</li>
@@ -29,7 +29,7 @@
             <ul>
                 <li>
                     <a href="{{ path('admin_colorChoice', {'project_name': site.username}) }}">
-                        Choisir la couleur principale
+                        Choisir la couleur principale du site
                     </a>
                 </li>
                 <li>Choisir la disposition</li>
@@ -38,10 +38,9 @@
                         Choisir les albums à cacher
                     </a>
                 </li>
-                <li>Choisir les photos à cacher</li>
                 <li>
                     <a href="{{ path('photo_upload', {'project_name': site.userName}) }}">
-                        Ajout d'une photo
+                        Uploader une photo
                     </a>
                 </li>
             </ul>

@@ -18,7 +18,15 @@ use Symfony\Component\HttpFoundation\Response;
 class ManageController extends Controller
 {
     /**
-     * @Route("/", name="manage_homepage")
+     * @Route("/", name="manage_home")
+     */
+    public function homeManageAction()
+    {
+        return $this->render('AppBundle:Manage:index.html.twig');
+    }
+
+    /**
+     * @Route("/edit", name="manage_edit")
      * @param Request $request
      * @return Response|RedirectResponse
      */
@@ -32,12 +40,12 @@ class ManageController extends Controller
             }
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('manage_homepage');
+            return $this->redirectToRoute('manage_edit');
         }
 
         $sites = $this->getDoctrine()->getRepository('AppBundle:Site')->findAll();
 
-        return $this->render('AppBundle:Manage:index.html.twig', [
+        return $this->render('AppBundle:Manage:edit.html.twig', [
             'sites' => $sites
         ]);
 

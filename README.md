@@ -61,4 +61,4 @@ Run ``docker-compose exec php-fpm php bin/console doctrine:schema:update --force
 To access to the Admin page you need to create a database user with the following command :
 ``php bin/console fos:user:create admin --super-admin`` (don't forget the `docker-compose exec php-fpm` if you use docker-compose)
 
-Next, the ``facebook-final.develop/manage/login`` and ``facebook-final.develop/manage`` pages are available to you 
+Next, the ``facebook-final.develop/manage/login`` and ``facebook-final.develop/manage/edit`` pages are available to you 
