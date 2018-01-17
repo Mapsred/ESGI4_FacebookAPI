@@ -3,7 +3,6 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Security\Core\User\OAuthUser;
-use Cocur\Slugify\Slugify;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
@@ -50,10 +49,8 @@ class DefaultController extends Controller
      */
     public function redirectToPageAction()
     {
-        $slugify = new Slugify();
-
         return $this->getUser() instanceof OAuthUser ? $this->redirectToRoute('site_home', [
-            'project_name' => $slugify->slugify($this->getUser()->getName())
+            'project_name' => $this->getUser()->getSlugifiedName()
         ]) : $this->redirectToRoute('homepage');
     }
 }
