@@ -16,79 +16,6 @@
 {% endblock %}
 
 {% block body %}
-
-    {% for album in site.oAuthUser.albums if site.oAuthUser.albums.count > 0 %}
-
-        <div class="post">
-            <div class="user-block">
-                <span class="username">
-                    <a href={{ path('admin_album', {'project_name': site.username, 'album_id': album.id}) }}>{{ album.name }}</a>
-                </span>
-                {% if album.pictures|length > 0 %}
-                    {% if album.id not in disabledAlbums %}
-                        <span class="pull-right">
-                          <a href="{{ path('admin_disable_album', {'project_name': site.username, 'album_id': album.id}) }}" type="button" class="btn btn-block btn-warning btn-sm">Désactiver l'album</a>
-                        </span>
-                    {% else %}
-                        <span class="pull-right">
-                          <a href="{{ path('admin_enable_album', {'project_name': site.username, 'album_id': album.id}) }}" type="button" class="btn btn-block btn-success btn-sm">Activer l'album</a>
-                        </span>
-                    {% endif %}
-                {% endif %}
-                <span class="description">{{ album.pictures|length }} photos posteés </span>
-            </div>
-            {% if album.pictures|length > 0 %}
-                <!-- /.user-block -->
-                <div class="row margin-bottom">
-                    <div class="col-sm-6">
-
-                        <a href="{{ album.pictures.first.webpimages[0].source }}" data-lightbox="{{ album.name }}">
-                            <img width="100%" class="img-responsive" src="{{ album.pictures.first.webpimages[0].source }}" alt="Photo">
-                        </a>
-                    </div>
-                    <!-- /.col -->
-                    <div class="col-sm-6">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                {% if album.pictures.get(1) %}
-                                <a href="{{ album.pictures.get(1).webpimages[0].source }}" data-lightbox="{{ album.name }}">
-                                    <img width="100%" class="img-responsive" src="{{ album.pictures.get(1).webpimages[0].source }}" alt="Photo">
-                                </a>
-                                {% endif %}
-                                <br>
-                                {% if album.pictures.get(2) %}
-                                <a href="{{ album.pictures.get(2).webpimages[0].source }}" data-lightbox="{{ album.name }}">
-                                    <img width="100%" class="img-responsive" src="{{ album.pictures.get(2).webpimages[0].source }}" alt="Photo">
-                                </a>
-                                {% endif %}
-                            </div>
-                            <!-- /.col -->
-                            <div class="col-sm-6">
-                                {% if album.pictures.get(3) %}
-                                <a href="{{ album.pictures.get(3).webpimages[0].source }}" data-lightbox="{{ album.name }}">
-                                    <img width="100%" class="img-responsive" src="{{ album.pictures.get(3).webpimages[0].source }}" alt="Photo">
-                                </a>
-                                {% endif %}
-                                <br>
-                                {% if album.pictures.get(4) %}
-                                <a href="{{ album.pictures.get(4).webpimages[0].source }}" data-lightbox="{{ album.name }}">
-                                    <img width="100%" class="img-responsive" src="{{ album.pictures.get(4).webpimages[0].source }}" alt="Photo">
-                                 </a>
-                                {% endif %}
-                            </div>
-                            <!-- /.col -->
-                        </div>
-                        <!-- /.row -->
-                    </div>
-                    <!-- /.col -->
-                </div>
-                <!-- /.row -->
-            {% endif %}
-        </div>
-    {% else %}
-        <p> Aucun album </p>
-    {% endfor %}
-
     <div class="navbar-collapse">
         <div class="nav navbar-right btn-group">
             <a href="{{ path('admin_albums', {'project_name': site.userName, 'type': 'list'}) }}"
@@ -103,7 +30,7 @@
     </div>
     {% if type == "list" %}
         {% include "AppBundle:Parts:admin_albums_list.html.twig" with {'site': site} %}
-        {% else %}
+    {% else %}
         {% include "AppBundle:Parts:admin_albums_large.html.twig" with {'site': site} %}
     {% endif %}
 {% endblock %}

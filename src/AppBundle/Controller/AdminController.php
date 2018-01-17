@@ -186,7 +186,7 @@ class AdminController extends Controller
     {
         $site = $this->get(SiteManager::class)->getSite();
 
-        $album = $site->getOAuthUser()->getAlbums()->filter(function ($album) use ($album_id) {
+        $album = $site->getOAuthUser()->getAlbums()->filter(function (Album $album) use ($album_id) {
             return $album->getId() == $album_id;
         });
 
@@ -210,9 +210,9 @@ class AdminController extends Controller
         }
 
         $site = $this->get(SiteManager::class)->getSite();
-        $redirectResponse = $this->redirectToRoute('admin_albums', ['project_name' => $site->getUserName()]);
+        $redirectResponse = $this->redirectToRoute('admin_albums', ['project_name' => $site->getUserName(), 'type' => 'large']);
 
-        $album = $site->getOAuthUser()->getAlbums()->filter(function ($album) use ($album_id) {
+        $album = $site->getOAuthUser()->getAlbums()->filter(function (Album $album) use ($album_id) {
             return $album->getId() == $album_id;
         });
 
@@ -225,26 +225,23 @@ class AdminController extends Controller
         if ($type == "disable") {
             $disabledAlbums = $site->getAlbumOptions(); // Array
             if (in_array($album_id, $disabledAlbums)) {
-                $this->addFlash('danger', 'Cet album est déja désactivé .');
+                $this->addFlash('danger', 'Cet album est déja désactivé.');
             } else {
                 $site->addAlbumOption($album_id);
-                $this->getDoctrine()->getManager()->persist($site);
-                $this->getDoctrine()->getManager()->flush();
-
                 $this->addFlash('success', 'L\'album a bien été désactivé.');
             }
         }else {
             $enabledAlbums = $site->getAlbumOptions(); // Array
             if (!in_array($album_id, $enabledAlbums)) {
-                $this->addFlash('danger', 'Cet album est déja activé .');
+                $this->addFlash('danger', 'Cet album est déja activé.');
             } else {
                 $site->removeAlbumOption($album_id);
-                $this->getDoctrine()->getManager()->persist($site);
-                $this->getDoctrine()->getManager()->flush();
-
-                $this->addFlash('success', 'L\'album a bien été activé .');
+                $this->addFlash('success', 'L\'album a bien été activé.');
             }
         }
+
+        $this->getDoctrine()->getManager()->persist($site);
+        $this->getDoctrine()->getManager()->flush();
 
         return $redirectResponse;
     }
