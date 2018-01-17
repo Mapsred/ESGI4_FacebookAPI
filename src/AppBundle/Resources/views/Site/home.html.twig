@@ -15,6 +15,23 @@
 {% endblock %}
 
 {% block body %}
+    <div class="navbar-collapse">
+        <div class="nav navbar-right btn-group">
+            <a href="{{ path('site_home', {'project_name': site.userName, 'type': 'list'}) }}"
+               class="btn btn-default navbar-btn {{ type == "list" ? "active" : "" }}">
+                <i class="fa fa-list fa-fw"></i>
+            </a>
+            <a href="{{ path('site_home', {'project_name': site.userName, 'type': 'large'}) }}"
+               class="btn btn-default navbar-btn {{ type == "large" ? "active" : "" }}">
+                <i class="fa fa-th-large fa-fw"></i>
+            </a>
+            <a href="{{ path('site_home', {'project_name': site.userName, 'type': 'masonry'}) }}"
+               class="btn btn-default navbar-btn {{ type == "masonry" ? "active" : "" }}">
+                <i class="fa fa-th-large fa-fw"></i>
+            </a>
+        </div>
+    </div>
+
     <div class="box box-red">
         <div class="box-header with-border">
             <h3 class="box-title">Liste des albums</h3>
@@ -34,30 +51,11 @@
         <!-- /.box-body -->
     </div>
 
-    {% for album in site.oAuthUser.albums %}
-        {% set text = url('site_home', {'project_name': site.userName}) ~ "#album_"~ album.id %}
-        <div class="box box-red" id="album_{{ album.id }}">
-            <div class="box-header with-border">
-                <h3 class="box-title">
-                    <span class="clipboard-copy" data-clipboard-text="{{ text }}">
-                        <i class="fa fa-link" aria-hidden="true" data-toggle="tooltip" data-placement="top"
-                           title="Copier le lien de l'album"></i>
-                    </span>
-                    {{ album.name }}
-                </h3>
-            </div>
-            <!-- form start -->
-            <div class="box-body">
-                {% for picture in album.pictures %}
-                    {% set img = picture.webpImages.last %}
-                    <img src="{{ img.source }}" class="star-grid" alt="">
-                    {#{{ dump(picture) }}#}
-                {% endfor %}
-            </div>
-            <!-- /.box-body -->
-        </div>
-
-    {% endfor %}
+    {% if type == "list" %}
+    {% elseif type == "large" %}
+        {% include "AppBundle:Parts:site_home_large.html.twig" with {'site': site} %}
+    {% else %}
+    {% endif %}
 {% endblock %}
 
 

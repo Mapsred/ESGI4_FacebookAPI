@@ -22,15 +22,17 @@ use Symfony\Component\HttpFoundation\Response;
 class SiteController extends Controller
 {
     /**
-     * @Route("/", name="site_home")
+     * @Route("/{type}", name="site_home", defaults={"type": "large"})
+     * @param $type
      * @return Response
      */
-    public function siteAction()
+    public function siteAction($type)
     {
         $site = $this->get('AppBundle\Manager\SiteManager')->getSite();
 
         return $this->render('AppBundle:Site:home.html.twig', [
-            'site' => $site
+            'site' => $site,
+            'type' => $type
         ]);
     }
 }
