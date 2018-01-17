@@ -247,6 +247,27 @@ class AdminController extends Controller
     }
 
     /**
+     * @Route("/admin_delete_website", name="admin_delete_website")
+     * @param Request $request
+     * @return RedirectResponse|Response
+     */
+    public function deleteWebsiteAction(Request $request)
+    {
+        $site = $this->get(SiteManager::class)->getSite();
+        if ($request->isMethod('POST')) {
+            $this->addFlash('success', 'Votre site a bien été supprimé');
+            $this->getDoctrine()->getManager()->remove($site);
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('logout');
+        }
+
+        return $this->render('AppBundle:Admin:delete_website.html.twig', [
+            'site' => $site
+        ]);
+    }
+
+    /**
      * @param Site $site
      * @param string $scope
      * @param string $msg

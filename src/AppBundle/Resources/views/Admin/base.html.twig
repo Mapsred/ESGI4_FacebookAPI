@@ -101,12 +101,17 @@ desired effect
                 </li>
                 <li class="{{ currentPath == 'admin_albums' ? 'active': '' }}">
                     <a href="{{ path('admin_albums', {'project_name': site.username}) }}">
-                        <i class="fa fa-cloud-upload"></i> <span>Choisir mes albums</span>
+                        <i class="fa fa-folder-open"></i> <span>Choisir mes albums</span>
                     </a>
                 </li>
                 <li class="{{ currentPath == 'photo_upload' ? 'active': '' }}">
                     <a href="{{ path('photo_upload', {'project_name': site.username}) }}">
                         <i class="fa fa-cloud-upload"></i> <span>Uploader une photo</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('admin_delete_website', {'project_name': site.username}) }}">
+                        <i class="fa fa-trash-o"></i> <span>Supprimer mon site</span>
                     </a>
                 </li>
             </ul>
