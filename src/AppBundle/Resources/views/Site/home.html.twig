@@ -1,1 +1,63 @@
 {% extends 'AppBundle::base.html.twig' %}
+
+{% block title %}{{ site.oAuthUser.name }} | MyPhotoBook{% endblock %}
+
+{% block header %}
+
+{% endblock %}
+
+{% block breadcumb %}
+    <ol class="breadcrumb">
+        <li class="active">
+            <i class="fa fa-dashboard"></i> Page d'accueil
+        </li>
+    </ol>
+{% endblock %}
+
+{% block body %}
+    <div class="box box-red">
+        <div class="box-header with-border">
+            <h3 class="box-title">Liste des albums</h3>
+        </div>
+        <!-- form start -->
+        <div class="box-body">
+            <ul>
+                {% for album in site.oAuthUser.albums %}
+                    <li>
+                        <a href="{{ path('site_home', {'project_name': site.userName}) }}#album_{{ album.id }}">
+                            Album {{ album.name }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <!-- /.box-body -->
+    </div>
+
+    {% for album in site.oAuthUser.albums %}
+        {% set text = url('site_home', {'project_name': site.userName}) ~ "#album_"~ album.id %}
+        <div class="box box-red" id="album_{{ album.id }}">
+            <div class="box-header with-border">
+                <h3 class="box-title">
+                    <span class="clipboard-copy" data-clipboard-text="{{ text }}">
+                        <i class="fa fa-link" aria-hidden="true" data-toggle="tooltip" data-placement="top"
+                           title="Copier le lien de l'album"></i>
+                    </span>
+                    {{ album.name }}
+                </h3>
+            </div>
+            <!-- form start -->
+            <div class="box-body">
+                {% for picture in album.pictures %}
+                    {% set img = picture.webpImages.last %}
+                    <img src="{{ img.source }}" class="star-grid" alt="">
+                    {#{{ dump(picture) }}#}
+                {% endfor %}
+            </div>
+            <!-- /.box-body -->
+        </div>
+
+    {% endfor %}
+{% endblock %}
+
+

@@ -21,7 +21,7 @@ If you did not modify the ``docker-compose.yml`` then you are ready to go
 Then run 
 
 * ``docker-compose exec php-fpm composer install`` To install composer dependencies
-* ``docker-compose exec nodejs bower install`` To install bower dependencies
+* ``docker-compose exec nodejs bower install --allow-root`` To install bower dependencies
 * ``docker-compose exec php-fpm php bin/console assetic:dump`` To dump all css/js libraries
 
 

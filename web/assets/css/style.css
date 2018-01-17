@@ -1,3 +1,14 @@
 .btn-color, .btn-choice {
     width: 100px;
 }
+
+.star-grid {
+    height: 211px;
+    width: 211px;
+}
+
+.clipboard-copy {
+    text-decoration: none;
+    border-bottom: 1px dotted #c6cbd1;
+    cursor: pointer;
+}
