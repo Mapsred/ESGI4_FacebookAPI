@@ -159,6 +159,32 @@ class Site
     }
 
     /**
+     * @param $albumOption
+     * @return Site
+     */
+    public function addAlbumOption($albumOption)
+    {
+        $this->albumOptions[] = $albumOption;
+
+        return $this;
+    }
+
+    /**
+     * @param $albumOption
+     * @return Site
+     */
+    public function removeAlbumOption($albumOption)
+    {
+        $key = array_search($albumOption, $this->albumOptions);
+
+        if (isset($this->albumOptions[$key])) {
+            unset($this->albumOptions[$key]);
+        }
+
+        return $this;
+    }
+
+    /**
      * Set photoOptions
      *
      * @param array $photoOptions
