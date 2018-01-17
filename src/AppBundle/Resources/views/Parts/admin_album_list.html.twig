@@ -1,0 +1,42 @@
+{% if album.pictures.count > 0 %}
+    <form action="{{ path('admin_album', {'project_name': site.userName, 'album_id': album.id}) }}" method="post"
+          id="largeForm">
+        <span class="h3">
+        <input type="submit" value="Désactiver le contenu sélectionné"
+               class="btn btn-isolonice btn-flat margin-bottom15" id="btn" disabled>
+    </span>
+        <div class="box box-red">
+            <div class="box-header with-border">
+                <h3 class="box-title">Activer/Désactiver des photos</h3>
+            </div>
+            <!-- form start -->
+            <div class="box-body table-responsive no-padding">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>Photos</th>
+                        <th class="select_all text-center">
+                            <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for picture in album.pictures %}
+                        <tr>
+                            <td>
+                                <img width="10%" src="{{ picture.webpimages[0].source }}" alt="Photo numero {{ picture.id }} ">
+                            </td>
+                            <td class="input text-center">
+                                <input type="checkbox" name="photos[{{ picture.id }}]" {{ picture.id in disabledPhotos ? 'checked' : '' }}>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.box-body -->
+        </div>
+    </form>
+{% else %}
+    <p> Aucune photo </p>
+{% endif %}

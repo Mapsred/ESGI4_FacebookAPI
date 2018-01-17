@@ -178,11 +178,13 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("/album/{album_id}", name="admin_album")
+     * @Route("/album/{album_id}/{type}", name="admin_album", defaults={"type": "list"})
+     * @param Request $request
      * @param null $album_id
+     * @param string $type
      * @return Response
      */
-    public function albumAction($album_id = null)
+    public function albumAction(Request $request , $album_id = null, $type)
     {
         $site = $this->get(SiteManager::class)->getSite();
 
@@ -190,10 +192,27 @@ class AdminController extends Controller
             return $album->getId() == $album_id;
         });
 
+        if ($album->count() == 0) {
+            $this->addFlash('danger', "Cet album n'existe pas");
+            return $this->redirectToRoute('admin_albums', ['project_name' => $site->getUserName(), 'type' => 'list']);
+        }
+
+        if ($request->isMethod('POST') && $request->request->has('photos')) {
+            $site->setPhotoOptions(array_keys($request->request->get('photos')));
+            $this->getDoctrine()->getManager()->persist($site);
+            $this->getDoctrine()->getManager()->flush();
+
+            $this->addFlash('success', 'Les photos sélectionnés ont bien été désactivés');
+
+            return $this->redirectToRoute('admin_album', ['project_name' => $site->getUserName(), 'album_id' => $album_id, 'type' => $type]);
+        }
+
         return $this->render('AppBundle:Admin:album.html.twig', [
             'site' => $site,
             'album' => $album->first(),
-            'disabledAlbums' => $disabledAlbums = $site->getAlbumOptions()
+            'disabledAlbums' =>  $site->getAlbumOptions(),
+            'disabledPhotos' =>  $site->getPhotoOptions(),
+            'type' => $type
         ]);
     }
 

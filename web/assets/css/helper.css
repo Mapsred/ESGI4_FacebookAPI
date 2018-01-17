@@ -712,3 +712,12 @@
 
 .h1.text-bold, .h2.text-bold, .h3.text-bold, .h4.text-bold, .h5.text-bold, .h6.text-bold,
 h1.text-bold, h2.text-bold, h3.text-bold, h4.text-bold, h5.text-bold, h6.text-bold, .text-bold { font-weight : bold; }
+
+.picture-enabled {
+    border-bottom: 5px solid #00a65a;
+}
+
+.picture-disabled {
+    border-bottom: 5px solid #dd4b39;
+}
+
