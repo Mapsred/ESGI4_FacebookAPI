@@ -86,26 +86,37 @@ class SiteManager
         if ($site->hasScope("user_photos")) {
             $albums = [];
             foreach ($response->getData()['albums']['data'] as $data) {
+                if ($data['created_time'] < $site->getUpdatedAt()) {
+                    $site->addAlbumOption($data['id']);
+                }
+
                 $photos = [];
                 if (isset($data['photos'])) {
                     foreach ($data['photos']['data'] as $photoData) {
+                        if ($photoData['created_time'] < $site->getUpdatedAt()) {
+                            $site->addPhotoOption($photoData['id']);
+                        }
+
                         $webpImages = [];
                         foreach ($photoData['webp_images'] as $webpImageData) {
-                            $webpImage = new WebpImage($webpImageData['source']);
+                            $webpImage = new WebpImage($webpImageData['source'], $site->isPictureDisabled($photoData['id']));
                             $webpImages[] = $webpImage;
                         }
 
-                        $photo = new Picture($photoData['id'], $photoData['picture'], $webpImages);
+                        $photo = new Picture($photoData['id'], $photoData['picture'], $webpImages, $site->isPictureDisabled($photoData['id']));
                         $photos[] = $photo;
                     }
                 }
 
-                $album = new Album($data['id'], $data['name'], $photos);
+                $album = new Album($data['id'], $data['name'], $photos, $site->isAlbumDisabled($data['id']));
 
                 $albums[] = $album;
             }
 
             $user->setAlbums($albums);
+            $site
+                ->setAlbumOptions(array_unique($site->getAlbumOptions()))
+                ->setPhotoOptions(array_unique($site->getPhotoOptions()));
         }
 
         $this->manager->persist($site);

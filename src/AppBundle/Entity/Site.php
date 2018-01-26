@@ -3,6 +3,8 @@
 namespace AppBundle\Entity;
 
 use AppBundle\Security\Core\User\OAuthUser;
+use AppBundle\Utils\Facebook\Album;
+use AppBundle\Utils\Facebook\Picture;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -75,6 +77,13 @@ class Site
      * @ORM\Column(name="given_scopes", type="json_array", nullable=true)
      */
     private $givenScopes;
+
+    /**
+     * @var \DateTime $updatedAt
+     *
+     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
+     */
+    private $updatedAt;
 
     /**
      * Get id
@@ -180,6 +189,17 @@ class Site
         if (isset($this->albumOptions[$key])) {
             unset($this->albumOptions[$key]);
         }
+
+        return $this;
+    }
+
+    /**
+     * @param $photoOption
+     * @return Site
+     */
+    public function addPhotoOption($photoOption)
+    {
+        $this->photoOptions[] = $photoOption;
 
         return $this;
     }
@@ -295,5 +315,49 @@ class Site
     public function getSkinColor()
     {
         return $this->skinColor;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @param \DateTime $updatedAt
+     * @return Site
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+
+    /**
+     * @param Album|int $album
+     * @return bool
+     */
+    public function isAlbumDisabled($album)
+    {
+        $albumId = $album instanceof Album ? $album->getId() : $album;
+        $key = array_search($albumId, $this->albumOptions);
+
+        return isset($this->albumOptions[$key]);
+    }
+
+    /**
+     * @param Picture|int $picture
+     * @return bool
+     */
+    public function isPictureDisabled($picture)
+    {
+        $pictureId = $picture instanceof Picture ? $picture->getId() : $picture;
+        $key = array_search($pictureId, $this->photoOptions);
+
+        return isset($this->photoOptions[$key]);
     }
 }

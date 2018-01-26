@@ -53,7 +53,7 @@ class OAuthUserProvider extends BaseOAuthUserProvider
             $site = new Site();
             $site->setUserId($response->getUsername());
         }
-
+        $site->setUpdatedAt(new \DateTime());
         $site = $this->siteManager->generateOAuthUser($site, $response);
 
         return $site->getOAuthUser();
