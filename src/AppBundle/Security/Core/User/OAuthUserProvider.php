@@ -51,9 +51,9 @@ class OAuthUserProvider extends BaseOAuthUserProvider
     {
         if (null === $site = $this->manager->getRepository("AppBundle:Site")->findOneBy(['userId' => $response->getUsername()])) {
             $site = new Site();
+            $site->setCreatedAt(new \DateTime());
             $site->setUserId($response->getUsername());
         }
-
         $site = $this->siteManager->generateOAuthUser($site, $response);
 
         return $site->getOAuthUser();

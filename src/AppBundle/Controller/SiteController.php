@@ -8,6 +8,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Manager\SiteManager;
 use AppBundle\Security\Core\User\OAuthUser;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -28,7 +29,7 @@ class SiteController extends Controller
      */
     public function siteAction($type)
     {
-        $site = $this->get('AppBundle\Manager\SiteManager')->getSite();
+        $site = $this->get(SiteManager::class)->getSite();
 
         return $this->render('AppBundle:Site:home.html.twig', [
             'site' => $site,

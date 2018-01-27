@@ -18,20 +18,23 @@ class Picture
     private $picture;
     /** @var WebpImage[]|ArrayCollection $webpImages */
     private $webpImages;
+    /** @var bool enabled */
+    private $enabled;
 
     /**
      * Picture constructor.
      * @param $id
      * @param $picture
      * @param $webpImages
+     * @param bool $enabled
      */
-    public function __construct($id, $picture, $webpImages)
+    public function __construct($id, $picture, $webpImages, $enabled = true)
     {
         $this->id = $id;
         $this->picture = $picture;
         $this->setWebpImages($webpImages);
+        $this->enabled = $enabled;
     }
-
 
     /**
      * @return int
@@ -72,5 +75,13 @@ class Picture
     public function getWebpImages()
     {
         return $this->webpImages;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isEnabled(): bool
+    {
+        return $this->enabled;
     }
 }

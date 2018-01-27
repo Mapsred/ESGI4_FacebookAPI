@@ -161,7 +161,7 @@ class AdminController extends Controller
         $site = $this->get(SiteManager::class)->getSite();
 
         if ($request->isMethod('POST') && $request->request->has('albums')) {
-            $site->setAlbumOptions(array_keys($request->request->get('albums')));
+            $site->setDisabledAlbums(array_keys($request->request->get('albums')));
             $this->getDoctrine()->getManager()->persist($site);
             $this->getDoctrine()->getManager()->flush();
 
@@ -172,7 +172,7 @@ class AdminController extends Controller
 
         return $this->render('AppBundle:Admin:albums.html.twig', [
             'site' => $site,
-            'disabledAlbums' => $site->getAlbumOptions(),
+            'disabledAlbums' => $site->getDisabledAlbums(),
             'type' => $type
         ]);
     }
@@ -198,7 +198,10 @@ class AdminController extends Controller
         }
 
         if ($request->isMethod('POST') && $request->request->has('photos')) {
-            $site->setPhotoOptions(array_keys($request->request->get('photos')));
+            $disablesPhotos = array_keys($request->request->get('photos'));
+            foreach ($disablesPhotos as $photo) {
+                $site->disablePicture($photo);
+            }
             $this->getDoctrine()->getManager()->persist($site);
             $this->getDoctrine()->getManager()->flush();
 
@@ -210,8 +213,8 @@ class AdminController extends Controller
         return $this->render('AppBundle:Admin:album.html.twig', [
             'site' => $site,
             'album' => $album->first(),
-            'disabledAlbums' =>  $site->getAlbumOptions(),
-            'disabledPhotos' =>  $site->getPhotoOptions(),
+            'disabledAlbums' => $disabledAlbums = $site->getDisabledAlbums(),
+            'disabledPhotos' =>  $site->getDisabledPictures(),
             'type' => $type
         ]);
     }
@@ -242,19 +245,19 @@ class AdminController extends Controller
         }
 
         if ($type == "disable") {
-            $disabledAlbums = $site->getAlbumOptions(); // Array
+            $disabledAlbums = $site->getDisabledAlbums(); // Array
             if (in_array($album_id, $disabledAlbums)) {
                 $this->addFlash('danger', 'Cet album est déja désactivé.');
             } else {
-                $site->addAlbumOption($album_id);
+                $site->disableAlbum($album_id);
                 $this->addFlash('success', 'L\'album a bien été désactivé.');
             }
         }else {
-            $enabledAlbums = $site->getAlbumOptions(); // Array
+            $enabledAlbums = $site->getDisabledAlbums(); // Array
             if (!in_array($album_id, $enabledAlbums)) {
                 $this->addFlash('danger', 'Cet album est déja activé.');
             } else {
-                $site->removeAlbumOption($album_id);
+                $site->enableAlbum($album_id);
                 $this->addFlash('success', 'L\'album a bien été activé.');
             }
         }

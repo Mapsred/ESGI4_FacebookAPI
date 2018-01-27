@@ -87,26 +87,37 @@ class SiteManager
         if ($site->hasScope("user_photos")) {
             $albums = [];
             foreach ($response->getData()['albums']['data'] as $data) {
+                if ($this->getCreatedTime($data) > $site->getCreatedAt()) {
+                    $site->disableAlbum($data['id']);
+                }
+
                 $photos = [];
                 if (isset($data['photos'])) {
                     foreach ($data['photos']['data'] as $photoData) {
+                        if ($this->getCreatedTime($photoData) > $site->getCreatedAt()) {
+                            $site->disablePicture($photoData['id']);
+                        }
+
                         $webpImages = [];
                         foreach ($photoData['webp_images'] as $webpImageData) {
-                            $webpImage = new WebpImage($webpImageData['source']);
+                            $webpImage = new WebpImage($webpImageData['source'], !$site->isPictureDisabled($photoData['id']));
                             $webpImages[] = $webpImage;
                         }
 
-                        $photo = new Picture($photoData['id'], $photoData['picture'], $webpImages);
+                        $photo = new Picture($photoData['id'], $photoData['picture'], $webpImages, !$site->isPictureDisabled($photoData['id']));
                         $photos[] = $photo;
                     }
                 }
 
-                $album = new Album($data['id'], $data['name'], $photos);
+                $album = new Album($data['id'], $data['name'], $photos, !$site->isAlbumDisabled($data['id']));
 
                 $albums[] = $album;
             }
 
             $user->setAlbums($albums);
+            $site
+                ->setDisabledAlbums(array_unique($site->getDisabledAlbums()))
+                ->setDisabledPictures(array_unique($site->getDisabledPictures()));
         }
 
         $this->manager->persist($site);
@@ -158,5 +169,14 @@ class SiteManager
     public function getFacebook(): Facebook
     {
         return $this->facebook;
+    }
+
+    /**
+     * @param $data
+     * @return \DateTime
+     */
+    private function getCreatedTime($data)
+    {
+        return new \DateTime($data['created_time']);
     }
 }

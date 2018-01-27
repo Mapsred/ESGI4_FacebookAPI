@@ -18,18 +18,22 @@ class Album
     private $pictures;
     /** @var string $name */
     private $name;
+    /** @var bool enabled */
+    private $enabled;
 
     /**
      * Album constructor.
      * @param int $id
-     * @param Picture[]|ArrayCollection $pictures
      * @param string $name
+     * @param Picture[]|ArrayCollection $pictures
+     * @param bool $enabled
      */
-    public function __construct($id, $name, $pictures)
+    public function __construct($id, $name, $pictures, $enabled = true)
     {
         $this->id = $id;
         $this->setPictures($pictures);
         $this->name = $name;
+        $this->enabled = $enabled;
     }
 
     /**
@@ -95,5 +99,13 @@ class Album
         }
 
         return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isEnabled(): bool
+    {
+        return $this->enabled;
     }
 }

@@ -3,6 +3,8 @@
 namespace AppBundle\Entity;
 
 use AppBundle\Security\Core\User\OAuthUser;
+use AppBundle\Utils\Facebook\Album;
+use AppBundle\Utils\Facebook\Picture;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -51,18 +53,18 @@ class Site
     private $skinColor = 'skin-blue';
 
     /**
-     * @var array $albumOptions
+     * @var array $disabledAlbums
      *
-     * @ORM\Column(name="album_options", type="json_array", nullable=true)
+     * @ORM\Column(name="disabled_albums", type="json_array", nullable=true)
      */
-    private $albumOptions;
+    private $disabledAlbums;
 
     /**
-     * @var array $photoOptions
+     * @var array $disabledPictures
      *
-     * @ORM\Column(name="photo_options", type="json_array", nullable=true)
+     * @ORM\Column(name="disabled_pictures", type="json_array", nullable=true)
      */
-    private $photoOptions;
+    private $disabledPictures;
 
     /**
      * @var OAuthUser $OAuthUser
@@ -75,6 +77,19 @@ class Site
      * @ORM\Column(name="given_scopes", type="json_array", nullable=true)
      */
     private $givenScopes;
+
+    /**
+     * @var \DateTime $createdAt
+     *
+     * @ORM\Column(name="created_at", type="datetime", nullable=true)
+     */
+    private $createdAt;
+
+    public function __construct()
+    {
+        $this->disabledPictures = [];
+        $this->disabledAlbums = [];
+    }
 
     /**
      * Get id
@@ -137,13 +152,13 @@ class Site
     /**
      * Set albumOptions
      *
-     * @param array $albumOptions
+     * @param array $disabledAlbums
      *
      * @return Site
      */
-    public function setAlbumOptions($albumOptions)
+    public function setDisabledAlbums($disabledAlbums)
     {
-        $this->albumOptions = $albumOptions;
+        $this->disabledAlbums = $disabledAlbums;
 
         return $this;
     }
@@ -153,33 +168,44 @@ class Site
      *
      * @return array
      */
-    public function getAlbumOptions()
+    public function getDisabledAlbums()
     {
-        return $this->albumOptions;
+        return $this->disabledAlbums;
     }
 
     /**
-     * @param $albumOption
+     * @param $album
      * @return Site
      */
-    public function addAlbumOption($albumOption)
+    public function disableAlbum($album)
     {
-        $this->albumOptions[] = $albumOption;
+        $this->disabledAlbums[] = $album;
 
         return $this;
     }
 
     /**
-     * @param $albumOption
+     * @param $album
      * @return Site
      */
-    public function removeAlbumOption($albumOption)
+    public function enableAlbum($album)
     {
-        $key = array_search($albumOption, $this->albumOptions);
+        $key = array_search($album, $this->disabledAlbums);
 
-        if (isset($this->albumOptions[$key])) {
-            unset($this->albumOptions[$key]);
+        if (isset($this->disabledAlbums[$key])) {
+            unset($this->disabledAlbums[$key]);
         }
+
+        return $this;
+    }
+
+    /**
+     * @param $photo
+     * @return Site
+     */
+    public function disablePicture($photo)
+    {
+        $this->disabledPictures[] = $photo;
 
         return $this;
     }
@@ -187,13 +213,13 @@ class Site
     /**
      * Set photoOptions
      *
-     * @param array $photoOptions
+     * @param array $disabledPictures
      *
      * @return Site
      */
-    public function setPhotoOptions($photoOptions)
+    public function setDisabledPictures($disabledPictures)
     {
-        $this->photoOptions = $photoOptions;
+        $this->disabledPictures = $disabledPictures;
 
         return $this;
     }
@@ -203,9 +229,9 @@ class Site
      *
      * @return array
      */
-    public function getPhotoOptions()
+    public function getDisabledPictures()
     {
-        return $this->photoOptions;
+        return $this->disabledPictures;
     }
 
     /**
@@ -295,5 +321,59 @@ class Site
     public function getSkinColor()
     {
         return $this->skinColor;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param \DateTime $createdAt
+     * @return Site
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+
+    /**
+     * @param Album|int $album
+     * @return bool
+     */
+    public function isAlbumDisabled($album)
+    {
+        $options = $this->getDisabledAlbums();
+        $options = is_array($options) ? $options : [];
+        $albumId = $album instanceof Album ? $album->getId() : $album;
+        $key = array_search($albumId, $options);
+        if (false !== $key) {
+            return isset($options[$key]);
+        }
+
+        return false;
+    }
+
+    /**
+     * @param Picture|int $picture
+     * @return bool
+     */
+    public function isPictureDisabled($picture)
+    {
+        $options = $this->getDisabledPictures();
+        $options = is_array($options) ? $options : [];
+        $pictureId = $picture instanceof Picture ? $picture->getId() : $picture;
+        $key = array_search($pictureId, $options);
+        if (false !== $key) {
+            return isset($options[$key]);
+        }
+
+        return false;
     }
 }

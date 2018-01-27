@@ -12,14 +12,20 @@ class WebpImage
 {
     /** @var static $source */
     private $source;
+    /**
+     * @var bool enabled
+     */
+    private $enabled;
 
     /**
      * Picture constructor.
      * @param string $source
+     * @param bool $enabled
      */
-    public function __construct($source)
+    public function __construct($source, $enabled = true)
     {
         $this->source = $source;
+        $this->enabled = $enabled;
     }
 
     /**
@@ -28,6 +34,14 @@ class WebpImage
     public function getSource()
     {
         return $this->source;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isEnabled(): bool
+    {
+        return $this->enabled;
     }
 
 }
