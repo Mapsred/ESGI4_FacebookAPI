@@ -11,12 +11,13 @@ $empty = true;
 
 $commands = [
     "--pull" => "git pull",
+    "--composer" => "composer install",
+    '--bower' => 'bower install',
     "--dump-sql" => "php bin/console doctrine:schema:update --dump-sql",
     "--force-sql" => "php bin/console doctrine:schema:update --force",
     "--assetic-dev" => "php bin/console assetic:dump --env=dev",
     "--assetic-prod" => "php bin/console assetic:dump --env=prod",
-    "--clear-cache-prod" => "php bin/console cache:clear --no-warmup --env=prod",
-    "--composer" => "composer install",
+    "--warmup-cache-prod" => "php bin/console cache:warmup --env=prod",
     "--copy-bootstrap-source" => "cp web/assets/bower/bootstrap/dist/css/bootstrap.css.map web/compiled/css/bootstrap.css.map"
 ];
 
@@ -25,7 +26,7 @@ $commands["--full"] = $commands;
 $commands["--prod"] = [
     "--pull" => "git pull",
     "--assetic-prod" => "php bin/console assetic:dump --env=prod",
-    "--clear-cache-prod" => "php bin/console cache:clear --no-warmup --env=prod",
+    "--warmup-cache-prod" => "php bin/console cache:warmup --env=prod",
     "--copy-bootstrap-source" => "cp web/assets/bower/bootstrap/dist/css/bootstrap.css.map web/compiled/css/bootstrap.css.map"
 ];
 
