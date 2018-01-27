@@ -353,8 +353,11 @@ class Site
         $options = is_array($options) ? $options : [];
         $albumId = $album instanceof Album ? $album->getId() : $album;
         $key = array_search($albumId, $options);
+        if (false !== $key) {
+            return isset($options[$key]);
+        }
 
-        return isset($options[$key]);
+        return false;
     }
 
     /**
@@ -367,7 +370,10 @@ class Site
         $options = is_array($options) ? $options : [];
         $pictureId = $picture instanceof Picture ? $picture->getId() : $picture;
         $key = array_search($pictureId, $options);
+        if (false !== $key) {
+            return isset($options[$key]);
+        }
 
-        return isset($options[$key]);
+        return false;
     }
 }

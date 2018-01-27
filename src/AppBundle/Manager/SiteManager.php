@@ -99,16 +99,16 @@ class SiteManager
 
                         $webpImages = [];
                         foreach ($photoData['webp_images'] as $webpImageData) {
-                            $webpImage = new WebpImage($webpImageData['source'], $site->isPictureDisabled($photoData['id']));
+                            $webpImage = new WebpImage($webpImageData['source'], !$site->isPictureDisabled($photoData['id']));
                             $webpImages[] = $webpImage;
                         }
 
-                        $photo = new Picture($photoData['id'], $photoData['picture'], $webpImages, $site->isPictureDisabled($photoData['id']));
+                        $photo = new Picture($photoData['id'], $photoData['picture'], $webpImages, !$site->isPictureDisabled($photoData['id']));
                         $photos[] = $photo;
                     }
                 }
 
-                $album = new Album($data['id'], $data['name'], $photos, $site->isAlbumDisabled($data['id']));
+                $album = new Album($data['id'], $data['name'], $photos, !$site->isAlbumDisabled($data['id']));
 
                 $albums[] = $album;
             }
