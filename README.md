@@ -22,6 +22,7 @@ Then run
 
 * ``docker-compose exec php-fpm composer install`` To install composer dependencies
 * ``docker-compose exec nodejs bower install --allow-root`` To install bower dependencies
+* ``docker-compose exec php-fpm php bin/console cache:clear`` To dump all css/js cache
 * ``docker-compose exec php-fpm php bin/console assetic:dump`` To dump all css/js libraries
 
 
@@ -35,6 +36,7 @@ Then run
 
 * ``composer install`` To install composer dependencies
 * ``bower install`` To install bower dependencies
+* ``php bin/console cache:clear`` To dump all css/js cache
 * ``php bin/console assetic:dump`` To dump all css/js libraries
 
 

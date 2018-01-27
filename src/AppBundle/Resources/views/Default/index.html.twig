@@ -14,61 +14,102 @@
             {{ error }}
         </div>
     {% endif %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">Etendre son réseau Facebook avec un site internet</h3>
+            </div>
+            <div class="box-body">
+                <p>
+                    Avec <b>MyPhotoBook</b>, créez votre site internet grâce aux données de votre compte Facebook.
+                </p>
+                <p>
+                    Ce site vous permet de vous connecter via votre compte <a href="https://facebook.com">Facebook</a> afin
+                    de partager vos albums et photos à un plus grand nombre de personnes n'étant pas forcément inscrites sur
+                    le site.
+                </p>
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+        </div>
+        {% if not app.user %}
+            <div class="col-md-6">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Connexion</h3>
+                    </div>
+                    <div class="box-body">
+                        <p>
+                            Afin d'utiliser MyPhotoBook et créer votre premier site internet ou gérer celui-ci vous devez vous
+                            connecter avec votre compte Facebook.
+                        </p>
 
-    <div class="box box-primary">
-        <div class="box-header with-border">
-            <h3 class="box-title">Qui sommes-nous ?</h3>
-        </div>
-        <div class="box-body">
-            <p>
-                <b>MyPhotoBook</b> est un projet créé par un groupe d'élèves de l'école
-                <a target="_blank" href="http://www.esgi.fr/ecole-informatique.html">ESGI</a>.
-            </p>
-            <p>
-                Ce site vous permet de vous connecter via votre compte <a href="https://facebook.com">facebook</a> afin
-                de partager vos albums et photos à un plus grand nombre de personnes n'étant pas forcément inscrites sur
-                le site.
-            </p>
-        </div>
-        <!-- /.box-body -->
+                        <div class="col-md-6"></div>
+                        <div class="col-md-6">
+                            <a href="{{ path('hwi_oauth_service_redirect', {'service': 'facebook'}) }}"
+                               class="btn btn-block btn-social btn-facebook">
+                                <i class="fa fa-facebook"></i> Se connecter avec Facebook
+                            </a>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+        {% elseif app.user %}
+            <div class="col-md-6">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Connexion</h3>
+                    </div>
+                    <div class="box-body">
+                        <p>
+                            Vous êtes correctement connecté ! Merci pour votre confiance. ;)
+                        </p>
+                        <p>
+                            Votre site est disponible à cette adresse :
+                            {% set my_site_link = path('site_home', {'project_name': app.user.getSlugifiedName }) %}
+                            <a href="{{ my_site_link }}">Votre site internet !</a>
+                        </p>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+        {% endif %}
     </div>
-    <!-- /.box -->
-
-    <div class="box box-default">
+    <div class="box box-primary">
         <div class="box-header with-border">
             <h3 class="box-title">Comment ça fonctionne ?</h3>
         </div>
         <div class="box-body">
             <p>
-                C'est très simple, il vous suffit juste de vous connecter avec votre compte Facebook, vous aurez ensuite
+                C'est très simple, il vous suffit juste de vous connecter avec votre compte Facebook. vous aurez ensuite
                 accès à une interface ou vous pourrez ajouter des photos mais aussi trier les photos et albums à
                 afficher
                 (ou non)
             </p>
+            <p>
+                Par la suite, notre site récupère vos photos mais elles ne sont pas directement utilisés ; Vous choisissez
+                quels photos sont utilisés pour votre site internet.
+            </p>
+            <p>
+                Sur votre panneau d'administration vous avez accès à des fonctionnalités simple d'utilisation tels que :
+                <ul>
+                <li> Choix de la disposition du site </li>
+                <li> Choix de la couleur du thème de votre site </li>
+                <li> Choix des albums et des photos utilisés pour votre site </li>
+                </ul>
+            </p>
         </div>
         <!-- /.box-body -->
     </div>
-    <!-- /.box -->
-    {% if not app.user %}
-        <div class="box box-default">
-            <div class="box-header with-border">
-                <h3 class="box-title">Inscription/Connexion</h3>
-            </div>
-            <div class="box-body">
-                <div class="col-md-4">
-                    <a href="{{ path('hwi_oauth_service_redirect', {'service': 'facebook'}) }}"
-                       class="btn btn-block btn-social btn-facebook">
-                        <i class="fa fa-facebook"></i> Se connecter avec Facebook
-                    </a>
-                </div>
-            </div>
-            <!-- /.box-body -->
-        </div>
-        <!-- /.box -->
-    {% endif %}
 
     {% if sites is defined %}
-        <div class="box box-default">
+        <div class="box box-primary">
             <div class="box-header with-border">
                 <h3 class="box-title">Nos utilisateurs</h3>
             </div>
@@ -85,6 +126,20 @@
         <!-- /.box -->
     {% endif %}
 
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">Qui sommes-nous ?</h3>
+        </div>
+        <div class="box-body">
+            <p>
+                <b>MyPhotoBook</b> est un projet créé par un groupe d'élèves de l'école
+                <a target="_blank" href="http://www.esgi.fr/ecole-informatique.html">ESGI</a>.
+            </p>
+        </div>
+        <!-- /.box-body -->
+    </div>
+    <!-- /.box -->
+</div>
 {% endblock %}
 
 
