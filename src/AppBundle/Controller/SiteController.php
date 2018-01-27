@@ -23,7 +23,7 @@ use Symfony\Component\HttpFoundation\Response;
 class SiteController extends Controller
 {
     /**
-     * @Route("/{type}", name="site_home", defaults={"type": "large"})
+     * @Route("/{type}", name="site_home", defaults={"type": "mosaic"})
      * @param $type
      * @return Response
      */
