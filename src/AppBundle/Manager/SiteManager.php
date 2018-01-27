@@ -86,15 +86,15 @@ class SiteManager
         if ($site->hasScope("user_photos")) {
             $albums = [];
             foreach ($response->getData()['albums']['data'] as $data) {
-                if ($data['created_time'] < $site->getUpdatedAt()) {
-                    $site->addAlbumOption($data['id']);
+                if ($this->getCreatedTime($data) > $site->getCreatedAt()) {
+                    $site->disableAlbum($data['id']);
                 }
 
                 $photos = [];
                 if (isset($data['photos'])) {
                     foreach ($data['photos']['data'] as $photoData) {
-                        if ($photoData['created_time'] < $site->getUpdatedAt()) {
-                            $site->addPhotoOption($photoData['id']);
+                        if ($this->getCreatedTime($photoData) > $site->getCreatedAt()) {
+                            $site->disablePicture($photoData['id']);
                         }
 
                         $webpImages = [];
@@ -115,8 +115,8 @@ class SiteManager
 
             $user->setAlbums($albums);
             $site
-                ->setAlbumOptions(array_unique($site->getAlbumOptions()))
-                ->setPhotoOptions(array_unique($site->getPhotoOptions()));
+                ->setDisabledAlbums(array_unique($site->getDisabledAlbums()))
+                ->setDisabledPictures(array_unique($site->getDisabledPictures()));
         }
 
         $this->manager->persist($site);
@@ -168,5 +168,14 @@ class SiteManager
     public function getFacebook(): Facebook
     {
         return $this->facebook;
+    }
+
+    /**
+     * @param $data
+     * @return \DateTime
+     */
+    private function getCreatedTime($data)
+    {
+        return new \DateTime($data['created_time']);
     }
 }

@@ -53,18 +53,18 @@ class Site
     private $skinColor = 'skin-blue';
 
     /**
-     * @var array $albumOptions
+     * @var array $disabledAlbums
      *
-     * @ORM\Column(name="album_options", type="json_array", nullable=true)
+     * @ORM\Column(name="disabled_albums", type="json_array", nullable=true)
      */
-    private $albumOptions;
+    private $disabledAlbums;
 
     /**
-     * @var array $photoOptions
+     * @var array $disabledPictures
      *
-     * @ORM\Column(name="photo_options", type="json_array", nullable=true)
+     * @ORM\Column(name="disabled_pictures", type="json_array", nullable=true)
      */
-    private $photoOptions;
+    private $disabledPictures;
 
     /**
      * @var OAuthUser $OAuthUser
@@ -79,11 +79,17 @@ class Site
     private $givenScopes;
 
     /**
-     * @var \DateTime $updatedAt
+     * @var \DateTime $createdAt
      *
-     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
+     * @ORM\Column(name="created_at", type="datetime", nullable=true)
      */
-    private $updatedAt;
+    private $createdAt;
+
+    public function __construct()
+    {
+        $this->disabledPictures = [];
+        $this->disabledAlbums = [];
+    }
 
     /**
      * Get id
@@ -146,13 +152,13 @@ class Site
     /**
      * Set albumOptions
      *
-     * @param array $albumOptions
+     * @param array $disabledAlbums
      *
      * @return Site
      */
-    public function setAlbumOptions($albumOptions)
+    public function setDisabledAlbums($disabledAlbums)
     {
-        $this->albumOptions = $albumOptions;
+        $this->disabledAlbums = $disabledAlbums;
 
         return $this;
     }
@@ -162,44 +168,44 @@ class Site
      *
      * @return array
      */
-    public function getAlbumOptions()
+    public function getDisabledAlbums()
     {
-        return $this->albumOptions;
+        return $this->disabledAlbums;
     }
 
     /**
-     * @param $albumOption
+     * @param $album
      * @return Site
      */
-    public function addAlbumOption($albumOption)
+    public function disableAlbum($album)
     {
-        $this->albumOptions[] = $albumOption;
+        $this->disabledAlbums[] = $album;
 
         return $this;
     }
 
     /**
-     * @param $albumOption
+     * @param $album
      * @return Site
      */
-    public function removeAlbumOption($albumOption)
+    public function enableAlbum($album)
     {
-        $key = array_search($albumOption, $this->albumOptions);
+        $key = array_search($album, $this->disabledAlbums);
 
-        if (isset($this->albumOptions[$key])) {
-            unset($this->albumOptions[$key]);
+        if (isset($this->disabledAlbums[$key])) {
+            unset($this->disabledAlbums[$key]);
         }
 
         return $this;
     }
 
     /**
-     * @param $photoOption
+     * @param $photo
      * @return Site
      */
-    public function addPhotoOption($photoOption)
+    public function disablePicture($photo)
     {
-        $this->photoOptions[] = $photoOption;
+        $this->disabledPictures[] = $photo;
 
         return $this;
     }
@@ -207,13 +213,13 @@ class Site
     /**
      * Set photoOptions
      *
-     * @param array $photoOptions
+     * @param array $disabledPictures
      *
      * @return Site
      */
-    public function setPhotoOptions($photoOptions)
+    public function setDisabledPictures($disabledPictures)
     {
-        $this->photoOptions = $photoOptions;
+        $this->disabledPictures = $disabledPictures;
 
         return $this;
     }
@@ -223,9 +229,9 @@ class Site
      *
      * @return array
      */
-    public function getPhotoOptions()
+    public function getDisabledPictures()
     {
-        return $this->photoOptions;
+        return $this->disabledPictures;
     }
 
     /**
@@ -320,18 +326,18 @@ class Site
     /**
      * @return \DateTime
      */
-    public function getUpdatedAt()
+    public function getCreatedAt()
     {
-        return $this->updatedAt;
+        return $this->createdAt;
     }
 
     /**
-     * @param \DateTime $updatedAt
+     * @param \DateTime $createdAt
      * @return Site
      */
-    public function setUpdatedAt($updatedAt)
+    public function setCreatedAt($createdAt)
     {
-        $this->updatedAt = $updatedAt;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
@@ -343,10 +349,12 @@ class Site
      */
     public function isAlbumDisabled($album)
     {
+        $options = $this->getDisabledAlbums();
+        $options = is_array($options) ? $options : [];
         $albumId = $album instanceof Album ? $album->getId() : $album;
-        $key = array_search($albumId, $this->albumOptions);
+        $key = array_search($albumId, $options);
 
-        return isset($this->albumOptions[$key]);
+        return isset($options[$key]);
     }
 
     /**
@@ -355,9 +363,11 @@ class Site
      */
     public function isPictureDisabled($picture)
     {
+        $options = $this->getDisabledPictures();
+        $options = is_array($options) ? $options : [];
         $pictureId = $picture instanceof Picture ? $picture->getId() : $picture;
-        $key = array_search($pictureId, $this->photoOptions);
+        $key = array_search($pictureId, $options);
 
-        return isset($this->photoOptions[$key]);
+        return isset($options[$key]);
     }
 }
