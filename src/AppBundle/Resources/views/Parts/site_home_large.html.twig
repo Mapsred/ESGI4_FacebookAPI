@@ -1,4 +1,4 @@
-{% for album in site.oAuthUser.albums %}
+{% for album in site.oAuthUser.albums if album.enabled %}
     {% set text = url('site_home', {'project_name': site.userName}) ~ "#album_"~ album.id %}
     <div class="box box-red" id="album_{{ album.id }}">
         <div class="box-header with-border">
@@ -12,7 +12,7 @@
         </div>
         <!-- form start -->
         <div class="box-body">
-            {% for picture in album.pictures %}
+            {% for picture in album.pictures if picture.enabled %}
                 {% set img = picture.webpImages.last %}
                 <img src="{{ img.source }}" class="star-grid" alt="">
                 {#{{ dump(picture) }}#}

@@ -55,7 +55,7 @@
     <!-- form start -->
     <div class="box-body">
         <ul>
-            {% for album in site.oAuthUser.albums %}
+            {% for album in site.oAuthUser.albums if album.enabled %}
                 <li>
                     <a href="{{ path('site_home', {'project_name': site.userName}) }}#album_{{ album.id }}">
                         Album {{ album.name }}
