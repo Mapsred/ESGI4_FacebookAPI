@@ -71,9 +71,8 @@
                         </p>
                         <p>
                             Votre site est disponible à cette adresse :
-                        </p>
-                        <p>
-                            {{ app.user.getSlugifiedName }}
+                            {% set my_site_link = path('site_home', {'project_name': app.user.getSlugifiedName }) %}
+                            <a href="{{ my_site_link }}">Votre site internet !</a>
                         </p>
                     </div>
                     <!-- /.box-body -->
