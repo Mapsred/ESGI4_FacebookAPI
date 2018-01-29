@@ -23,7 +23,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Class AdminController
@@ -185,9 +184,13 @@ class AdminController extends Controller
      * @param string $type
      * @return Response
      */
-    public function albumAction(Request $request, $album_id = null, $type)
+    public function albumPhotosAction(Request $request, $album_id = null, $type)
     {
         $site = $this->get(SiteManager::class)->getSite();
+
+        $redirectResponse = $this->redirectToRoute('admin_album', [
+            'project_name' => $site->getUserName(), 'album_id' => $album_id, 'type' => $type
+        ]);
 
         $album = $site->getOAuthUser()->getAlbums()->filter(function (Album $album) use ($album_id) {
             return $album->getId() == $album_id;
@@ -195,20 +198,20 @@ class AdminController extends Controller
 
         if ($album->count() == 0) {
             $this->addFlash('danger', "Cet album n'existe pas");
-            return $this->redirectToRoute('admin_albums', ['project_name' => $site->getUserName(), 'type' => 'list']);
+
+            return $redirectResponse;
         }
 
-        if ($request->isMethod('POST') && $request->request->has('photos')) {
-            $disablesPhotos = array_keys($request->request->get('photos'));
-            foreach ($disablesPhotos as $photo) {
-                $site->disablePicture($photo);
-            }
-            $this->getDoctrine()->getManager()->persist($site);
+        if ($request->isMethod('POST')) {
+            $picturesToDisable = $request->request->get("photos", []);
+            $picturesToDisable = array_keys($picturesToDisable);
+
+            $this->get(ContentManager::class)->switchPicturesStatus($site, $picturesToDisable, $album_id, false);
             $this->getDoctrine()->getManager()->flush();
 
             $this->addFlash('success', 'Les photos sélectionnés ont bien été désactivés');
 
-            return $this->redirectToRoute('admin_album', ['project_name' => $site->getUserName(), 'album_id' => $album_id, 'type' => $type]);
+            return $redirectResponse;
         }
 
         return $this->render('AppBundle:Admin:album.html.twig', [

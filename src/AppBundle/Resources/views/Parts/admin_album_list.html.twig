@@ -29,7 +29,7 @@
                                 </a>
                             </td>
                             <td class="input text-center">
-                                <input type="checkbox" name="photos[{{ picture.id }}]" {{ picture.id in disabledPhotos ? 'checked' : '' }}>
+                                <input type="checkbox" name="photos[{{ picture.id }}]" {{ picture.enabled ? '' : 'checked' }}>
                             </td>
                         </tr>
                     {% endfor %}

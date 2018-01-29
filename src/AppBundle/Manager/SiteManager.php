@@ -105,7 +105,7 @@ class SiteManager
                 if (isset($data['photos'])) {
                     foreach ($data['photos']['data'] as $photoData) {
                         $isPictureEnabled = $this->getCreatedTime($photoData) > $site->getCreatedAt();
-                        $pictureContent = $this->contentManager->getOrCreatePicture($site, $photoData['id'], $isPictureEnabled);
+                        $pictureContent = $this->contentManager->getOrCreatePicture($site, $photoData['id'], $data['id'], $isPictureEnabled);
 
                         // If ID is null, new PictureContent
                         if (null === $pictureContent->getId()) {

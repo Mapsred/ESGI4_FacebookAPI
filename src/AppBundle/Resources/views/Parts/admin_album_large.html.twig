@@ -1,15 +1,13 @@
 <div class="row">
-
     {% for picture in album.pictures %}
-
         <div class="col-sm-3">
             <a href="{{ picture.webpimages[0].source }}" data-lightbox="album">
-                <img class="picture-{{ picture.id in disabledPhotos ? 'enabled' : 'disabled' }}" width="100%" class="img-responsive" src="{{ picture.webpimages[0].source }}" alt="Photo {{ picture.id }}">
+                <img class="picture-{{ picture.enabled ? 'enabled' : 'disabled' }} img-responsive" width="100%"
+                     src="{{ picture.webpimages[0].source }}" alt="Photo {{ picture.id }}">
             </a>
             <br>
         </div>
-
     {% else %}
-        <p> Aucune photos </p>
+        <p>Aucune photo</p>
     {% endfor %}
 </div>

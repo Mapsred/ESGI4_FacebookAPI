@@ -42,16 +42,46 @@ class ContentManager extends BaseManager
     /**
      * @param Site $site
      * @param $picture
+     * @param $album
      * @param bool $enabled
      * @return Content
      */
-    public function addPicture(Site $site, $picture, $enabled = false)
+    public function addPicture(Site $site, $picture, $album, $enabled = false)
     {
+        $albumId = $album instanceof Album ? $album->getId() : $album;
         return $this->newClass()
             ->setContentId($picture instanceof Picture ? $picture->getId() : $picture)
             ->setSite($site)
             ->setType(self::PICTURE)
+            ->setAlbumId($albumId)
             ->setEnabled($enabled);
+    }
+
+    /**
+     * @param Site $site
+     * @param $pictures
+     * @param $album
+     * @param bool $enabled
+     * @return ContentManager
+     * @throws \Doctrine\ORM\ORMException
+     */
+    public function switchPicturesStatus(Site $site, $pictures, $album, $enabled = false)
+    {
+        $albumId = $album instanceof Album ? $album->getId() : $album;
+        $pictures = $this->arrayCollectionToArray($pictures);
+        foreach ($site->getContentPictures() as $content) {
+            if ($content->getAlbumId() == $albumId) {
+                if (in_array($content->getContentId(), $pictures)) {
+                    $content->setEnabled($enabled);
+                }else {
+                    $content->setEnabled(!$enabled);
+                }
+
+                $this->getManager()->persist($content);
+            }
+        }
+
+        return $this;
     }
 
 
@@ -170,13 +200,15 @@ class ContentManager extends BaseManager
     /**
      * @param Site $site
      * @param $id
+     * @param $album
      * @param bool $enabled
      * @return Content
      */
-    public function getOrCreatePicture(Site $site, $id, $enabled = true)
+    public function getOrCreatePicture(Site $site, $id, $album, $enabled = true)
     {
+        $albumId = $album instanceof Album ? $album->getId() : $album;
         if (null === $entity = $this->getPicture($site, $id)) {
-            $entity = $this->addPicture($site, $id, $enabled);
+            $entity = $this->addPicture($site, $id, $albumId, $enabled);
         }
 
         return $entity;

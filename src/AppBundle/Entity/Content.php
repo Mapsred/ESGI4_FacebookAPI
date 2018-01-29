@@ -51,6 +51,13 @@ class Content
     private $enabled = false;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="album_id", type="string", nullable=true)
+     */
+    private $albumId;
+
+    /**
      * Get id.
      *
      * @return int
@@ -154,5 +161,39 @@ class Content
     public function isEnabled()
     {
         return $this->enabled;
+    }
+
+    /**
+     * Get enabled.
+     *
+     * @return bool
+     */
+    public function getEnabled()
+    {
+        return $this->enabled;
+    }
+
+    /**
+     * Set albumId.
+     *
+     * @param string|null $albumId
+     *
+     * @return Content
+     */
+    public function setAlbumId($albumId = null)
+    {
+        $this->albumId = $albumId;
+
+        return $this;
+    }
+
+    /**
+     * Get albumId.
+     *
+     * @return string|null
+     */
+    public function getAlbumId()
+    {
+        return $this->albumId;
     }
 }
