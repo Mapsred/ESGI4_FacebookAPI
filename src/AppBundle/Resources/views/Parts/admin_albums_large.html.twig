@@ -5,7 +5,7 @@
                     <a href={{ path('admin_album', {'project_name': site.username, 'album_id': album.id}) }}>{{ album.name }}</a>
                 </span>
             {% if album.pictures|length > 0 %}
-                {% if album.id not in disabledAlbums %}
+                {% if album.enabled %}
                     <span class="pull-right">
                         <a href="{{ path('admin_album_update', {'project_name': site.username, 'album_id': album.id, 'type': 'disable'}) }}"
                            type="button" class="btn btn-block btn-warning btn-xs">

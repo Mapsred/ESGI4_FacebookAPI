@@ -164,8 +164,6 @@ class AdminController extends Controller
             $albumsToDisable = array_keys($albumsToDisable);
 
             $this->get(ContentManager::class)->switchAlbumsStatus($site, $albumsToDisable, false);
-
-            $this->getDoctrine()->getManager()->persist($site);
             $this->getDoctrine()->getManager()->flush();
 
             $this->addFlash('success', 'Les albums sélectionnés ont bien été modifiés');
@@ -223,17 +221,13 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("/album_update/{type}/{album_id}", name="admin_album_update")
+     * @Route("/album_update/{type}/{album_id}", name="admin_album_update", requirements={"type": "enable|disable"})
      * @param $type
      * @param $album_id
      * @return RedirectResponse
      */
     public function albumUpdateAction($type, $album_id)
     {
-        if (!in_array($type, ['enable', 'disable'])) {
-            throw new NotFoundHttpException(sprintf('Page not found for $type = %s', $type));
-        }
-
         $site = $this->get(SiteManager::class)->getSite();
         $redirectResponse = $this->redirectToRoute('admin_albums', ['project_name' => $site->getUserName(), 'type' => 'large']);
 
@@ -248,25 +242,28 @@ class AdminController extends Controller
         }
 
         if ($type == "disable") {
-            $disabledAlbums = $site->getAlbums(); // Array
-            if (in_array($album_id, $disabledAlbums)) {
-                $this->addFlash('danger', 'Cet album est déja désactivé.');
-            } else {
-                $site->disableAlbum($album_id);
+            if (null !== $entity = $this->get(ContentManager::class)->getAlbum($site, $album_id, true)) {
+                $entity->setEnabled(false);
+                $this->get(ContentManager::class)->persistAndFlush($entity);
                 $this->addFlash('success', 'L\'album a bien été désactivé.');
-            }
-        } else {
-            $enabledAlbums = $site->getAlbums(); // Array
-            if (!in_array($album_id, $enabledAlbums)) {
-                $this->addFlash('danger', 'Cet album est déja activé.');
             } else {
-                $site->enableAlbum($album_id);
-                $this->addFlash('success', 'L\'album a bien été activé.');
+                $this->addFlash('danger', 'Cet album est déja désactivé.');
             }
+
+            return $redirectResponse;
         }
 
-        $this->getDoctrine()->getManager()->persist($site);
-        $this->getDoctrine()->getManager()->flush();
+        if ($type == "enable") {
+            if (null !== $entity = $this->get(ContentManager::class)->getAlbum($site, $album_id, false)) {
+                $entity->setEnabled(true);
+                $this->get(ContentManager::class)->persistAndFlush($entity);
+                $this->addFlash('success', 'L\'album a bien été activé.');
+            } else {
+                $this->addFlash('danger', 'Cet album est déja activé.');
+            }
+
+            return $redirectResponse;
+        }
 
         return $redirectResponse;
     }

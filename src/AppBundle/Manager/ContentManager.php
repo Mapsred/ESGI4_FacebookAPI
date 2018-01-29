@@ -54,29 +54,6 @@ class ContentManager extends BaseManager
             ->setEnabled($enabled);
     }
 
-    /**
-     * @param Site $site
-     * @param $pictures
-     * @param bool $enabled
-     * @return Content[]
-     */
-    public function addPictures(Site $site, $pictures, $enabled = false)
-    {
-        $entities = [];
-        foreach ($pictures as $picture) {
-            $entity = $this->addPicture($site, $picture, $enabled);
-            $this->getManager()->persist($entity);
-            $entities[] = $entity;
-        }
-
-        $this->getManager()->flush();
-
-        return $entities;
-    }
-
-
-
-
 
     /**
      * @param Site $site
@@ -91,26 +68,6 @@ class ContentManager extends BaseManager
             ->setSite($site)
             ->setType(self::ALBUM)
             ->setEnabled($enabled);
-    }
-
-    /**
-     * @param Site $site
-     * @param $albums
-     * @param bool $enabled
-     * @return Content[]
-     */
-    public function addAlbums(Site $site, $albums, $enabled = false)
-    {
-        $entities = [];
-        foreach ($albums as $album) {
-            $entity = $this->addAlbum($site, $album, $enabled);
-            $this->getManager()->persist($entity);
-            $entities[] = $entity;
-        }
-
-        $this->getManager()->flush();
-
-        return $entities;
     }
 
     /**
@@ -165,37 +122,6 @@ class ContentManager extends BaseManager
     public function isPicturePresent(Site $site, $picture)
     {
         return $this->isPicture($site, $picture);
-    }
-
-
-    /**
-     * @param Site $site
-     * @param $album
-     * @return bool
-     */
-    public function isAlbumEnabled(Site $site, $album)
-    {
-        return $this->isAlbum($site, $album, true);
-    }
-
-    /**
-     * @param Site $site
-     * @param $album
-     * @return bool
-     */
-    public function isAlbumDisabled(Site $site, $album)
-    {
-        return $this->isAlbum($site, $album, false);
-    }
-
-    /**
-     * @param Site $site
-     * @param $album
-     * @return bool
-     */
-    public function isAlbumPresent(Site $site, $album)
-    {
-        return $this->isAlbum($site, $album);
     }
 
 
