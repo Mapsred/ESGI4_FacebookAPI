@@ -8,8 +8,8 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\AppBundle;
 use AppBundle\Entity\Site;
+use AppBundle\Manager\ContentManager;
 use AppBundle\Manager\SiteManager;
 use AppBundle\Security\Core\User\OAuthUser;
 use AppBundle\Utils\Facebook\Album;
@@ -159,20 +159,23 @@ class AdminController extends Controller
     public function albumsAction(Request $request, $type)
     {
         $site = $this->get(SiteManager::class)->getSite();
+        if ($request->isMethod('POST')) {
+            $albumsToDisable = $request->request->get("albums", []);
+            $albumsToDisable = array_keys($albumsToDisable);
 
-        if ($request->isMethod('POST') && $request->request->has('albums')) {
-            $site->setDisabledAlbums(array_keys($request->request->get('albums')));
+            $this->get(ContentManager::class)->switchAlbumsStatus($site, $albumsToDisable, false);
+
             $this->getDoctrine()->getManager()->persist($site);
             $this->getDoctrine()->getManager()->flush();
 
-            $this->addFlash('success', 'Les albums sélectionnés ont bien été désactivés');
+            $this->addFlash('success', 'Les albums sélectionnés ont bien été modifiés');
 
             return $this->redirectToRoute('admin_albums', ['project_name' => $site->getUserName(), 'type' => $type]);
         }
 
         return $this->render('AppBundle:Admin:albums.html.twig', [
             'site' => $site,
-            'disabledAlbums' => $site->getDisabledAlbums(),
+            'disabledAlbums' => $site->getAlbums(),
             'type' => $type
         ]);
     }
@@ -184,7 +187,7 @@ class AdminController extends Controller
      * @param string $type
      * @return Response
      */
-    public function albumAction(Request $request , $album_id = null, $type)
+    public function albumAction(Request $request, $album_id = null, $type)
     {
         $site = $this->get(SiteManager::class)->getSite();
 
@@ -213,8 +216,8 @@ class AdminController extends Controller
         return $this->render('AppBundle:Admin:album.html.twig', [
             'site' => $site,
             'album' => $album->first(),
-            'disabledAlbums' => $disabledAlbums = $site->getDisabledAlbums(),
-            'disabledPhotos' =>  $site->getDisabledPictures(),
+            'disabledAlbums' => $disabledAlbums = $site->getAlbums(),
+            'disabledPhotos' => $site->getPictures(),
             'type' => $type
         ]);
     }
@@ -245,15 +248,15 @@ class AdminController extends Controller
         }
 
         if ($type == "disable") {
-            $disabledAlbums = $site->getDisabledAlbums(); // Array
+            $disabledAlbums = $site->getAlbums(); // Array
             if (in_array($album_id, $disabledAlbums)) {
                 $this->addFlash('danger', 'Cet album est déja désactivé.');
             } else {
                 $site->disableAlbum($album_id);
                 $this->addFlash('success', 'L\'album a bien été désactivé.');
             }
-        }else {
-            $enabledAlbums = $site->getDisabledAlbums(); // Array
+        } else {
+            $enabledAlbums = $site->getAlbums(); // Array
             if (!in_array($album_id, $enabledAlbums)) {
                 $this->addFlash('danger', 'Cet album est déja activé.');
             } else {

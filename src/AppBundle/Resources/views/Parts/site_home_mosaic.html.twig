@@ -15,7 +15,6 @@
             {% for picture in album.pictures if picture.enabled %}
                 {% set img = picture.webpImages.last %}
                 <img src="{{ img.source }}" class="star-grid" alt="">
-                {#{{ dump(picture) }}#}
             {% endfor %}
         </div>
         <!-- /.box-body -->

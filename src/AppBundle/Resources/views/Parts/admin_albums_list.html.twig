@@ -7,7 +7,7 @@
     </span>
         <div class="box box-red">
             <div class="box-header with-border">
-                <h3 class="box-title">Activer/Désactiver des albums</h3>
+                <h3 class="box-title">Désactiver des albums</h3>
             </div>
             <!-- form start -->
             <div class="box-body table-responsive no-padding">
@@ -27,7 +27,7 @@
                                 <a href={{ path('admin_album', {'project_name': site.username, 'album_id': album.id}) }}>{{ album.name }}</a>
                             </td>
                             <td class="input text-center">
-                                <input type="checkbox" name="albums[{{ album.id }}]" {{ album.id in disabledAlbums ? 'checked' : '' }}>
+                                <input type="checkbox" name="albums[{{ album.id }}]" {{ album.enabled ?  '' : 'checked' }}>
                             </td>
                         </tr>
                     {% endfor %}

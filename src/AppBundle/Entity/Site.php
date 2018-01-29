@@ -2,9 +2,9 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Manager\ContentManager;
 use AppBundle\Security\Core\User\OAuthUser;
-use AppBundle\Utils\Facebook\Album;
-use AppBundle\Utils\Facebook\Picture;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -53,20 +53,6 @@ class Site
     private $skinColor = 'skin-blue';
 
     /**
-     * @var array $disabledAlbums
-     *
-     * @ORM\Column(name="disabled_albums", type="json_array", nullable=true)
-     */
-    private $disabledAlbums;
-
-    /**
-     * @var array $disabledPictures
-     *
-     * @ORM\Column(name="disabled_pictures", type="json_array", nullable=true)
-     */
-    private $disabledPictures;
-
-    /**
      * @var OAuthUser $OAuthUser
      */
     private $OAuthUser;
@@ -84,6 +70,12 @@ class Site
      * @ORM\Column(name="created_at", type="datetime", nullable=true)
      */
     private $createdAt;
+
+    /**
+     * @var ArrayCollection|Content[] $disabledContent
+     * @ORM\OneToMany(targetEntity="Content", mappedBy="site", cascade={"persist"})
+     */
+    private $disabledContent;
 
     public function __construct()
     {
@@ -147,91 +139,6 @@ class Site
     public function getUserName()
     {
         return $this->userName;
-    }
-
-    /**
-     * Set albumOptions
-     *
-     * @param array $disabledAlbums
-     *
-     * @return Site
-     */
-    public function setDisabledAlbums($disabledAlbums)
-    {
-        $this->disabledAlbums = $disabledAlbums;
-
-        return $this;
-    }
-
-    /**
-     * Get albumOptions
-     *
-     * @return array
-     */
-    public function getDisabledAlbums()
-    {
-        return $this->disabledAlbums;
-    }
-
-    /**
-     * @param $album
-     * @return Site
-     */
-    public function disableAlbum($album)
-    {
-        $this->disabledAlbums[] = $album;
-
-        return $this;
-    }
-
-    /**
-     * @param $album
-     * @return Site
-     */
-    public function enableAlbum($album)
-    {
-        $key = array_search($album, $this->disabledAlbums);
-
-        if (isset($this->disabledAlbums[$key])) {
-            unset($this->disabledAlbums[$key]);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param $photo
-     * @return Site
-     */
-    public function disablePicture($photo)
-    {
-        $this->disabledPictures[] = $photo;
-
-        return $this;
-    }
-
-    /**
-     * Set photoOptions
-     *
-     * @param array $disabledPictures
-     *
-     * @return Site
-     */
-    public function setDisabledPictures($disabledPictures)
-    {
-        $this->disabledPictures = $disabledPictures;
-
-        return $this;
-    }
-
-    /**
-     * Get photoOptions
-     *
-     * @return array
-     */
-    public function getDisabledPictures()
-    {
-        return $this->disabledPictures;
     }
 
     /**
@@ -342,38 +249,87 @@ class Site
         return $this;
     }
 
-
     /**
-     * @param Album|int $album
-     * @return bool
+     * Add disabledContent.
+     *
+     * @param Content $disabledContent
+     *
+     * @return Site
      */
-    public function isAlbumDisabled($album)
+    public function addDisabledContent(Content $disabledContent)
     {
-        $options = $this->getDisabledAlbums();
-        $options = is_array($options) ? $options : [];
-        $albumId = $album instanceof Album ? $album->getId() : $album;
-        $key = array_search($albumId, $options);
-        if (false !== $key) {
-            return isset($options[$key]);
-        }
+        $this->disabledContent[] = $disabledContent;
 
-        return false;
+        return $this;
     }
 
     /**
-     * @param Picture|int $picture
-     * @return bool
+     * Remove disabledContent.
+     *
+     * @param Content $disabledContent
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
      */
-    public function isPictureDisabled($picture)
+    public function removeDisabledContent(Content $disabledContent)
     {
-        $options = $this->getDisabledPictures();
-        $options = is_array($options) ? $options : [];
-        $pictureId = $picture instanceof Picture ? $picture->getId() : $picture;
-        $key = array_search($pictureId, $options);
-        if (false !== $key) {
-            return isset($options[$key]);
-        }
+        return $this->disabledContent->removeElement($disabledContent);
+    }
 
-        return false;
+    /**
+     * Get disabledContent.
+     *
+     * @return ArrayCollection|Content[]
+     */
+    public function getDisabledContent()
+    {
+        return $this->disabledContent;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getPictures()
+    {
+        return $this->getContentPictures()->map(function (Content $content) {
+            return $content->getContentId();
+        });
+    }
+
+    /**
+     * @return ArrayCollection|Content[]
+     */
+    public function getContentPictures()
+    {
+        $content = $this->getDisabledContent()->map(function (Content $content) {
+            if ($content->getType() == ContentManager::PICTURE) {
+                return $content;
+            }
+        });
+
+        return new ArrayCollection(array_filter($content->toArray()));
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getAlbums()
+    {
+        return $this->getContentAlbums()->map(function (Content $content) {
+            return $content->getContentId();
+        });
+    }
+
+    /**
+     * @return ArrayCollection|Content[]
+     */
+    public function getContentAlbums()
+    {
+        $content = $this->getDisabledContent()->map(function (Content $content) {
+            if ($content->getType() == ContentManager::ALBUM) {
+                return $content;
+            }
+        });
+
+        return new ArrayCollection(array_filter($content->toArray()));
     }
 }

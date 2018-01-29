@@ -41,18 +41,24 @@ class SiteManager
      * @var Facebook $facebook
      */
     private $facebook;
+    /**
+     * @var ContentManager
+     */
+    private $contentManager;
 
     /**
      * SiteManager constructor.
      * @param ObjectManager $manager
      * @param FacebookResourceOwner $resourceOwner
      * @param Facebook $facebook
+     * @param ContentManager $disabledContentManager
      */
-    public function __construct(ObjectManager $manager, FacebookResourceOwner $resourceOwner, Facebook $facebook)
+    public function __construct(ObjectManager $manager, FacebookResourceOwner $resourceOwner, Facebook $facebook, ContentManager $disabledContentManager)
     {
         $this->manager = $manager;
         $this->resourceOwner = $resourceOwner;
         $this->facebook = $facebook;
+        $this->contentManager = $disabledContentManager;
     }
 
     /**
@@ -87,37 +93,42 @@ class SiteManager
         if ($site->hasScope("user_photos")) {
             $albums = [];
             foreach ($response->getData()['albums']['data'] as $data) {
-                if ($this->getCreatedTime($data) > $site->getCreatedAt()) {
-                    $site->disableAlbum($data['id']);
+                $isAlbumEnabled = $this->getCreatedTime($data) > $site->getCreatedAt();
+                $albumContent = $this->contentManager->getOrCreateAlbum($site, $data['id'], $isAlbumEnabled);
+
+                // If ID is null, new AlbumContent
+                if (null === $albumContent->getId()) {
+                    $site->addDisabledContent($albumContent);
                 }
 
                 $photos = [];
                 if (isset($data['photos'])) {
                     foreach ($data['photos']['data'] as $photoData) {
-                        if ($this->getCreatedTime($photoData) > $site->getCreatedAt()) {
-                            $site->disablePicture($photoData['id']);
+                        $isPictureEnabled = $this->getCreatedTime($photoData) > $site->getCreatedAt();
+                        $pictureContent = $this->contentManager->getOrCreatePicture($site, $photoData['id'], $isPictureEnabled);
+
+                        // If ID is null, new PictureContent
+                        if (null === $pictureContent->getId()) {
+                            $site->addDisabledContent($pictureContent);
                         }
 
                         $webpImages = [];
                         foreach ($photoData['webp_images'] as $webpImageData) {
-                            $webpImage = new WebpImage($webpImageData['source'], !$site->isPictureDisabled($photoData['id']));
+                            $webpImage = new WebpImage($webpImageData['source'], $pictureContent->isEnabled());
                             $webpImages[] = $webpImage;
                         }
 
-                        $photo = new Picture($photoData['id'], $photoData['picture'], $webpImages, !$site->isPictureDisabled($photoData['id']));
+                        $photo = new Picture($photoData['id'], $photoData['picture'], $webpImages, $pictureContent->isEnabled());
                         $photos[] = $photo;
                     }
                 }
 
-                $album = new Album($data['id'], $data['name'], $photos, !$site->isAlbumDisabled($data['id']));
+                $album = new Album($data['id'], $data['name'], $photos, $albumContent->isEnabled());
 
                 $albums[] = $album;
             }
 
             $user->setAlbums($albums);
-            $site
-                ->setDisabledAlbums(array_unique($site->getDisabledAlbums()))
-                ->setDisabledPictures(array_unique($site->getDisabledPictures()));
         }
 
         $this->manager->persist($site);

@@ -48,6 +48,9 @@ services:
     AppBundle\Manager\SiteManager:
         public: true
 
+    AppBundle\Manager\ContentManager:
+        public: true
+
     AppBundle\EventListener\CurrentSiteListener:
         class: AppBundle\EventListener\CurrentSiteListener
         arguments: ['@AppBundle\Manager\SiteManager', "@security.token_storage", "%domain%"]
