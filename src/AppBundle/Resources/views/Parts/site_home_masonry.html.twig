@@ -1,15 +1,17 @@
-<ul class="grid effect-3" id="grid">
-
-    {% for album in site.oAuthUser.albums if album.enabled %}
-
-        {% for picture in album.pictures if picture.enabled %}
-
-            <li>
-                <img src="{{ picture.webpimages[0].source }}"></a>
-            </li>
-
-        {% endfor %}
-
-    {% endfor %}
-
-</ul>
+<div class="box box-red">
+    <div class="box-header with-border">
+        <h3 class="box-title">Albums</h3>
+    </div>
+    <div class="box-body row">
+        <ul class="grid effect-3" id="grid">
+            {% for album in site.oAuthUser.albums if album.enabled %}
+                {% for picture in album.pictures if picture.enabled %}
+                    <li>
+                        <img src="{{ picture.webpimages[0].source }}"/>
+                    </li>
+                {% endfor %}
+            {% endfor %}
+        </ul>
+    </div>
+    <!-- /.box-body -->
+</div>

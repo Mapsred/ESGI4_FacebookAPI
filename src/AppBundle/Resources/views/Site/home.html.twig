@@ -14,29 +14,43 @@
     </ol>
 {% endblock %}
 
-
 {% block body %}
-<div class="navbar-collapse">
-    <div class="nav navbar-right btn-group">
-        <a href="{{ path('site_home', {'project_name': site.userName, 'type': 'mosaic'}) }}"
-           class="btn btn-default navbar-btn {{ type == "mosaic" ? "active" : "" }}">
-            <i class="fa fa-th-list fa-fw"></i>
-        </a>
-        <a href="{{ path('site_home', {'project_name': site.userName, 'type': 'masonry'}) }}"
-           class="btn btn-default navbar-btn {{ type == "masonry" ? "active" : "" }}">
-            <i class="fa fa-th-large fa-fw"></i>
-        </a>
+    <div class="navbar-collapse">
+        <div class="nav navbar-right btn-group">
+            <a href="{{ path('site_home', {'project_name': site.userName, 'type': 'mosaic'}) }}"
+               class="btn btn-default navbar-btn {{ type == "mosaic" ? "active" : "" }}">
+                <i class="fa fa-th-list fa-fw"></i>
+            </a>
+            <a href="{{ path('site_home', {'project_name': site.userName, 'type': 'masonry'}) }}"
+               class="btn btn-default navbar-btn {{ type == "masonry" ? "active" : "" }}">
+                <i class="fa fa-th-large fa-fw"></i>
+            </a>
+        </div>
     </div>
-</div>
+    {% if type != "mosaic" %}
+        <div class="box box-red">
+            <div class="box-header with-border">
+                <h3 class="box-title">Liste des albums</h3>
+            </div>
+            <!-- form start -->
+            <div class="box-body">
+                <ul>
+                    {% for album in site.oAuthUser.albums if album.enabled %}
+                        <li>
+                            <a href="{{ path('site_home', {'project_name': site.userName}) }}#album_{{ album.id }}">
+                                Album {{ album.name }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <!-- /.box-body -->
+        </div>
+    {% endif %}
 
     {% if type == "mosaic" %}
         {% include "AppBundle:Parts:site_home_mosaic.html.twig" with {'site': site} %}
     {% elseif type == "masonry" %}
         {% include "AppBundle:Parts:site_home_masonry.html.twig" with {'site': site} %}
-    {% else %}
     {% endif %}
-
-    <!-- /.box-body -->
-
-
 {% endblock %}
