@@ -1,20 +1,5 @@
 {% extends 'AppBundle::base.html.twig' %}
 
-{% block stylesheet %}
-    {{ parent() }}
-    <link href="{{ asset('assets/css/component.css') }}" rel="stylesheet" />
-{% endblock %}
-
-{% block javascript %}
-    {{ parent() }}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/3.0.0/masonry.pkgd.min.js"></script>
-    <script src="{{ asset('assets/js/imgLoaded.js') }}"></script>
-    <script src="{{ asset('assets/js/classie.js') }}"></script>
-    <script src="{{ asset('assets/js/animonscroll.js') }}"></script>
-    <script src="{{ asset('assets/js/home.js') }}"></script>
-{% endblock %}
-
 {% block title %}{{ site.oAuthUser.name }} | MyPhotoBook{% endblock %}
 
 {% block header %}
@@ -33,13 +18,9 @@
 {% block body %}
 <div class="navbar-collapse">
     <div class="nav navbar-right btn-group">
-        <a href="{{ path('site_home', {'project_name': site.userName, 'type': 'list'}) }}"
-           class="btn btn-default navbar-btn {{ type == "list" ? "active" : "" }}">
-            <i class="fa fa-list fa-fw"></i>
-        </a>
         <a href="{{ path('site_home', {'project_name': site.userName, 'type': 'mosaic'}) }}"
            class="btn btn-default navbar-btn {{ type == "mosaic" ? "active" : "" }}">
-            <i class="fa fa-th-large fa-fw"></i>
+            <i class="fa fa-th-list fa-fw"></i>
         </a>
         <a href="{{ path('site_home', {'project_name': site.userName, 'type': 'masonry'}) }}"
            class="btn btn-default navbar-btn {{ type == "masonry" ? "active" : "" }}">
@@ -48,60 +29,14 @@
     </div>
 </div>
 
-<div class="box box-red">
-    <div class="box-header with-border">
-        <h3 class="box-title">Liste des albums</h3>
-    </div>
-    <!-- form start -->
-    <div class="box-body">
-        <ul>
-            {% for album in site.oAuthUser.albums if album.enabled %}
-                <li>
-                    <a href="{{ path('site_home', {'project_name': site.userName}) }}#album_{{ album.id }}">
-                        Album {{ album.name }}
-                    </a>
-                </li>
-            {% endfor %}
-        </ul>
-    </div>
+    {% if type == "mosaic" %}
+        {% include "AppBundle:Parts:site_home_mosaic.html.twig" with {'site': site} %}
+    {% elseif type == "masonry" %}
+        {% include "AppBundle:Parts:site_home_masonry.html.twig" with {'site': site} %}
+    {% else %}
+    {% endif %}
+
     <!-- /.box-body -->
-</div>
 
-{% if type == "list" %}
-{% elseif type == "mosaic" %}
-    {% include "AppBundle:Parts:site_home_mosaic.html.twig" with {'site': site} %}
-{% else %}
-{% endif %}
-{% endblock %}
-
-{# Masonry
-
-{% block body %}
-
-    <ul class="grid effect-3" id="grid">
-
-        {% for album in site.oAuthUser.albums %}
-
-            {% if album.id not in site.albumOptions %}
-
-                {% for picture in album.pictures %}
-
-                    {% if picture.id  not in site.photoOptions %}
-
-                        <li>
-                            <img src="{{ picture.webpimages[0].source }}"></a>
-                        </li>
-
-                    {% endif %}
-
-                {% endfor %}
-
-            {% endif %}
-
-        {% endfor %}
-
-    </ul>
 
 {% endblock %}
-
-#}

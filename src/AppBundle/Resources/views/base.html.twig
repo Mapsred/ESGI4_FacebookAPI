@@ -17,7 +17,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     {% stylesheets 'assets/bower/bootstrap/dist/css/bootstrap.css' 'assets/bower/font-awesome/css/font-awesome.css'
         'assets/bower/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css' 'assets/bower/select2/dist/css/select2.css'
         'assets/bower/Ionicons/css/ionicons.css' 'assets/css/AdminLTE.css' 'assets/css/_all-skins.css' 'assets/css/style.css'
-        'assets/css/helper.css'
+        'assets/css/helper.css' 'assets/bower/lightbox2/dist/css/lightbox.css' 'assets/css/component.css'
         output='compiled/css/main.css' filter='cssrewrite' %}
         <link href="{{ asset_url }}" rel="stylesheet">
     {% endstylesheets %}
@@ -142,7 +142,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     'assets/js/adminlte.js' 'assets/bower/moment/moment.js'
     'assets/bower/moment/locale/fr.js' 'assets/bower/bootstrap-datepicker/dist/js/bootstrap-datepicker.js'
     'assets/bower/bootstrap-datepicker/dist/locales/bootstrap-datepicker.fr.min.js'
-    'assets/bower/select2/dist/js/select2.js' 'assets/bower/select2/dist/js/i18n/fr.js'
+    'assets/bower/select2/dist/js/select2.js' 'assets/bower/select2/dist/js/i18n/fr.js' 'assets/bower/modernizr/index.js' 'assets/bower/masonry-layout/dist/masonry.pkgd.min.js' 'assets/bower/imagesloaded/imagesloaded.pkgd.min.js' 'assets/js/classie.js'
+    'assets/bower/AnimOnScroll/index.js' 'assets/bower/lightbox2/dist/js/lightbox.js'
     'assets/js/app.js'
     output='compiled/js/main.js' %}
     <script src="{{ asset_url }}"></script>

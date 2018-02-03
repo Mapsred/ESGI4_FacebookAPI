@@ -11,10 +11,13 @@
             </h3>
         </div>
         <!-- form start -->
-        <div class="box-body">
+        <div class="box-body row">
             {% for picture in album.pictures if picture.enabled %}
-                {% set img = picture.webpImages.last %}
-                <img src="{{ img.source }}" class="star-grid" alt="">
+            <div class="col-sm-3">
+                <a href="{{ picture.webpimages[0].source }}" data-lightbox="album-{{ album.id }}">
+                    <img src="{{ picture.webpimages[0].source }}" class="img-responsive" width="100%" alt="Photo {{ picture.id }}">
+                </a>
+            </div>
             {% endfor %}
         </div>
         <!-- /.box-body -->

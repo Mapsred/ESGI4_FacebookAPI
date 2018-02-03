@@ -1,0 +1,15 @@
+<ul class="grid effect-3" id="grid">
+
+    {% for album in site.oAuthUser.albums if album.enabled %}
+
+        {% for picture in album.pictures if picture.enabled %}
+
+            <li>
+                <img src="{{ picture.webpimages[0].source }}"></a>
+            </li>
+
+        {% endfor %}
+
+    {% endfor %}
+
+</ul>

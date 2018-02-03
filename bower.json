@@ -37,7 +37,11 @@
     "font-awesome": "^4.7.0",
     "Ionicons": "ionicons#^2.0.1",
     "lightbox2": "lightbox#^2.10.0",
-    "clipboard": "^1.7.1"
+    "clipboard": "^1.7.1",
+    "modernizr": "https://raw.githubusercontent.com/components/modernizr/2.6.2/modernizr.js",
+    "masonry-layout": "masonry#^3.0.0",
+    "AnimOnScroll": "https://raw.githubusercontent.com/codrops/GridLoadingEffects/master/js/AnimOnScroll.js",
+    "imagesloaded": "^3.0.2"
   },
   "resolutions": {
     "jquery": "~3.2.1"
