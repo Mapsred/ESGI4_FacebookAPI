@@ -115,7 +115,7 @@
             </div>
             <div class="box-body">
                 <ul>
-                    {% for site in sites %}
+                    {% for site in sites if not site.hidden %}
                         {% set site_link = path('site_home', {'project_name': site.userName}) %}
                         <li><a href="{{ site_link }}">{{ site_link }}</a></li>
                     {% endfor %}

@@ -93,7 +93,6 @@ desired effect
                 {% set currentPath = app.request.attributes.get('_route') %}
                 <li class="header">Options</li>
                 <!-- Optionally, you can add icons to the links -->
-                <li><a href="#"><i class="fa fa-file-text-o"></i> <span>Choisir ma disposition</span></a></li>
                 <li class="{{ currentPath == 'admin_colorChoice' ? 'active': '' }}">
                     <a href="{{ path('admin_colorChoice', {'project_name': site.username}) }}">
                         <i class="fa fa-adjust"></i> <span>Choisir ma couleur</span>
@@ -110,8 +109,8 @@ desired effect
                     </a>
                 </li>
                 <li>
-                    <a href="{{ path('admin_delete_website', {'project_name': site.username}) }}">
-                        <i class="fa fa-trash-o"></i> <span>Supprimer mon site</span>
+                    <a href="{{ path('admin_update_website', {'project_name': site.username}) }}">
+                        <i class="fa fa-info-circle"></i> <span>Modifier mon site</span>
                     </a>
                 </li>
             </ul>

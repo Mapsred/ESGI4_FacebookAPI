@@ -77,6 +77,13 @@ class Site
      */
     private $disabledContent;
 
+    /**
+     * @var boolean $hidden
+     *
+     * @ORM\Column(name="hidden", type="boolean")
+     */
+    private $hidden = false;
+
     public function __construct()
     {
         $this->disabledPictures = [];
@@ -331,5 +338,29 @@ class Site
         });
 
         return new ArrayCollection(array_filter($content->toArray()));
+    }
+
+    /**
+     * Set hidden.
+     *
+     * @param bool $hidden
+     *
+     * @return Site
+     */
+    public function setHidden($hidden)
+    {
+        $this->hidden = $hidden;
+
+        return $this;
+    }
+
+    /**
+     * Get hidden.
+     *
+     * @return bool
+     */
+    public function isHidden()
+    {
+        return $this->hidden;
     }
 }

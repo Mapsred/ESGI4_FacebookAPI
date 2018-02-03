@@ -272,22 +272,34 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("/admin_delete_website", name="admin_delete_website")
+     * @Route("/update_website", name="admin_update_website")
      * @param Request $request
      * @return RedirectResponse|Response
      */
-    public function deleteWebsiteAction(Request $request)
+    public function updateWebsiteAction(Request $request)
     {
         $site = $this->get(SiteManager::class)->getSite();
         if ($request->isMethod('POST')) {
-            $this->addFlash('success', 'Votre site a bien été supprimé');
-            $this->getDoctrine()->getManager()->remove($site);
-            $this->getDoctrine()->getManager()->flush();
+            $type = $request->query->get("type");
+            if (in_array($type, ["hide", "reveal"])) {
+                $site->setHidden($type == "hide");
+                $this->getDoctrine()->getManager()->persist($site);
+                $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('logout');
+                $this->addFlash('success', sprintf('Votre site a bien été %s', $type == "hide" ? "caché" : "révélé"));
+
+                return $this->redirectToRoute('admin_update_website', ['project_name' => $site->getUserName()]);
+            } elseif ($type == "remove") {
+                $this->getDoctrine()->getManager()->remove($site);
+                $this->getDoctrine()->getManager()->flush();
+
+                $this->addFlash('success', 'Votre site a bien été supprimé');
+
+                return $this->redirectToRoute('logout');
+            }
         }
 
-        return $this->render('AppBundle:Admin:delete_website.html.twig', [
+        return $this->render('AppBundle:Admin:update_website.html.twig', [
             'site' => $site
         ]);
     }
