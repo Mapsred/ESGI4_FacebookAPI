@@ -73,7 +73,7 @@ class Site
 
     /**
      * @var ArrayCollection|Content[] $disabledContent
-     * @ORM\OneToMany(targetEntity="Content", mappedBy="site", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Content", mappedBy="site", cascade={"persist", "remove"})
      */
     private $disabledContent;
 
@@ -83,12 +83,6 @@ class Site
      * @ORM\Column(name="hidden", type="boolean")
      */
     private $hidden = false;
-
-    public function __construct()
-    {
-        $this->disabledPictures = [];
-        $this->disabledAlbums = [];
-    }
 
     /**
      * Get id

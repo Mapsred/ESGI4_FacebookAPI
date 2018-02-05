@@ -43,10 +43,8 @@ class ManageController extends Controller
             return $this->redirectToRoute('manage_edit');
         }
 
-        $sites = $this->getDoctrine()->getRepository('AppBundle:Site')->findAll();
-
         return $this->render('AppBundle:Manage:edit.html.twig', [
-            'sites' => $sites
+            'sites' => $this->getDoctrine()->getRepository('AppBundle:Site')->findAll()
         ]);
 
     }

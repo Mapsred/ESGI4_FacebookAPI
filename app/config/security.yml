@@ -20,12 +20,14 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-        admin:
+        manage:
             pattern: ^/manage/.*
             form_login:
                 provider: fos_userbundle
                 csrf_token_generator: security.csrf.token_manager
                 check_path: /manage/login_check
+                always_use_default_target_path: false
+                default_target_path:            /manage/edit
             logout:       true
             anonymous:    true
 

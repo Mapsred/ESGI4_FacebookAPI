@@ -2,10 +2,13 @@
 
 {% block body %}
     <div class="container">
-        <h1>Management de MyPhotoBook</h1>
-        <h2><a href="{{ path('fos_user_security_login') }}">Se connecter</a></h2>
+        <div class="page-header">
+            <h1>Management de MyPhotoBook</h1>
+        </div>
+        <p class="lead">Cette interface permet de gérer les différents utilisateurs du site</p>
+        <p><a href="{{ path('fos_user_security_login') }}">Se connecter</a></p>
         {% if app.user is not null and is_granted('ROLE_ADMIN') %}
-            <h2><a href="{{ path('manage_edit') }}">Editer les sites</a></h2>
+            <p><a href="{{ path('manage_edit') }}">Editer les sites</a></p>
         {% endif %}
     </div>
 {% endblock %}
